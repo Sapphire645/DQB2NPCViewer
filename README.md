@@ -28,13 +28,13 @@ NPC editor with a visual component for feedback. Info taken from [the save edito
 - Voice preview wont be in first release
 
 ## Current screenshots:
-- Menu
-<img src="./Screenshots/General.png">
-- Model updating
-<img src="./Screenshots/General2.png">
-- Colour selection
-<img src="./Screenshots/Colour2.png">
-- Resizeable
-<img src="./Screenshots/Colour.png">
-- Menus will have dropdown for everything
-<img src="./Screenshots/drop.png">
+- Menu </br>
+<img src="./Screenshots/General.png"> </br>
+- Model updating </br>
+<img src="./Screenshots/General2.png"></br>
+- Colour selection </br>
+<img src="./Screenshots/Colour2.png"></br>
+- Resizeable </br>
+<img src="./Screenshots/Colour.png"></br>
+- Menus will have dropdown for everything </br>
+<img src="./Screenshots/drop.png"></br>
