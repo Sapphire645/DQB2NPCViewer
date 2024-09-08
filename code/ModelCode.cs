@@ -1,28 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.TextFormatting;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DQB2NPCViewer;
+using System.Windows.Resources;
 using HelixToolkit.Wpf;
-using Microsoft.Win32;
-using static System.Net.Mime.MediaTypeNames;
+
 
 public static class DQB2ModelRendering
 {
@@ -364,14 +348,38 @@ public static class DQB2ModelRendering
         return material;
     }
 
-private static Model3DGroup LoadModel(DiffuseMaterial material, String Model_Path)
+
+    //PLACEHOLDER CODE, OBJ FILES MAY CHANGE TO A BETTER, LIGHTER FORMAT
+    private static Model3DGroup LoadObjFile(string relativeUri)
+    {
+        // Construct the URI for the resource (pack URI)
+        Uri uri = new Uri(relativeUri, UriKind.RelativeOrAbsolute);
+
+        // Get the resource stream from the embedded resource
+        StreamResourceInfo resourceInfo = Application.GetResourceStream(uri);
+        if (resourceInfo != null)
+        {
+            using (Stream stream = resourceInfo.Stream)
+            {
+                // Use HelixToolkit ObjReader to read the OBJ file
+                var reader = new ObjReader();
+                var modelGroup = reader.Read(stream);  // Reads from the stream
+
+                return modelGroup;  // Returns the loaded 3D model
+            }
+        }
+
+        throw new FileNotFoundException("Resource not found.");
+    }
+    private static Model3DGroup LoadModel(DiffuseMaterial material, String Model_Path)
     {
         var importer = new ModelImporter();
         try
         {
             var objReader = new HelixToolkit.Wpf.ObjReader();
-            var model = objReader.Read(Model_Path);
-            
+            var model = LoadObjFile(Model_Path);
+            //var model = objReader.Read(new Uri(Model_Path));
+
             if (model is Model3DGroup modelGroup)
             {
                 foreach (var geometry in modelGroup.Children)
@@ -385,7 +393,7 @@ private static Model3DGroup LoadModel(DiffuseMaterial material, String Model_Pat
             model.Transform = transformGroup;
             return model;
         }
-        catch (Exception ex)
+        catch
         {
             MessageBox.Show($"Model does not exist! NPC will not appear.");
             return null;
@@ -429,7 +437,7 @@ private static Model3DGroup LoadModel(DiffuseMaterial material, String Model_Pat
             if (Hair == true)
             {
                 material = LoadTexture(HairImage, "pack://application:,,,/textures/hair/" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/hair/m" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/body/c" + body.ToString("D3") + ".png", 0, HairImage);
-                HairModel = LoadModel(material, "models/hair/" + hair.ToString("D3") + ".obj");
+                HairModel = LoadModel(material, "pack://application:,,,/models/hair/" + hair.ToString("D3") + ".obj");
             }
             if (HairModel != null)
             {
@@ -440,7 +448,7 @@ private static Model3DGroup LoadModel(DiffuseMaterial material, String Model_Pat
             if (Face == true)
             {
                 material = LoadTexture(SkinImage, "pack://application:,,,/textures/face/" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/m" + face.ToString("D3") + ".dds", "NULL", 1, EyeImage);
-                FaceModel = LoadModel(material, "models/face/" + face.ToString("D3") + ".obj");
+                FaceModel = LoadModel(material, "pack://application:,,,/models/face/" + face.ToString("D3") + ".obj");
             }
             if (FaceModel != null)
                 {
@@ -448,11 +456,11 @@ private static Model3DGroup LoadModel(DiffuseMaterial material, String Model_Pat
                 }
 
             if (BodyModel == null || FaceModel == null || HairModel == null) 
-                            return LoadModel(new DiffuseMaterial(), "models/Unknown.obj");
+                            return LoadModel(new DiffuseMaterial(), "pack://application:,,,/models/Unknown.obj");
             return modelGroup;
 
         }
-        catch (Exception ex)
+        catch
         {
             return modelGroup;
         }
