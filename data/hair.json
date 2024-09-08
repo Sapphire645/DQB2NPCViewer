@@ -1,0 +1,609 @@
+[
+    {
+        "ID": 0,
+        "ImageID": 0,
+        "HairName": " (none) "
+    },
+
+    {
+        "ID": 1,
+        "ImageID": 1,
+        "HairName": " MaleHistoricHat "
+    },
+
+    {
+        "ID": 2,
+        "ImageID": 2,
+        "HairName": " FemaleHistoricHairband "
+    },
+
+    {
+        "ID": 3,
+        "HairName": " Malroth "
+    },
+
+    {
+        "ID": 4,
+        "HairName": " Bonanzo "
+    },
+
+    {
+        "ID": 5,
+        "HairName": " Brownbeard "
+    },
+
+    {
+        "ID": 6,
+        "HairName": " Molly "
+    },
+
+    {
+        "ID": 7,
+        "HairName": " Den "
+    },
+
+    {
+        "ID": 8,
+        "ImageID": 8,
+        "HairName": " Babs/BunnyEars&Ponytail "
+    },
+
+    {
+        "ID": 9,
+        "ImageID": 8,
+        "HairName": " Babs/BunnyEars&PermedCurls "
+    },
+
+    {
+        "ID": 10,
+        "ImageID": 8,
+        "HairName": " Babs/BunnyEars&Wig "
+    },
+
+    {
+        "ID": 11,
+        "ImageID": 0,
+        "HairName": " (none) "
+    },
+
+    {
+        "ID": 12,
+        "HairName": " King "
+    },
+
+    {
+        "ID": 13,
+        "HairName": " Anessa "
+    },
+
+    {
+        "ID": 14,
+        "ImageID": 14,
+        "HairName": " Clayton "
+    },
+
+    {
+        "ID": 15,
+        "ImageID": 15,
+        "HairName": " Perry "
+    },
+
+    {
+        "ID": 16,
+        "ImageID": 16,
+        "HairName": " Serge/Finn "
+    },
+
+    {
+        "ID": 17,
+        "ImageID": 17,
+        "HairName": " (Shortspikes,combedback,oftenusedbyBartenders) "
+    },
+
+    {
+        "ID": 18,
+        "ImageID": 18,
+        "HairName": " Lulu "
+    },
+
+    {
+        "ID": 19,
+        "ImageID": 19,
+        "HairName": " Saffron/Haydin "
+    },
+
+    {
+        "ID": 20,
+        "ImageID": 20,
+        "HairName": " Zara "
+    },
+
+    {
+        "ID": 21,
+        "ImageID": 21,
+        "HairName": " Rosie "
+    },
+
+    {
+        "ID": 22,
+        "HairName": " MaleMerchant "
+    },
+
+    {
+        "ID": 23,
+        "HairName": " FemaleMerchant "
+    },
+
+    {
+        "ID": 24,
+        "HairName": " MaleBlueSoldier "
+    },
+
+    {
+        "ID": 25,
+        "HairName": " FemaleBlueSoldier "
+    },
+
+    {
+        "ID": 26,
+        "HairName": " MaleFarmer "
+    },
+
+    {
+        "ID": 27,
+        "HairName": " FemaleFarmer "
+    },
+
+    {
+        "ID": 28,
+        "HairName": " Ordelia/Original "
+    },
+
+    {
+        "ID": 29,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 30,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 31,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 32,
+        "HairName": " (none) "
+    },
+
+    {
+        "ID": 33,
+        "HairName": " FemaleElder "
+    },
+
+    {
+        "ID": 34,
+        "HairName": " MaleChild "
+    },
+
+    {
+        "ID": 35,
+        "HairName": " Lillian/FemaleChild "
+    },
+
+    {
+        "ID": 36,
+        "HairName": " Haydin/Bard "
+    },
+
+    {
+        "ID": 37,
+        "HairName": " (none) "
+    },
+
+    {
+        "ID": 38,
+        "HairName": " Esther/Nun "
+    },
+
+    {
+        "ID": 39,
+        "ImageID": 21,
+        "HairName": " Singer "
+    },
+
+    {
+        "ID": 40,
+        "HairName": " PumpkinMask "
+    },
+
+    {
+        "ID": 41,
+        "HairName": " MaleBuilder "
+    },
+
+    {
+        "ID": 42,
+        "HairName": " FemaleBuilder "
+    },
+
+    {
+        "ID": 43,
+        "HairName": " Jeremiah(includingbeard) "
+    },
+
+    {
+        "ID": 44,
+        "ImageID": 44,
+        "HairName": " BlockHead "
+    },
+
+    {
+        "ID": 45,
+        "HairName": " Babs/Original "
+    },
+
+    {
+        "ID": 46,
+        "HairName": " (none) "
+    },
+
+    {
+        "ID": 47,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 48,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 49,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 50,
+        "HairName": " MaleBuilderwithoutbangs "
+    },
+
+    {
+        "ID": 51,
+        "HairName": " MaleBuilderunderHistoricHat "
+    },
+
+    {
+        "ID": 52,
+        "HairName": " FemaleBuilderundermosthats "
+    },
+
+    {
+        "ID": 53,
+        "HairName": " MaleBuilderundermosthats "
+    },
+
+    {
+        "ID": 54,
+        "HairName": " FemaleBuilderwithoutponytails "
+    },
+
+    {
+        "ID": 55,
+        "HairName": " MaleFarmer "
+    },
+
+    {
+        "ID": 56,
+        "HairName": " FemaleFarmer "
+    },
+
+    {
+        "ID": 57,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 58,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 59,
+        "HairName": " [Unrenderable] "
+    },
+
+    {
+        "ID": 60,
+        "HairName": " MaleRedSoldier "
+    },
+
+    {
+        "ID": 61,
+        "HairName": " MaleGreenSoldier "
+    },
+
+    {
+        "ID": 62,
+        "HairName": " FemaleRedSoldier "
+    },
+
+    {
+        "ID": 63,
+        "HairName": " FemaleGreenSoldier "
+    },
+
+    {
+        "ID": 64,
+        "HairName": " LuluwithBunnyEars "
+    },
+
+    {
+        "ID": 65,
+        "HairName": " Saffron/HaydinwithBunnyEars "
+    },
+
+    {
+        "ID": 66,
+        "HairName": " ZarawithBunnyEars "
+    },
+
+    {
+        "ID": 67,
+        "HairName": " Ordelia/BunnyEars "
+    },
+
+    {
+        "ID": 68,
+        "HairName": " MaleBlueSoldier "
+    },
+
+    {
+        "ID": 69,
+        "HairName": " MaleRedSoldier "
+    },
+
+    {
+        "ID": 70,
+        "HairName": " MaleGreenSoldier "
+    },
+
+    {
+        "ID": 71,
+        "ImageID": 19,
+        "HairName": " Saffron/Haydin "
+    },
+
+    {
+        "ID": 72,
+        "HairName": " WhiteClassicCurtianswithoutbangs "
+    },
+
+    {
+        "ID": 73,
+        "HairName": " WhiteLuluwithBunnyEarswithoutbangs "
+    },
+
+    {
+        "ID": 74,
+        "HairName": " WhiteSaffron/HaydenwithBunnyEarswithoutbangs "
+    },
+
+    {
+        "ID": 75,
+        "ImageID": 19,
+        "HairName": " WhiteSaffron/Haydenwithoutbangs "
+    },
+
+    {
+        "ID": 76,
+        "ImageID": 18,
+        "HairName": " WhiteLuluwithoutbangs "
+    },
+
+    {
+        "ID": 77,
+        "ImageID": 19,
+        "HairName": " WhiteSaffron/Haydenwithoutbangs "
+    },
+
+    {
+        "ID": 78,
+        "ImageID": 21,
+        "HairName": " WhiteRosiewithoutbangs "
+    },
+
+    {
+        "ID": 79,
+        "ImageID": 21,
+        "HairName": " WhiteRosiewithhairbandwithoutbangs "
+    },
+
+    {
+        "ID": 80,
+        "ImageID": 80,
+        "HairName": " Thug'sMug "
+    },
+
+    {
+        "ID": 81,
+        "ImageID": 81,
+        "HairName": " MaleStrawHat "
+    },
+
+    {
+        "ID": 82,
+        "ImageID": 81,
+        "HairName": " FemaleStrawHat "
+    },
+
+    {
+        "ID": 83,
+        "ImageID": 16,
+        "HairName": " MussedMopwithoutbangs "
+    },
+
+    {
+        "ID": 84,
+        "ImageID": 84,
+        "HairName": " HipsterPonytail "
+    },
+
+    {
+        "ID": 85,
+        "ImageID": 85,
+        "HairName": " PrettyPonytail "
+    },
+
+    {
+        "ID": 86,
+        "HairName": " Gillian "
+    },
+
+    {
+        "ID": 87,
+        "ImageID": 81,
+        "HairName": " WhiteMaleStrawHat "
+    },
+
+    {
+        "ID": 88,
+        "ImageID": 81,
+        "HairName": " WhiteFemaleStrawHat "
+    },
+
+    {
+        "ID": 89,
+        "ImageID": 85,
+        "HairName": " WhitePrettyPonytailwithoutbangs "
+    },
+
+    {
+        "ID": 90,
+        "ImageID": 85,
+        "HairName": " PrettyPonytail "
+    },
+
+    {
+        "ID": 91,
+        "ImageID": 85,
+        "HairName": " WhitePrettyPonytailwithoutbangs "
+    },
+
+    {
+        "ID": 92,
+        "ImageID": 84,
+        "HairName": " HipsterPonytail "
+    },
+
+    {
+        "ID": 93,
+        "ImageID": 93,
+        "HairName": " DandoDo "
+    },
+
+    {
+        "ID": 94,
+        "ImageID": 94,
+        "HairName": " WavyLocks "
+    },
+
+    {
+        "ID": 95,
+        "ImageID": 94,
+        "HairName": " WavyLocks "
+    },
+
+    {
+        "ID": 96,
+        "ImageID": 93,
+        "HairName": " DandoDo "
+    },
+
+    {
+        "ID": 97,
+        "ImageID": 94,
+        "HairName": " WhiteWavyLockswithoutbangs "
+    },
+
+    {
+        "ID": 98,
+        "ImageID": 94,
+        "HairName": " WhiteWavyLockswithoutbangs "
+    },
+
+    {
+        "ID": 99,
+        "ImageID": 14,
+        "HairName": " CurlyQuiff "
+    },
+
+    {
+        "ID": 100,
+        "ImageID": 15,
+        "HairName": " ClassicCurtains "
+    },
+
+    {
+        "ID": 101,
+        "ImageID": 15,
+        "HairName": " WhiteClassicCurtainswithoutbangs "
+    },
+
+    {
+        "ID": 102,
+        "ImageID": 16,
+        "HairName": " MussedMop "
+    },
+
+    {
+        "ID": 103,
+        "ImageID": 17,
+        "HairName": " BackcombedCut "
+    },
+
+    {
+        "ID": 104,
+        "ImageID": 18,
+        "HairName": " LopsidedPonytail "
+    },
+
+    {
+        "ID": 105,
+        "ImageID": 18,
+        "HairName": " WhiteLopsidesPonytailwithoutbangs "
+    },
+
+    {
+        "ID": 106,
+        "ImageID": 19,
+        "HairName": " FashionableFlick "
+    },
+
+    {
+        "ID": 107,
+        "ImageID": 19,
+        "HairName": " WhiteFashionableFlickwithoutbangs "
+    },
+
+    {
+        "ID": 108,
+        "ImageID": 20,
+        "HairName": " BonnyBobCut "
+    },
+
+    {
+        "ID": 109,
+        "ImageID": 21,
+        "HairName": " ImpressiveTresses "
+    },
+
+    {
+        "ID": 110,
+        "ImageID": 21,
+        "HairName": " WhiteImpressiveTresseswithoutbangs "
+    },
+]

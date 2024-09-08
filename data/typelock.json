@@ -1,0 +1,18 @@
+[
+    {
+        "type": 1,
+        "hair": 3,
+        "face": 3,
+        "body": 50,
+        "name": "Malroth"
+    },
+    {
+        "type": 2,
+        "hair": 4,
+        "face": 4,
+        "body": 52,
+        "name": "Bonanzo"
+    }
+
+]
+
