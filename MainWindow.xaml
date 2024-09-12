@@ -9,7 +9,7 @@
         xmlns:control="clr-namespace:DQB2NPCViewer.control"
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Class="DQB2NPCViewer.MainWindow"
         mc:Ignorable="d"
-        Title="DQB2 NPC Viewer Pre-Alpha 0" Height="530" Width="1000" MinHeight="530" MinWidth="1000">
+        Title="DQB2 NPC Viewer Pre-Alpha 0" Height="600" Width="1000" MinHeight="530" MinWidth="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -59,8 +59,21 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox Grid.Column="0" Margin="60,160,10,0" VerticalAlignment="Top" Height="26"/>
-                    <TextBlock Grid.Column="0"  HorizontalAlignment="Left" Margin="15,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Foreground="Red"><Run Text="Type"/></TextBlock>
+                    <ComboBox Name="ComboBoxTypeLock" Grid.Column="0" Margin="60,160,10,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxTypeLock_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Path="typeID" />
+                                            <Binding Path="name" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Grid.Column="0"  HorizontalAlignment="Left" Margin="15,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Foreground="#FFFFA600"><Run Text="Type"/></TextBlock>
                     <ComboBox Name="ComboBoxHome" Margin="60,190,41,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxHome_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -98,21 +111,22 @@
                         <ComboBoxItem Content="Green Gardens"/>
                         <ComboBoxItem Content="Scarlet Sands"/>
                         <ComboBoxItem Content="Cerulean Steppe"/>
+                        <ComboBoxItem Content="Beach"/>
                     </ComboBox>
                     <Image Name="PlaceImageBox" Height="26" Margin="0,250,10,0" VerticalAlignment="Top" Width="26" HorizontalAlignment="Right"/>
                     <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="15,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Place"/></TextBlock>
 
-                    <CheckBox Content="Lock Appearance" HorizontalAlignment="Left" Margin="193,11,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="112" Height="15" Grid.Column="1" Foreground="Red"/>
+                    <CheckBox Name="LockCheck" Content="Lock Appearance" HorizontalAlignment="Left" Margin="193,11,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="112" Height="15" Grid.Column="1" Checked="LockCheck_Checked" Unchecked="LockCheck_Unchecked"/>
 
                     <TextBlock  HorizontalAlignment="Left" Margin="15,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Voice"/></TextBlock>
                     <TextBox x:Name="TextBoxVoice" Margin="60,280,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" TextChanged="TextBoxVoice_TextChanged"/>
 
                     <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Face Model"/></TextBlock>
-                    <ComboBox Name="ComboBoxFace" Grid.Column="1" Margin="71,40,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxFace_SelectionChanged" SelectedItem="{Binding SelectedFace, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding FaceList, RelativeSource={RelativeSource AncestorType=Window}}" />
+                    <ComboBox Name="ComboBoxFace" Grid.Column="1" Margin="71,40,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxFace_SelectionChanged" SelectedItem="{Binding SelectedFace, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.FaceList, RelativeSource={RelativeSource AncestorType=Window}}" />
                     <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Hair Model"/></TextBlock>
-                    <ComboBox Name="ComboBoxHair" Grid.Column="1" Margin="71,70,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxHair_SelectionChanged" SelectedItem="{Binding SelectedHair, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding HairList, RelativeSource={RelativeSource AncestorType=Window}}" />
-                     <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Body Model"/></TextBlock>
-                    <ComboBox Name="ComboBoxBody" Grid.Column="1" Margin="71,100,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxBody_SelectionChanged" SelectedItem="{Binding SelectedBody, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding BodyList, RelativeSource={RelativeSource AncestorType=Window}}" />
+                    <ComboBox Name="ComboBoxHair" Grid.Column="1" Margin="71,70,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxHair_SelectionChanged" SelectedItem="{Binding SelectedHair, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.HairList, RelativeSource={RelativeSource AncestorType=Window}}" />
+                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Body Model"/></TextBlock>
+                    <ComboBox Name="ComboBoxBody" Grid.Column="1" Margin="71,100,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxBody_SelectionChanged" SelectedItem="{Binding SelectedBody, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.BodyList, RelativeSource={RelativeSource AncestorType=Window}}" />
                     <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Eye Colour"/></TextBlock>
                     <Button Name="ButtonEye" Grid.Column="1" Content="Select Colour" Margin="71,130,0,0" VerticalAlignment="Top" Height="26" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonEye_Click" Width="161" HorizontalAlignment="Left"/>
                     <Rectangle Name="RectangleEye" Grid.Column="1" Margin="237,130,21,0" Stroke="#FFACACAC" VerticalAlignment="Top" Height="26"/>
@@ -122,32 +136,57 @@
                     <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Skin Colour"/></TextBlock>
                     <Button Name="ButtonSkin" Grid.Column="1" Content="Select Colour" Margin="71,190,0,0" VerticalAlignment="Top" Height="26" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonSkin_Click" Width="161" HorizontalAlignment="Left" />
                     <Rectangle Name="RectangleSkin" Grid.Column="1" Margin="237,190,21,0" Stroke="#FFACACAC" VerticalAlignment="Top" Height="26"/>
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Foreground="Red"><Run Text="Weapon"/></TextBlock>
-                    <ComboBox Grid.Column="1" Margin="71,220,21,0" VerticalAlignment="Top" Height="26">
-                        <ComboBoxItem Content="a"/>
+                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Weapon"/></TextBlock>
+                    <ComboBox Name="WeaponBox" Grid.Column="1" Margin="71,220,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="WeaponBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Path="ID" />
+                                            <Binding Path="Name" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                     <Image Grid.Column="2" HorizontalAlignment="Left" Height="26" Margin="5,219,0,0" VerticalAlignment="Top" Width="26" Source="/images/resource/open.png"/>
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Foreground="Red"><Run Text="Armour"/></TextBlock>
-                    <ComboBox Grid.Column="1" Margin="71,250,21,0" VerticalAlignment="Top" Height="26">
-                        <ComboBoxItem Content="a"/>
+                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Armour"/></TextBlock>
+                    <ComboBox Name="ArmourBox" Grid.Column="1" Margin="71,250,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ArmourBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Path="ID" />
+                                            <Binding Path="Name" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                     <Image Grid.Column="2" HorizontalAlignment="Left" Height="26" Margin="5,249,0,0" VerticalAlignment="Top" Width="26" Source="/images/resource/open.png"/>
 
                     <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Dialogue"/></TextBlock>
                     <TextBox Name="TextBoxDialogue" Grid.Column="1" Margin="71,280,21,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" TextChanged="TextBoxDialogue_TextChanged"/>
-
-                    <TextBlock  HorizontalAlignment="Right" Margin="0,327,140,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1" Foreground="Red"><Run Text="Room Size"/></TextBlock>
-                    <ComboBox Grid.Column="1"  HorizontalAlignment="Right" Margin="0,327,21,0" VerticalAlignment="Top" Width="120" Height="26" BorderBrush="White" Foreground="White" Background="White">
-                        <ComboBoxItem Content="a"/>
-                    </ComboBox>
-                    <TextBlock  HorizontalAlignment="Right" Margin="60,357,140,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1" Foreground="Red"><Run Text="Fanciness"/></TextBlock>
-                    <ComboBox Grid.Column="1"  HorizontalAlignment="Right" Margin="141,357,21,0" VerticalAlignment="Top" Width="120" Height="26">
-                        <ComboBoxItem Content="a"/>
-                    </ComboBox>
-                    <TextBlock  HorizontalAlignment="Right" Margin="60,387,140,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1" Foreground="Red"><Run Text="Ambience"/></TextBlock>
-                    <ComboBox Grid.Column="1"  HorizontalAlignment="Right" Margin="141,387,21,0" VerticalAlignment="Top" Width="120" Height="26">
-                        <ComboBoxItem Content="a"/>
-                    </ComboBox>
+                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="71,325,21,0">
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock  TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Room Size"/></TextBlock>
+                            <ComboBox Name="SizeBox" Grid.Column="1" VerticalAlignment="Top" Width="142" Height="26" HorizontalAlignment="Right" SelectionChanged="SizeBox_SelectionChanged"/>
+                        </StackPanel>
+                        <Image Name="SizeImage" Grid.Column="1" Margin="0,5,0,5" Height="10"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Fanciness"/></TextBlock>
+                            <ComboBox Name="FancinessBox" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="142" Height="26" SelectionChanged="FancinessBox_SelectionChanged"></ComboBox>
+                        </StackPanel>
+                        <Image Name="FancyImage" Grid.Column="1" Margin="0,5,0,5" Height="10"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Ambience"/></TextBlock>
+                            <ComboBox Name="AmbianceBox" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="142" Height="26" SelectionChanged="ComboBoxAmbiance_SelectionChanged"/>
+                        </StackPanel>
+                    </StackPanel>
                     <HelixToolkit:HelixViewport3D x:Name="MyHelixViewport" Grid.Column="2" Background="DarkGray" Margin="0,3,7,5">
                         <!-- Define a camera for viewing the model -->
                         <HelixToolkit:HelixViewport3D.Camera>
@@ -172,6 +211,7 @@
                             <!-- Content will be set in the code-behind -->
                         </ModelVisual3D>
                     </HelixToolkit:HelixViewport3D>
+
 
 
                 </Grid>

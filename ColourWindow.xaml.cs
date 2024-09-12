@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using DQB2NPCViewer.code;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -18,13 +19,13 @@ namespace DQB2NPCViewer
 
         private void CreateButtons()
         {
-            for (int i = 0; i < MainWindow.ColorList.Count; i++)
+            for (ushort i = 0; i < 999; i++)
             {
                 // Create a new Button
                 Button button = new Button
                 {
-                    Background = (SolidColorBrush)new BrushConverter().ConvertFromString(MainWindow.ColorList[i].color),
-                    Tag = MainWindow.ColorList[i].ID,
+                    Background = (SolidColorBrush)new BrushConverter().ConvertFromString(MainWindow.Lists.getColorVal(i).color),
+                    Tag = MainWindow.Lists.getColorVal(i).ID,
                     Width = 20,
                     Height = 20
                 };

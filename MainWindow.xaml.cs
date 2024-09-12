@@ -6,8 +6,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using DQB2NPCViewer.control;
+using DQB2NPCViewer.code;
+using System.Collections;
+using System.Windows.Documents;
+using System.Xml.Linq;
 
 namespace DQB2NPCViewer
 {
@@ -36,89 +39,63 @@ namespace DQB2NPCViewer
         public static ushort RoomSize { get; set; }
         public static ushort RoomFanciness { get; set; }
         public static ushort RoomAmbience { get; set; }
-        public static List<Colour> ColorList { get; set; }
+        public static ushort Weapon { get; set; }
+        public static ushort Armour { get; set; }
+        public static ListText Lists  { get; set; } = new ListText();
+        public static bool TypeVisual { get; set; }
 
-        public static ObservableCollection<ComboBoxBody> BodyList { get; set; }
-        public static BodyModelClass SelectedBody { get; set; }
-        public static ObservableCollection<ComboBoxHair> HairList { get; set; }
-        public static BodyModelClass SelectedHair { get; set; }
-        public static ObservableCollection<ComboBoxFace> FaceList { get; set; }
-        public static BodyModelClass SelectedFace { get; set; }
-
-        public MainWindow()
+    public MainWindow()
         {
-                DataContext = this;
-                InitializeComponent();
-                TextBoxConsole.Text = "Hello World";
-                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Black);
-                CreateComboBoxTiles("data/jobs.json", 0);
-                CreateComboBoxTiles("data/islands.json", 1);
-                CreateComboBoxTiles("data/body.json", 2);
-                CreateComboBoxTiles("data/hair.json", 3);
-                CreateComboBoxTiles("data/face.json", 4);
-                CreateComboBoxTiles("data/color.json", 5);
+            DataContext = this;
+            InitializeComponent();
+            TextBoxConsole.Text = "Hello World";
+            TextBoxConsole.Foreground = new SolidColorBrush(Colors.Black);
+            InitializeComboBoxTiles();
+            CreateComboBoxHearts();
             DQB2ModelRendering.Rotate();
         }
 
-        private void CreateComboBoxTiles(string Json,ushort Case)
+        private void InitializeComboBoxTiles()
+        {
+            Lists.setList("body","color","face","hair","islands","jobs","ambiance","typelock","weapon","armour");
+
+            ComboBoxIsland.ItemsSource = Lists.IslandList;
+            ComboBoxIsland.SelectedValuePath = "IslandId";
+
+            ComboBoxHome.ItemsSource = Lists.IslandList;
+            ComboBoxHome.SelectedValuePath = "IslandId";
+
+            ComboBoxJob.ItemsSource = Lists.JobList;
+            ComboBoxJob.SelectedValuePath = "JobId";
+
+            AmbianceBox.ItemsSource = Lists.AmbianceList;
+
+            ComboBoxTypeLock.ItemsSource = Lists.TypeLockList;
+            ComboBoxTypeLock.SelectedValuePath = "typeID";
+
+            ComboBoxBody.ItemsSource = Lists.BodyList;
+            ComboBoxFace.ItemsSource = Lists.FaceList;
+            ComboBoxHair.ItemsSource = Lists.HairList;
+
+            WeaponBox.ItemsSource = Lists.WeaponList;
+            WeaponBox.SelectedValuePath = "ID";
+            ArmourBox.ItemsSource = Lists.ArmourList;
+            ArmourBox.SelectedValuePath = "ID";
+
+        }
+            private void CreateComboBoxHearts()
         {
             try
             {
-                var json = System.IO.File.ReadAllText(Json);
-                switch (Case)
-                {
-                    case 0:
-                        var jlist = JsonConvert.DeserializeObject<List<Job>>(json);
-                        ComboBoxJob.ItemsSource = jlist;
-                        ComboBoxJob.SelectedValuePath = "JobId";
-                        break;
-                    case 1:
-                        var ilist = JsonConvert.DeserializeObject<List<Island>>(json);
-                        ComboBoxIsland.ItemsSource = ilist;
-                        ComboBoxIsland.SelectedValuePath = "IslandId";
-                        ComboBoxHome.ItemsSource = ilist;
-                        ComboBoxHome.SelectedValuePath = "IslandId";
-                        break;
-                    case 2:
-                        var olist = JsonConvert.DeserializeObject<List<BodyModelClass>>(json);
-                        BodyList = new ObservableCollection<ComboBoxBody>();
-                        for (ushort i = 0; i < olist.Count; i++)
+                        for (ushort i = 1; i < 6; i++)
                         {
-                            BodyList.Add(new ComboBoxBody
-                            {
-                                ID = i,
-                                BodyModelClassV = olist[i]
-                            });
+                            var HeartsVar = new Hearts();
+                            HeartsVar.HeartsCommand(i,"size");
+                            SizeBox.Items.Add(HeartsVar);
+                            HeartsVar = new Hearts();
+                            HeartsVar.HeartsCommand(i, "fancy");
+                            FancinessBox.Items.Add(HeartsVar);
                         }
-                        break;
-                    case 3:
-                        var oolist = JsonConvert.DeserializeObject<List<HairModelClass>>(json);
-                        HairList = new ObservableCollection<ComboBoxHair>();
-                        for (ushort i = 0; i < oolist.Count; i++)
-                        {
-                            HairList.Add(new ComboBoxHair
-                            {
-                                ID = i,
-                                HairModelClassV = oolist[i]
-                            });
-                        }
-                        break;
-                    case 4:
-                        var ooolist = JsonConvert.DeserializeObject<List<FaceModelClass>>(json);
-                        FaceList = new ObservableCollection<ComboBoxFace>();
-                        for (ushort i = 0; i < ooolist.Count; i++)
-                        {
-                            FaceList.Add(new ComboBoxFace
-                            {
-                                ID = i,
-                                FaceModelClassV = ooolist[i]
-                            });
-                        }
-                        break;
-                    default:
-                        ColorList = JsonConvert.DeserializeObject<List<Colour>>(json);
-                        break;
-                }
             }
             catch (Exception ex)
             {
@@ -153,18 +130,37 @@ namespace DQB2NPCViewer
                 ComboBoxHome.SelectedValue = Home;
                 ComboBoxIsland.SelectedValue = Island;
                 ComboBoxPlace.SelectedIndex = Place;
+                ComboBoxTypeLock.SelectedValue = Type;
+
+                ArmourBox.SelectedValue = Armour;
+                WeaponBox.SelectedValue = Weapon;
+
+                var TypeBackup = TypeVisual;
+
+                if ((ComboBoxTypeLock.SelectedItem as TypeSet).Tier == 3 && TypeVisual == true)
+                {
+                    TypeVisual = true;
+                }else TypeVisual = false;
+
+
+                SizeBox.SelectedIndex = RoomSize - 1;
+                AmbianceBox.SelectedIndex = RoomAmbience - 1;
+                FancinessBox.SelectedIndex = RoomFanciness - 1;
 
                 ButtonEye.Content = EyeColor;
-                RectangleEye.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList[EyeColor].color);
-                DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ColorList[EyeColor].color);
-                
+                var ColorList = Lists.getColorVal(EyeColor);
+                RectangleEye.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
+
                 ButtonSkin.Content = SkinColor;
-                RectangleSkin.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList[SkinColor].color);
-                DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ColorList[SkinColor].color);
+                ColorList = Lists.getColorVal(SkinColor);
+                RectangleSkin.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
 
                 ButtonHair.Content = HairColor;
-                RectangleHair.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList[HairColor].color);
-                DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ColorList[HairColor].color);
+                ColorList = Lists.getColorVal(HairColor);
+                RectangleHair.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
 
                 TextBoxConsole.Text = "Loaded File!";
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
@@ -172,6 +168,8 @@ namespace DQB2NPCViewer
                 ComboBoxBody.SelectedIndex = BodyModel;
                 ComboBoxFace.SelectedIndex = FaceModel;
                 ComboBoxHair.SelectedIndex = HairModel;
+
+                LockCheck.IsChecked = TypeVisual;
             }
             catch (Exception ex)
             {
@@ -200,7 +198,10 @@ namespace DQB2NPCViewer
             {
                 return;
             }
+            var TypeVisualBackup = TypeVisual;
+            TypeVisual = (bool)LockCheck.IsChecked;
             DQB2DataEditor.SaveFile(saveFileDialog.FileName);
+            TypeVisual = TypeVisualBackup;
             }
             catch (Exception ex)
             {
@@ -372,9 +373,11 @@ namespace DQB2NPCViewer
                 }
                 EyeColor = ColorWindow.ColourPicked;
                 ButtonEye.Content = EyeColor;
-                RectangleEye.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList[EyeColor].color);
-                DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ColorList[EyeColor].color);
-                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, true, false, false);
+                var ColorList = Lists.getColorVal(EyeColor);
+                RectangleEye.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
+                if (TypeVisual == false) ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, true, false, false);
+                else ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels((ComboBoxTypeLock.SelectedItem as TypeSet).faceID, HairModel, BodyModel, true, false, false);
             }
         }
         private void ButtonSkin_Click(object sender, RoutedEventArgs e)
@@ -392,9 +395,11 @@ namespace DQB2NPCViewer
                 }
                 SkinColor = ColorWindow.ColourPicked;
                 ButtonSkin.Content = SkinColor;
-                RectangleSkin.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList[SkinColor].color);
-                DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ColorList[SkinColor].color);
-                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, true, false, true);
+                var ColorList = Lists.getColorVal(SkinColor);
+                RectangleSkin.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
+                if (TypeVisual == false) ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, true, false, true);
+                else ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels((ComboBoxTypeLock.SelectedItem as TypeSet).faceID, HairModel, (ComboBoxTypeLock.SelectedItem as TypeSet).bodyID, true, false, true);
             }
         }
         private void ButtonHair_Click(object sender, RoutedEventArgs e)
@@ -412,9 +417,11 @@ namespace DQB2NPCViewer
                 }
                 HairColor = ColorWindow.ColourPicked;
                 ButtonHair.Content = HairColor;
-                RectangleHair.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList[HairColor].color);
-                DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ColorList[HairColor].color);
-                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, false, true, false);
+                var ColorList = Lists.getColorVal(HairColor);
+                RectangleHair.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
+                if (TypeVisual == false) ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, false, true, false);
+                else ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, (ComboBoxTypeLock.SelectedItem as TypeSet).hairID, BodyModel, false, true, false);
             }
         }
 
@@ -422,10 +429,11 @@ namespace DQB2NPCViewer
         {
             try
             {
-                BodyModel = (ushort)ComboBoxBody.SelectedIndex;
+                BodyModel = ((ComboBoxBody)ComboBoxBody.SelectedItem).ID;
                 TextBoxConsole.Text = "Changed body model to " + ((ComboBoxBody)ComboBoxBody.SelectedItem).BodyModelClassV.BodyName + "!";
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
-                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, false, false, true);
+                if (TypeVisual == false) ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, false, false, true);
+                else ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, (ComboBoxTypeLock.SelectedItem as TypeSet).bodyID, false, false, true);
             }
             catch (Exception ex)
             {
@@ -438,10 +446,11 @@ namespace DQB2NPCViewer
         {
             try
             {
-                FaceModel = (ushort)ComboBoxFace.SelectedIndex;
+                FaceModel = ((ComboBoxFace)ComboBoxFace.SelectedItem).ID;
                 TextBoxConsole.Text = "Changed face model to " + ((ComboBoxFace)ComboBoxFace.SelectedItem).FaceModelClassV.FaceName + "!";
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
-                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, true, false, false);
+                if (TypeVisual == false) ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, true, false, false);
+                else ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels((ComboBoxTypeLock.SelectedItem as TypeSet).faceID, HairModel, BodyModel, true, false, false);
             }
             catch (Exception ex)
             {
@@ -454,15 +463,145 @@ namespace DQB2NPCViewer
         {
             try
             {
-                HairModel = (ushort)ComboBoxHair.SelectedIndex;
+                HairModel = ((ComboBoxHair)ComboBoxHair.SelectedItem).ID;
                 TextBoxConsole.Text = "Changed hair model to " + ((ComboBoxHair)ComboBoxHair.SelectedItem).HairModelClassV.HairName + "!";
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
-                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, false, true, false);
+                if (TypeVisual == false) ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, HairModel, BodyModel, false, true, false);
+                else ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceModel, (ComboBoxTypeLock.SelectedItem as TypeSet).hairID, BodyModel, false, true, false);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 TextBoxConsole.Text = "Error (face model change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+        private void ComboBoxAmbiance_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                RoomAmbience = (AmbianceBox.SelectedItem as AmbianceBox).ID;
+                TextBoxConsole.Text = "Changed room ambiance to " + (AmbianceBox.SelectedItem as AmbianceBox).AName + "!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                TextBoxConsole.Text = "Error (Room ambiance Change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void SizeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                RoomSize = (ushort)(SizeBox.SelectedIndex + 1);
+                TextBoxConsole.Text = "Changed room size to " + (SizeBox.SelectedIndex+1).ToString()+ "!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+                SizeImage.Source = new BitmapImage(new Uri("/images/resource/size" + RoomSize.ToString() + ".png", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                TextBoxConsole.Text = "Error (Size Change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+        private void FancinessBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                RoomFanciness = (ushort)(FancinessBox.SelectedIndex + 1);
+                TextBoxConsole.Text = "Changed room fanciness to " + (FancinessBox.SelectedIndex + 1).ToString() + "!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+                FancyImage.Source = new BitmapImage(new Uri("/images/resource/fancy" + RoomFanciness.ToString() + ".png",UriKind.Relative));
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                TextBoxConsole.Text = "Error (Fancy Change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void ComboBoxTypeLock_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Type = (ComboBoxTypeLock.SelectedItem as TypeSet).typeID;
+                TextBoxConsole.Text = "Changed type to '" + (ComboBoxTypeLock.SelectedItem as TypeSet).name + " type'!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+                if ((ComboBoxTypeLock.SelectedItem as TypeSet).Tier == 3)
+                {
+                    TypeVisual = true;
+                }
+                else TypeVisual = false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                TextBoxConsole.Text = "Error (Type Change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void LockCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((ComboBoxTypeLock.SelectedItem as TypeSet).Tier == 3)
+                {
+                    TypeVisual = true;
+                }
+                ComboBoxBody_SelectionChanged(null, null);
+                ComboBoxFace_SelectionChanged(null, null);
+                ComboBoxHair_SelectionChanged(null, null);
+            }
+            catch { }
+
+        }
+        private void LockCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TypeVisual = false;
+                ComboBoxBody_SelectionChanged(null, null);
+                ComboBoxFace_SelectionChanged(null, null);
+                ComboBoxHair_SelectionChanged(null, null);
+            }
+            catch { }
+        }
+
+        private void WeaponBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Weapon = (WeaponBox.SelectedItem as Equipment).ID;
+                TextBoxConsole.Text = "Changed weapon to " + (WeaponBox.SelectedItem as Equipment).Name + "!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                TextBoxConsole.Text = "Error (Weapon Change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        private void ArmourBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Armour = (ArmourBox.SelectedItem as Equipment).ID;
+                TextBoxConsole.Text = "Changed armour to " + (ArmourBox.SelectedItem as Equipment).Name + "!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                TextBoxConsole.Text = "Error (Armour Change)";
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
