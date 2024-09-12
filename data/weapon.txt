@@ -1,0 +1,37 @@
+#ID	ModelID	Name
+301	0	oaken club {301}
+302	0	copper sword {302}
+303	0	iron broadsword {303}
+304	0	steel broadsword {304}
+305	0	aurora blade {305}
+306	0	fire blade {306}
+307	0	sword of kings * {307}
+308	0	falcon blade * {308}
+309	0	sword of ruin * {309}
+310	0	cypress stick {310}
+311	0	stone sword {311}
+312	0	erdrick's sword *** {312}
+326	0	stone axe {326}
+327	0	iron axe {327}
+328	0	battleaxe {328}
+332	0	night club {332}
+902	0	<Oaken Club> {902}
+903	0	<Stone Axe> {903}
+904	0	<Spiked Club> {904}
+905	0	<Iron Axe> {905}
+906	0	<Night Club> {906}
+907	0	<Battleaxe> {907}
+908	0	<Gigantes's Club> {908}
+909	0	<Hela's Hammer> {909}
+1187	0	war banner * {1187}
+2048	0	barbed blade {2048}
+2049	0	spiked club {2049}
+2050	0	poison needle * {2050}
+2051	0	dragonsbane * {2051}
+2052	0	gigantes's club {2052}
+2053	0	mountaincleaver * {2053}
+2054	0	thunderbolt blade * {2054}
+2055	0	hela's hammer * {2055}
+2058	0	falcon blade *** {2058}
+2059	0	liquid metal sword * {2059}
+2500	0	borrowed sword {2500}

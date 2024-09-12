@@ -1,0 +1,34 @@
+#IslandId	IslandName	IslandValid
+0	Unknown	true
+1	Isle of Awakening	true
+2	Furrowfield	true
+3	Khrumbul-Dun	true
+4	Moonbrooke	true
+5	Malhalla	true
+6	Destroyed Malhalla	false
+7	Buildertopia Zheta	false
+8	Buildertopia Iota	false
+9	Angler's Isle'	true
+10	Skelkatraz	true
+11	Buildertopia Kappa	false
+12	Buildertopia Alpha	true
+13	Buildertopia Beta	true
+14	Battle Atoll	false
+15	Tutorial ship	false
+16	Buildertopia Gamma	true
+17	Buildertopia Delta	false
+18	Explorer's Shore	false
+19	Overwrite IoA	false
+20	Buildertopia Epsilon	false
+21	Buildertopia Zeta	false
+22	Debug IoA	false
+23	Buildertopia Eta	false
+24	Generated Furrowfield	false
+25	Generated Cantlin	false
+26	Generated Khrumbul-dun	false
+27	Generated Moonbrooke	false
+28	Generated Malhalla	false
+29	Debug NPC Small Island	false
+30	Debug Room Island	false
+31	Debug Big Grass Island	false
+

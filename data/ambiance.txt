@@ -1,0 +1,7 @@
+#ID	Name
+1	Cute
+2	Cool
+3	Natural
+4	Flamboyant
+5	Cheeky
+6	Normal

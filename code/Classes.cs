@@ -21,10 +21,13 @@ public class Colour
 }
 public class TypeSet
 {
-    public ushort type { get; set; }
-    public ushort hair { get; set; }
-    public ushort face { get; set; }
-    public ushort body { get; set; }
+    public ushort typeID { get; set; }
+    public ushort hairID { get; set; }
+    public ushort faceID { get; set; }
+    public ushort bodyID { get; set; }
+    public bool Monster { get; set; }
+    public ushort Tier { get; set; }
+    public ushort jobID { get; set; }
     public string name { get; set; }
 }
 public class BodyModelClass
@@ -47,4 +50,13 @@ public class HairModelClass
     public ushort ImageID { get; set; } = 0;
     public string HairName { get; set; }
     public string HairImage => $"/images/hair/{ImageID:000}.png";
+}
+
+public class Equipment
+{
+    public ushort ID { get; set; }
+    public ushort ModelID { get; set; }
+    public ushort ImageID { get; set; }
+    public string Image => $"/images/hair/{ImageID:000}.png";
+    public string Name { get; set; }
 }

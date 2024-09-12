@@ -1,0 +1,132 @@
+#ID	ModelID	NAME
+293	0	plain clothes [white] {293}
+336	0	townperson's togs {336}	
+349	0	wayfarer's clothes {349}
+350	0	training togs {350}
+351	0	cloak of evasion * {351}
+352	0	chain mail {352}
+353	0	flowing dress * {353}
+354	0	plain clothes {354}
+355	0	ragged rags {355}
+356	0	plain clothes [black] {356}
+361	0	leather armour {361}
+362	0	iron armour {362}
+363	0	full plate armour {363}
+364	0	spiked armour {364}
+365	0	magic armour {365}
+366	0	auroral armour *** {366}
+367	0	wailer's mail * {367}
+368	0	scandalous swimsuit {368}
+538	0	plain clothes [purple] {538}
+539	0	plain clothes [pink] {539}
+540	0	plain clothes [red] {540}
+589	0	plain clothes [green] {589}
+898	0	plain clothes [yellow] {898}
+899	0	plain clothes [blue] {899}
+900	0	training togs [black] {900}
+901	0	training togs [purple] {901}
+989	0	training togs [pink] {989}
+1120	0	training togs [pink] {1120}
+1121	0	training togs [red] {1121}
+1122	0	training togs [green] {1122}
+1179	0	training togs [yellow] {1179}
+1180	0	training togs [blue] {1180}
+1181	0	tortoise shell [white] {1181}
+1182	0	tortoise shell [black] {1182}
+1194	0	tortoise shell [purple] {1194}
+1249	0	tortoise shell [pink] {1249}
+1341	0	tortoise shell [red] {1341}
+1359	0	tortoise shell [green] {1359}
+1360	0	stone handrail [red] {1360}
+1389	0	tortoise shell [yellow] {1389}
+1390	0	tortoise shell [blue] {1390}
+1391	0	leather armour [white] {1391}
+1392	0	leather armour [black] {1392}
+1393	0	leather armour [purple] {1393}
+1394	0	leather armour [pink] {1394}
+1395	0	leather armour [red] {1395}
+1396	0	leather armour [green] {1396}
+1400	0	leather armour [yellow] {1400}
+1401	0	leather armour [blue] {1401}
+1402	0	cloak of evasion [white] {1402}
+1408	0	cloak of evasion [black] {1408}
+1421	0	cloak of evasion [purple] {1421}
+1452	0	cloak of evasion [pink] {1452}
+1453	0	cloak of evasion [red] {1453}
+1454	0	cloak of evasion [green] {1454}
+1455	0	cloak of evasion [yellow] {1455}
+1630	0	guard's garb {1630}
+1631	0	villager's vesture {1631}
+1632	0	trader's tunic {1632}
+1648	0	cloak of evasion [blue] {1648}
+1652	0	fur coat * [white] {1652}
+1653	0	fur coat * [black] {1653}
+1662	0	fur coat * [purple] {1662}
+1663	0	fur coat * [pink] {1663}
+1664	0	fur coat * [red] {1664}
+1667	0	fur coat * [green] {1667}
+1669	0	fur coat * [yellow] {1669}
+1672	0	fur coat * [blue] {1672}
+1674	0	scandalous swimsuit [white] {1674}
+1801	0	scandalous swimsuit [black] {1801}
+1814	0	scandalous swimsuit [purple] {1814}
+1845	0	scandalous swimsuit [pink] {1845}
+1955	0	scandalous swimsuit [red] {1955}
+1956	0	scandalous swimsuit [green] {1956}
+1958	0	scandalous swimsuit [yellow] {1958}
+1960	0	scandalous swimsuit [blue] {1960}
+1962	0	cottontail costume [white] {1962}
+2057	0	cottontail costume [black] {2057}
+2060	0	builder's workwear {2060}
+2061	0	tortoise shell * {2061}
+2062	0	dragon mail * {2062}
+2063	0	tectonic plate ** {2063}
+2064	0	bath towel {2064}
+2065	0	fur coat * {2065}
+2066	0	midenhall garb * {2066}
+2067	0	cannock cloak * {2067}
+2068	0	moonbrooke frock * {2068}
+2069	0	liquid metal armour * {2069}
+2075	0	cottontail costume [purple] {2075}
+2099	0	wayfarer's clothes [white] {2099}
+2100	0	wayfarer's clothes [black] {2100}
+2101	0	wayfarer's clothes [purple] {2101}
+2102	0	wayfarer's clothes [pink] {2102}
+2103	0	wayfarer's clothes [red] {2103}
+2104	0	wayfarer's clothes [green] {2104}
+2105	0	wayfarer's clothes [yellow] {2105}
+2106	0	wayfarer's clothes [blue] {2106}
+2109	0	cottontail costume [pink] {2109}
+2115	0	cottontail costume [red] {2115}
+2116	0	cottontail costume [green] {2116}
+2117	0	cottontail costume [yellow] {2117}
+2136	0	cottontail costume [blue] {2136}
+2137	0	bath towel [white] {2137}
+2176	0	bath towel [black] {2176}
+2179	0	bath towel [purple] {2179}
+2180	0	bath towel [pink] {2180}
+2181	0	bath towel [red] {2181}
+2182	0	bath towel [green] {2182}
+2183	0	bath towel [yellow] {2183}
+2193	0	bath towel [blue] {2193}
+2546	0	farming gear {2546}
+2547	0	nun's habit {2547}
+2548	0	troubadour's togs {2548}
+3226	0	chic swimsuit {3226}
+3227	0	chic swimsuit [white] {3227}
+3228	0	chic swimsuit [black] {3228}
+3229	0	chic swimsuit [purple] {3229}
+3230	0	chic swimsuit [pink] {3230}
+3231	0	chic swimsuit [red] {3231}
+3232	0	chic swimsuit [green] {3232}
+3233	0	chic swimsuit [yellow] {3233}
+3234	0	chic swimsuit [blue] {3234}
+3975	0	flashy formalwear {3975}
+3982	0	flashy formalwear [white] {3982}
+3983	0	flashy formalwear [black] {3983}
+3984	0	flashy formalwear [purple] {3984}
+3985	0	flashy formalwear [pink] {3985}
+3986	0	flashy formalwear [red] {3986}
+3987	0	flashy formalwear [green] {3987}
+3988	0	flashy formalwear [yellow] {3988}
+3989	0	flashy formalwear [blue] {3989}
