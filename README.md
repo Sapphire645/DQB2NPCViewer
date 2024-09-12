@@ -6,7 +6,7 @@ NPC editor with a visual component for feedback. Info taken from [the save edito
 ### Pre-Alpha build is avaliable.</br>
 <img src="./Screenshots/PreAlpha1.png"> </br>
 
-Has basic Save and Load functionality. Features in black work. Model picking has some glitches related to picking non-valid models. Face combobox has a glitch with the images.
+Has basic Save and Load functionality. Every value should be edited and loaded proterly. Model picking has some glitches related to picking non-valid models & lock appearance.
 
 **BIGGEST PROBLEM** -> Textures & Models are not optimized. I couldn't even upload the body models from how big they are. I will have to do some optimizing on those.</br>
 **COLORS ARE NOT ACCURATE** -> Masks are missing. Blending is not fine-tuned.
@@ -15,8 +15,6 @@ Note: I only have formal knowdledge on some Python and base C. Everything else i
 
 ### Implementation priority list:
 **Easy**
-- Lock appearance
-- Room preferences
 - Add all images to basic values
   
 **Things to do**
@@ -26,7 +24,7 @@ Note: I only have formal knowdledge on some Python and base C. Everything else i
 - Categorize ALL type and their model locks.
   
 **Low priority**
-- Weapon & Armour picking (Problem is the colour filters with those-should I add weapon models to the viewer?)
+- Weapon & Armourn(Problem is the colour filters with those-should I add weapon models to the viewer?)
 - Colour balance (Recreate glitch I found in-game)
 - Inventory
 - Info box
