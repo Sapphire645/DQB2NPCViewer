@@ -1,4 +1,5 @@
 #TypeID	Name	HairID	FaceID	BodyID	JobID	Tier	Monster
+0	--	0	0	0	0	0	FALSE
 1	Malroth	3	3	50	18	3	FALSE
 2	Bonanzo	4	4	0	0	3	FALSE
 4	Rosie	0	0	0	0	3	FALSE

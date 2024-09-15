@@ -1,85 +1,79 @@
-#ID	JobName	JobDescription
-0	Hello	1
-1	No job	Renders properly.
-2	Villager	N/A
-3	Farmer	Perry's job. Furrowfield NPC's job.
-4	Miner	Digby/Dougie's job. Makes NPC bigger.
-5	Merchant
-6	Soldier (Blue)	Britney's job.
-7	Sailor	Brownbeard's job.
-8	Bartender	Den's job.
-9	Dancer	Serge's job.
-10	General	Anessa's job.
-11	Nun	Esther's job. Will pray on church altars and occasionally hold church with 4 other NPCs.
-12	King	King's job. Will sit on throne.
-13	Bard	Haydin's job. Will sing. (Female equivalent -> 14 - Singer)
-14	Singer	Furrowfield retriever's job. Will sing. (Male equivalent -> 13 - Bard)
-15	Dog	Furrowfield retriever's job.
-16	Enigma	Malroth's job. Makes NPC unable to eat or go to the bathroom. They will complain about it.
-17	Farmer
-18	Farmer	Bonanzo's job.
-19	Wiggly	Wrigley's job.
-20	N/A
-21	Chicken
-22	Chick
-23	Sheep
-24	Lamb
-25	Cow
-26	Calf
-27	Slime	No abilities.
-28	Farmer	Rosie's job.
-29	N/A
-30	Villager (Red dress)	Saffron's job.
-31	N/A
-32	Crater/Cat??	Unused.
-33	Kitten
-34	Puppy
-35	Child
-36	Ghost	No abilities.
-37	Hammerhood	No abilities.
-38	Healslime	Has abilities.
-39	Chimaera	No abilities.
-40	Killing Machine	No abilities.
-41	Walking Corpse	Has abilities.
-42	Golem	No abilities.
-43	Liquid Metal Slime	No abilities.
-44	Great Sabrecat	No abilities.
-45	Muddy Hand	Has abilities.
-46	Powie Yowie	Has abilities.
-47	Living Statue	No abilities.
-48	Hammerhood	No abilities.
-49	Smithy	Margog's job. Will build on an armoury crafting room if given materials in the chest.
-50	Farmer
-51	Villager
-52	N/A
-53	N/A
-54	Villager	Babs' job.
-55	N/A
-56	Elder
-57	N/A
-58	Magus	No abilities.
-59	Farmer or N/A?	Furrowfield NPC's job.
-60	Soldier
-61	Soldier (Red)	Zara's job.
-62	Goodybag	No abilities.
-63	Great Sabrecub	Has abilities.
-64	Metal Slime	No abilities.
-65	Killing Machine	No abilities.
-66	Whackolyte	No abilities.
-67	Magus	No abilities.
-68	Deadnaut	No abilities.
-69	Deadnaut	No abilities.
-70	Gremlin	No abilities.
-71	Dracky	No abilities.
-72	Badboon	No abilities.
-73	Hood	No abilities.
-74	Silvapithecus	No abilities.
-75	Gargoyle	No abilities.
-76	Rockbomb	No abilities.
-77	Archdemon	No abilities.
-78	Mean Spirit	No abilities.
-79	Villager (Wise Man)	Jeremiah's job.
-80	Child (Red dress)	Lillian's job.
-82	Miner	Digby/Dougie's job. Makes NPC bigger.
-83	Soldier (Emeritus)	Gerome's job.
-84	Angler	Gillian and Finn's job. Will fish.
+#ID	JobName	JobDescription	JobBool
+0	--	--	FALSE
+1	No job	Renders properly.	TRUE
+2	Villager	N/A	TRUE
+3	Farmer	Perry's job. Furrowfield NPC's job.	TRUE
+4	Miner	Digby/Dougie's job. Makes NPC bigger.	TRUE
+5	Merchant		TRUE
+6	Soldier (Blue)	Britney's job.	TRUE
+7	Sailor	Brownbeard's job.	TRUE
+8	Bartender	Den's job.	TRUE
+9	Dancer	Serge's job.	TRUE
+10	General	Anessa's job.	TRUE
+11	Nun	Esther's job. Will pray on church altars and occasionally hold church with 4 other NPCs.	TRUE
+12	King	King's job. Will sit on throne.	TRUE
+13	Bard	Haydin's job. Will sing. (Female equivalent -> 14 - Singer)	TRUE
+14	Singer	Furrowfield retriever's job. Will sing. (Male equivalent -> 13 - Bard)	TRUE
+15	Dog	Furrowfield retriever's job.	TRUE
+16	Enigma	Malroth's job. Makes NPC unable to eat or go to the bathroom. They will complain about it.	TRUE
+17	Farmer		TRUE
+18	Farmer	Bonanzo's job.	TRUE
+19	Wiggly	Wrigley's job.	TRUE
+20	N/A		TRUE
+21	Chicken		TRUE
+22	Chick		TRUE
+23	Sheep		TRUE
+24	Lamb		TRUE
+25	Cow		TRUE
+26	Calf		TRUE
+27	Slime	No abilities.	TRUE
+28	Farmer	Rosie's job.	TRUE
+30	Villager (Red dress)	Saffron's job.	TRUE
+32	Crater/Cat??	Unused.	TRUE
+33	Kitten		TRUE
+34	Puppy		TRUE
+35	Child		TRUE
+36	Ghost	No abilities.	TRUE
+37	Hammerhood	No abilities.	TRUE
+38	Healslime	Has abilities.	TRUE
+39	Chimaera	No abilities.	TRUE
+40	Killing Machine	No abilities.	TRUE
+41	Walking Corpse	Has abilities.	TRUE
+42	Golem	No abilities.	TRUE
+43	Liquid Metal Slime	No abilities.	TRUE
+44	Great Sabrecat	No abilities.	TRUE
+45	Muddy Hand	Has abilities.	TRUE
+46	Powie Yowie	Has abilities.	TRUE
+47	Living Statue	No abilities.	TRUE
+48	Hammerhood	No abilities.	TRUE
+49	Smithy	Margog's job. Will build on an armoury crafting room if given materials in the chest.	TRUE
+50	Farmer		TRUE
+51	Villager		TRUE
+54	Villager	Babs' job.	TRUE
+56	Elder		TRUE
+58	Magus	No abilities.	TRUE
+59	Farmer or N/A?	Furrowfield NPC's job.	TRUE
+60	Soldier		TRUE
+61	Soldier (Red)	Zara's job.	TRUE
+62	Goodybag	No abilities.	TRUE
+63	Great Sabrecub	Has abilities.	TRUE
+64	Metal Slime	No abilities.	TRUE
+65	Killing Machine	No abilities.	TRUE
+66	Whackolyte	No abilities.	TRUE
+67	Magus	No abilities.	TRUE
+68	Deadnaut	No abilities.	TRUE
+69	Deadnaut	No abilities.	TRUE
+70	Gremlin	No abilities.	TRUE
+71	Dracky	No abilities.	TRUE
+72	Badboon	No abilities.	TRUE
+73	Hood	No abilities.	TRUE
+74	Silvapithecus	No abilities.	TRUE
+75	Gargoyle	No abilities.	TRUE
+76	Rockbomb	No abilities.	TRUE
+77	Archdemon	No abilities.	TRUE
+78	Mean Spirit	No abilities.	TRUE
+79	Villager (Wise Man)	Jeremiah's job.	TRUE
+80	Child (Red dress)	Lillian's job.	TRUE
+82	Miner	Digby/Dougie's job. Makes NPC bigger.	TRUE
+83	Soldier (Emeritus)	Gerome's job.	TRUE
+84	Angler	Gillian and Finn's job. Will fish.	TRUE

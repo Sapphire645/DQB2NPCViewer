@@ -1,18 +1,17 @@
-
-0	0	(none)
+#ID	ImageID	Name
+0	0	---
 1	1	Male Historic Hat
 2	2	Female Historic Hairband
-3	0	Malroth
-4	0	Bonanzo
-5	0	Brownbeard
-6	0	Molly
-7	0	Den
+3	3	Malroth
+4	4	Bonanzo
+5	5	Brownbeard
+6	6	Molly
+7	7	Den
 8	8	Babs/BunnyEars&Ponytail
-9	8	Babs/BunnyEars&PermedCurls
-10	8	Babs/BunnyEars&Wig
-11	0	(none)
-12	0	King
-13	0	Anessa
+9	9	Babs/BunnyEars&PermedCurls
+10	10	Babs/BunnyEars&Wig
+12	12	King
+13	13	Anessa
 14	14	Clayton
 15	15	Perry
 16	16	Serge/Finn
@@ -21,59 +20,49 @@
 19	19	Saffron/Haydin
 20	20	Zara
 21	21	Rosie
-22	0	Male Merchant
-23	0	Female Merchant
-24	0	Male Blue Soldier
-25	0	Female Blue Soldier
-26	0	Male Farmer
-27	0	Female Farmer
-28	0	Ordelia/Original
-29	0	[Unrenderable]
-30	0	[Unrenderable]
-31	0	[Unrenderable]
-32	0	(none)
-33	0	Female Elder
-34	0	Male Child
-35	0	Lillian/Female Child
-36	0	Haydin/Bard
-37	0	(none)
-38	0	Esther/Nun
-39	21	Singer
-40	0	Pumpkin Mask
-41	0	Male Builder
-42	0	Female Builder
-43	0	Jeremiah(including beard)
+22	22	Male Merchant
+23	23	Female Merchant
+24	24	Male Blue Soldier
+25	25	Female Blue Soldier
+26	26	Male Farmer
+27	27	Female Farmer
+28	28	Ordelia/Original
+32	0	(Bald)
+33	33	Female Elder
+34	34	Male Child
+35	35	Lillian/Female Child
+36	36	Haydin/Bard
+37	0	(Bald)
+38	38	Esther/Nun
+39	39	Singer
+40	40	Pumpkin Mask
+41	41	Male Builder
+42	42	Female Builder
+43	43	Jeremiah(including beard)
 44	44	Block Head
-45	0	Babs/Original
-46	0	(none)
-47	0	[Unrenderable]
-48	0	[Unrenderable]
-49	0	[Unrenderable]
-50	0	Male Builder without bangs
-51	0	Male Builder under Historic Hat
-52	0	Female Builder under most hats
-53	0	Male Builder under most hats
-54	0	Female Builder without ponytails
-55	0	Male Farmer
-56	0	Female Farmer
-57	0	[Unrenderable]
-58	0	[Unrenderable]
-59	0	[Unrenderable]
-60	0	Male Red Soldier
-61	0	Male Green Soldier
-62	0	Female Red Soldier
-63	0	Female Green Soldier
-64	0	Lulu with Bunny Ears
-65	0	Saffron/Haydin with Bunny Ears
-66	0	Zarawith Bunny Ears
-67	0	Ordelia/Bunny Ears
-68	0	Male Blue Soldier
-69	0	Male Red Soldier
-70	0	Male Green Soldier
+45	45	Babs/Original
+50	50	Male Builder without bangs
+51	51	Male Builder under Historic Hat
+52	52	Female Builder under hats
+53	53	Male  Builder under hats
+54	54	Female Builder without ponytails
+55	26	Male Farmer
+56	27	Female Farmer
+60	60	Male Red Soldier
+61	61	Male Green Soldier
+62	62	Female Red Soldier
+63	63	Female Green Soldier
+64	64	Lulu with Bunny Ears
+65	65	Saffron/Haydin with Bunny Ears
+66	66	Zarawith Bunny Ears
+67	67	Ordelia/Bunny Ears
+68	24	Male Blue Soldier
+69	60	Male Red Soldier
+70	61	Male Green Soldier
 71	19	Saffron/Haydin
-72	0	White ClassicCurtianswithoutbangs
-73	0	White LuluwithBunnyEarswithoutbangs
-74	0	White Saffron/HaydenwithBunnyEarswithoutbangs
+72	15	White ClassicCurtianswithoutbangs
+73	18	White LuluwithBunnyEarswithoutbangs
+74	19	White Saffron/HaydenwithBunnyEarswithoutbangs
 75	19	White Saffron/Haydenwithoutbangs
 76	18	White Luluwithoutbangs
 77	19	White Saffron/Haydenwithoutbangs
@@ -85,7 +74,7 @@
 83	16	MussedMopwithoutbangs
 84	84	HipsterPonytail
 85	85	PrettyPonytail
-86	0	Gillian
+86	86	Gillian
 87	81	WhiteMaleStrawHat
 88	81	WhiteFemaleStrawHat
 89	85	WhitePrettyPonytailwithoutbangs

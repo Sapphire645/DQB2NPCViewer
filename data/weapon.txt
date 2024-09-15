@@ -1,4 +1,5 @@
 #ID	ModelID	Name
+0	0	---
 301	0	oaken club {301}
 302	0	copper sword {302}
 303	0	iron broadsword {303}

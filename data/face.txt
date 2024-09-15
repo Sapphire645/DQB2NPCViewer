@@ -1,52 +1,33 @@
 #ID	ImageID	Face
-0	0	(none)
-1	0	Male Builder
-2	0	Female Builder
-3	0	Malroth
-4	0	Bonanzo
-5	0	Brownbeard
-6	0	Molly
-7	0	Den
-8	0	Babs / Original
-9	0	Magrog
-10	0	King
-11	0	Babs / Makeup
-12	0	Perry
-13	0	Clayton
-14	0	Haydin
-15	0	(Stern-faced Bearded Man)
-16	0	Lulu/Britney/Zara/Esther
-17	0	Anessa
-18	0	Saffron/FF Dog
-19	0	Ordelia
-20	0	[Unrenderable]
-21	0	[Unrenderable]
-22	0	[Unrenderable]
-23	0	[Unrenderable]
-24	0	Gerome/(Male Elder) [includes bald back of head
-25	0	(Female Elder)
-26	0	(Male Child) [only scaled properly on Child's body
-27	0	Lillian/(Female Child) [only scaled properly on Child's body
-28	0	(Small Yellow Miner's Mask)
-29	0	Jeremiah (but not beard)
-30	0	Rosie
-31	0	(Small Brown Miner's Mask)
-32	0	(Small Brown Miner's Mask)
-33	0	(Child-scale Perry? Finn?)
-34	0	Gillian
-35	0	[Unrenderable]
-36	0	[Unrenderable]
-37	0	[Unrenderable]
-38	0	[Unrenderable]
-39	0	[Unrenderable]
-40	0	[Unrenderable]
-41	0	[Unrenderable]
-42	0	[Unrenderable]
-43	0	[Unrenderable]
-44	0	[Unrenderable]
-45	0	[Unrenderable]
-46	0	[Unrenderable]
-47	0	[Unrenderable]
-48	0	[Unrenderable]
-49	0	[Unrenderable]
-50	0	Male Builder (serious) [?]
+0	0	---
+1	1	Male Builder
+2	2	Female Builder
+3	3	Malroth
+4	4	Bonanzo
+5	5	Brownbeard
+6	6	Molly
+7	7	Den
+8	8	Babs / Original
+9	9	Magrog
+10	10	King
+11	11	Babs / Makeup
+12	12	Perry
+13	13	Clayton
+14	14	Haydin
+15	15	(Stern-faced Bearded Man)
+16	16	Lulu/Britney/Zara/Esther
+17	17	Anessa
+18	18	Saffron/FF Dog
+19	19	Ordelia
+24	24	Gerome/(Male Elder) [includes bald back of head
+25	25	(Female Elder)
+26	26	(Male Child) [only scaled properly on Child's body
+27	27	Lillian/(Female Child) [only scaled properly on Child's body
+28	28	(Small Yellow Miner's Mask)
+29	29	Jeremiah (but not beard)
+30	30	Rosie
+31	31	(Small Brown Miner's Mask)
+32	31	(Small Brown Miner's Mask)
+33	33	(Child-scale Perry? Finn?)
+34	34	Gillian
+51	51	Male Builder (serious) [?]

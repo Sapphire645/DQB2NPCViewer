@@ -1,188 +1,135 @@
-#ID	ImageID BodyName
-0	0	Unrenderable& may crash game
-1	1	Male Wayfarer's Clothing
-2	2	Female Wayfarer's Clothing
-3	3	Male Plain Clothes
-4	3	Female Plain Clothes
-5	5	Male Training Togs
-6	5	Female Training Togs
-7	7	Male Cloak of Evasion
-8	7	Female Cloak of Evasion
-9	9	Male Chain Mail
-10	9	Female Chain Mail
-11	11	Male Flowing Dress
-12	11	Female Flowing Dress
-13	13	Male Leather Armour
-14	13	Female Leather Armour
-15	15	Male Iron Armour
-16	15	Female Iron Armour
-17	17	Male Full Plate Armour
-18	17	Female Full Plate Armour
-19	19	Male Spiked Armour
-20	19	Female Spiked Armour
-21	21	Male Magic Armour
-22	21	Female Magic Armour
-23	23	Male Auroral Armour
-24	23	Female Auroral Armour
-25	25	Male Wailer's Mail
-26	25	Female Wailer's Mail
-27	27	Male Scandalous Swimsuit
-28	28	Female Scandalous Swimsuit
-29	0	Male Underwear
-30	0	Female Underwear
-31	31	Male Ragged Rags
-32	31	Female Ragged Rags
-33	33	Male Bath Towel
-34	34	Female Bath Towel
-35	0	0	Unrenderable
-36	0	Unrenderable
-37	37	Male Builder's Workwear
-38	37	Female Builder's Workwear
-39	39	Male Tortoise Shell
-40	39	Female Tortoise Shell
-41	41	Male Dragon Mail
-42	41	Female Dragon Mail
-43	43	Male Tectonic Plate
-44	43	Female Tectonic Plate
-45	45	Male Fur Coat
-46	45	Female Fur Coat
+#ID	ImageID BodyName	
+0	0	...
+1	1	Wayfarer's Clothing ♂ [D]
+2	2	Wayfarer's Clothing ♀ [D]
+3	3	Plain Clothes ♂ [D]
+4	3	Plain Clothes ♀ [D]
+5	5	Training Togs ♂ [D]
+6	5	Training Togs ♀ [D]
+7	7	Cloak of Evasion ♂ [D]
+8	7	Cloak of Evasion ♀ [D]
+9	9	Chain Mail ♂
+10	9	Chain Mail ♀
+11	11	Flowing Dress ♂
+12	11	Flowing Dress ♀
+13	13	Leather Armour ♂ [D]
+14	13	Leather Armour ♀ [D]
+15	15	Iron Armour ♂
+16	15	Iron Armour ♀
+17	17	Full Plate Armour ♂
+18	17	Full Plate Armour ♀
+19	19	Spiked Armour ♂
+20	19	Spiked Armour ♀
+21	21	Magic Armour ♂
+22	21	Magic Armour ♀
+23	23	Auroral Armour ♂
+24	23	Auroral Armour ♀
+25	25	Wailer's Mail ♂
+26	25	Wailer's Mail ♀
+27	27	Scandalous Swimsuit ♂ [D]
+28	28	Scandalous Swimsuit ♀ [D]
+29	0	Underwear ♂
+30	0	Underwear ♀
+31	31	Ragged Rags ♂
+32	31	Ragged Rags ♀
+33	33	Bath Towel ♂ [D?]
+34	34	Bath Towel ♀ [D?]
+37	37	Builder's Workwear ♂
+38	37	Builder's Workwear ♀
+39	39	Tortoise Shell ♂ [D]
+40	39	Tortoise Shell ♀ [D]
+41	41	Dragon Mail ♂
+42	41	Dragon Mail ♀
+43	43	Tectonic Plate ♂
+44	43	Tectonic Plate ♀
+45	45	Fur Coat ♂ [D]
+46	45	Fur Coat ♀ [D]
 47	33	Malroth Bath Towel
 48	27	Malroth Scandalous Swimsuit
-49	0	Unrenderable
-50	0	Malroth
-51	0	Unrenderable
+50	50	Malroth
 52	0	Bonanzo
 53	0	Bonanzo / Worn-out
 54	0	Brownbeard
-55	0	Unrenderable
-56	0	Unrenderable
-57	0	Unrenderable
-58	0	Larger Female Mage
-59	0	Larger Female Mage / Worn-out
-60	0	Smaller Female Mage
-61	0	Smaller Female Mage / Worn-out
+58	0	Larger  Mage ♀
+59	0	Larger  Mage / Worn-out ♀
+60	0	Smaller  Mage ♀
+61	0	Smaller  Mage / Worn-out ♀
 62	0	Bartender
-63	0	Unrenderable
-64	0	Unrenderable
-65	0	Unrenderable
 66	66	Dancer
 67	0	Babs / Red Dancer
 68	0	Babs / Final
 69	0	Magrog
-70	0	Unrenderable
 71	0	King
-72	0	Unrenderable
-73	0	Anessa
-74	0	Unrenderable
-75	75	Male Villager's Vesture
-76	76	Male Townsperson's Togs
-77	0	Unrenderable
-78	31	Male Ragged Rags
-79	33	Male Bath Towel
-80	27	Male Scandalous Swimsuit
-81	0	Unrenderable
-82	0	Unrenderable
-83	0	Unrenderable
-84	0	Unrenderable
-85	0	Unrenderable
-86	0	Unrenderable
-87	87	Female Villager's Vesture
-88	76	Female Townspeson's Togs
-89	0	Unrenderable
-90	31	Female Ragged Rags
-91	34	Female Bath Towel
-92	28	Female Scandalous Swimsuit
-93	0	Unrenderable
-94	0	Unrenderable
-95	0	Unrenderable
-96	0	Unrenderable
-97	0	Unrenderable
-98	0	Unrenderable
-99	99	Male Trader's Tunic
-100	0	Unrenderable
-101	99	Female Trader's Tunic
-102	0	Unrenderable
-103	103	Male Blue Soldier
-104	0	Unrenderable
-105	103	Female Blue Soldier
-106	0	Unrenderable
-107	107	Male Farming Gear
-108	0	Unrenderable
-109	107	Female Farming Gear
-110	0	Unrenderable
-111	0	Unrenderable
-112	0	Unrenderable
-113	0	Unrenderable
-114	0	Unrenderable
-115	0	Male Elder
-116	0	Male Elder / Worn-out
-117	0	Male Elder Bath Towel without neck
-118	0	Unrenderable
-119	0	Female Elder without neck
-120	0	Unrenderable
-121	0	Female Elder Bath Towel
-122	0	Unrenderable
-123	0	Male Child
-124	0	Unrenderable
-125	0	Male Child Bath Towel
-126	0	Male Child Swimsuit
-127	0	Female Child
-128	0	Unrenderable
-129	0	Female Child Bath Towel
-130	0	Female Child Swimsuit
-131	131	Male Troubadour's Togs
+72	0	Anessa
+75	75	Villager's Vesture ♂
+76	76	Townsperson's Togs ♂
+78	31	Ragged Rags ♂
+79	33	Bath Towel ♂
+80	27	Scandalous Swimsuit ♂
+87	87	Villager's Vesture ♀
+88	76	Townsperson's Togs ♀
+90	31	Ragged Rags ♀
+91	34	Bath Towel ♀
+92	28	Scandalous Swimsuit ♀
+99	99	Trader's Tunic ♂
+101	99	Trader's Tunic ♀
+103	103	Blue Soldier ♂
+105	103	Blue Soldier ♀
+107	107	Farming Gear ♂
+109	107	Farming Gear ♀
+115	0	Elder ♂
+116	0	Elder / Worn-out ♂
+117	0	Elder Bath Towel without neck ♂
+119	0	Elder without neck ♀
+121	0	Elder Bath Towel ♀
+123	0	Child ♂
+125	0	Child Bath Towel ♂
+126	0	Child Swimsuit ♂
+127	0	Child ♀
+129	0	Child Bath Towel ♀
+130	0	Child Swimsuit ♀
+131	131	Troubadour's Togs ♂
 132	0	Miner
-133	0	Unrenderable
 134	0	Miner Bath Towel
 135	0	Miner Scandalous Swimsuit
 136	136	Nun's Habit
-137	0	Unrenderable
-138	138	Female Troubadour's Togs
+138	138	Troubadour's Togs ♀
 139	0	Lulu (Blue Villager's Vesture)
 140	0	Jeremiah
 141	0	Den/Bartender
 142	0	Den/Bartender
-143	0	Female Elder
-144	144	Male Red Soldier
-145	145	Male Green Soldier
-146	144	Female Red Soldier
-147	145	Female Green Soldier
+143	0	Elder ♀
+144	144	Red Soldier ♂
+145	145	Green Soldier ♂
+146	144	Red Soldier ♀
+147	145	Green Soldier ♀
 148	103	Previous Miner Blue Soldier
-149	0	Unrenderable
-150	150	Male Midenhall Garb
-151	150	Female Midenhall Garb
-152	152	Male Cannock Cloak
-153	152	Female Cannock Cloak
-154	154	Male Moonbrooke Frock
-155	154	Female Moonbrooke Frock
-156	156	Male Liquid Metal Armour
-157	156	Female Liquid Metal Armour
-158	158	Male White Cottontail Costume
-159	158	Female White Cottontail Costume
+150	150	Midenhall Garb ♂
+151	150	Midenhall Garb ♀
+152	152	Cannock Cloak ♂
+153	152	Cannock Cloak ♀
+154	154	Moonbrooke Frock ♂
+155	154	Moonbrooke Frock ♀
+156	156	Liquid Metal Armour ♂
+157	156	Liquid Metal Armour ♀
+158	158	Cottontail Costume ♂ [D]
+159	158	Cottontail Costume ♀ [D]
 160	0	Brown Miner
 161	0	Ordelia Original
 162	66	Serge's Cottontail Costume
 163	9	Warwick's Chain Mail
 164	31	Molly's Ragged Rags
-165	165	Male Fur Coat
-166	165	Female Fur Coat
-167	0	Unrenderable
-168	0	Unrenderable
-169	0	Unrenderable
+165	165	Fur Coat ♂
+166	165	Fur Coat ♀
 170	0	Dragonlord
-171	0	Unrenderable
-172	0	Unrenderable
-173	0	Unrenderable
-174	0	Unrenderable
-175	175	Male Chic Swimsuit
-176	176	Female Chic Swimsuit
-177	176	Female Chic Swimsuit
+175	175	Chic Swimsuit ♂ [D]
+176	176	Chic Swimsuit ♀ [D]
+177	176	Chic Swimsuit ♀
 178	0	Gillian
 179	0	Gillian Bath Towel
 180	0	Gillian Scandalous Swimsuit
-181	181	Male Dyeable Flashy Formalwear
-182	182	Female Flashy Formalwear
-183	183	Male Flashy Formalwear
+181	181	Flashy Formalwear ♂ [D]
+182	182	Flashy Formalwear ♀ [D]
+183	183	Flashy Formalwear ♂
 184	183	Malroth's Flashy Formalwear
-185	181	Malroth's Dyeable Flashy Formalwear
-
+185	181	Malroth's Flashy Formalwear [D]
