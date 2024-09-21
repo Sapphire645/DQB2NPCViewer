@@ -1,0 +1,20 @@
+#Field	Desc.
+Name	Name of the NPC. All NPCs can be named, even story NPCs. Empty names will make the game default to the original name. You can write longer names, and with more characters than what the game UI will allow. (For example, numbers)
+Sex	Change gender. This affects the animations and (as far as it is known) the cloth model.
+HP	HP. Changes HP. Usually it will be the HP value of the player. 
+Job	This affects specific behaviour. For detail descriptions select a job. (We need to check if animal jobs turn into animals)
+Type	This is the ID of the NPC. It basically says "Who they are". It affects general behaviour. If the "Lock Appearance" flag is enabled the NPC will ignore the model values and use their own, hard coded ones.
+Home	Where the NPC originates from.
+Island	Where the NPC is living currently.
+Place	The area where the NPC is. Any map excluding IoA only has 1 place, so set it as "green gardens". IoA has 4 areas, including the beach prologue area. 
+Voice	Changes their voice. Not documented yet. 
+Flags	"Lock appearance" sets the appearance of the NPC to their hard-coded values (For NPCs whose Type has set appearances). If unset they will use the appearance of the model values. "Has Clothes" sets the armour as their body appearance. IMPORTANT! If you set an armour without setting this flag the colour of the body model will be the armour colour. Use this to your advantage! 
+Face Model	Sets their face model. Most faces aren't compatible with most hairs. Do be careful. Children models will look enlarged (Child job reduces the NPCs size to compensate) and Miner models will look small (Miner job increases NPC size to compensate)
+Hair Model	Sets their hair model. Some hairs have dyed clothes (that default to white). It's still unkown which hairs can have colour and which ones do not. Most hairs aren't compatible with most hairs. Do be careful. Children models will look enlarged (Child job reduces the NPCs size to compensate) and Miner models will look small (Miner job increases NPC size to compensate)
+Body Model	Sets their hair model. Most models default to white. If you want to change the colour you can set an "armour" without activating the "has clothes" flag. Children models will look enlarged (Child job reduces the NPCs size to compensate) and Miner models will look small (Miner job increases NPC size to compensate)
+Eye Colour	Sets the eye colour. In-game it will look brighter. (Red areas in the selector are colours not documented yet. The 800+ area might be off-hue)
+Hair Colour	Sets the haircolour and eyebrow colour. (Red areas in the selector are colours not documented yet. The 800+ area might be off-hue)
+Skin Colour	Sets the skin colour. (WARNING-> Some models might not change colour in the game, not fully documented). The program blends the colour to make it look closer to the final skin colour, but sometimes that process is skipped. (Opening the character, Default colour opening the selector). (Red areas in the selector are colours not documented yet. The 800+ area might be off-hue)
+Weapon	Sets their weapon. Still in research.
+Armour	Sets their clothing. As it is currently understood gender affects the model of the cloth. If you do not set the "has clothes" variable the colour of the armour will be applied to the body model. Use this to your advantage!
+Dialogue	This affects the little beige popups. Not documented yet.

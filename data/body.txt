@@ -45,7 +45,7 @@
 45	45	Fur Coat ♂ [D]
 46	45	Fur Coat ♀ [D]
 47	33	Malroth Bath Towel
-48	27	Malroth Scandalous Swimsuit
+48	260	Malroth Scandalous Swimsuit
 50	50	Malroth
 52	0	Bonanzo
 53	0	Bonanzo / Worn-out
@@ -65,12 +65,12 @@
 76	76	Townsperson's Togs ♂
 78	31	Ragged Rags ♂
 79	33	Bath Towel ♂
-80	27	Scandalous Swimsuit ♂
+80	260	Scandalous Swimsuit ♂
 87	87	Villager's Vesture ♀
 88	76	Townsperson's Togs ♀
 90	31	Ragged Rags ♀
 91	34	Bath Towel ♀
-92	28	Scandalous Swimsuit ♀
+92	270	Scandalous Swimsuit ♀
 99	99	Trader's Tunic ♂
 101	99	Trader's Tunic ♀
 103	103	Blue Soldier ♂
@@ -83,8 +83,8 @@
 119	0	Elder without neck ♀
 121	0	Elder Bath Towel ♀
 123	0	Child ♂
-125	0	Child Bath Towel ♂
-126	0	Child Swimsuit ♂
+125	33	Child Bath Towel ♂
+126	300	Child Swimsuit ♂
 127	0	Child ♀
 129	0	Child Bath Towel ♀
 130	0	Child Swimsuit ♀
@@ -126,8 +126,8 @@
 176	176	Chic Swimsuit ♀ [D]
 177	176	Chic Swimsuit ♀
 178	0	Gillian
-179	0	Gillian Bath Towel
-180	0	Gillian Scandalous Swimsuit
+179	34	Gillian Bath Towel
+180	270	Gillian Scandalous Swimsuit
 181	181	Flashy Formalwear ♂ [D]
 182	182	Flashy Formalwear ♀ [D]
 183	183	Flashy Formalwear ♂

@@ -1,10 +1,10 @@
-#ID	colour	Name
-0	#FFFFFF	...
-1	#FFFFFF	White
-2	#000000	Black
-3	#800080	Purple
-4	#FF0094	Pink
-5	#FF0000	Red
-6	#00FF00	Green
-7	#FFFF00	Yellow
-8	#0000FF	Blue
+#ID	Name
+0	Base
+1	White
+2	Black
+3	Purple
+4	Pink
+5	Red
+6	Green
+7	Yellow
+8	Blue
