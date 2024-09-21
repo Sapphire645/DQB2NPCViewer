@@ -29,6 +29,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,14 +52,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cyotek.Drawing.BitmapFont, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
+      <HintPath>packages\Cyotek.Drawing.BitmapFont.2.0.0\lib\net472\Cyotek.Drawing.BitmapFont.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit, Version=2.25.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>packages\HelixToolkit.2.25.0\lib\netstandard2.0\HelixToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="HelixToolkit.Wpf, Version=2.25.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>packages\HelixToolkit.Wpf.2.25.0\lib\net462\HelixToolkit.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGLTF.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f8b67557d279fe6, processorArchitecture=MSIL">
+      <HintPath>packages\SharpGLTF.Core.1.0.2\lib\netstandard2.0\SharpGLTF.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGLTF.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f8b67557d279fe6, processorArchitecture=MSIL">
+      <HintPath>packages\SharpGLTF.Runtime.1.0.2\lib\netstandard2.0\SharpGLTF.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGLTF.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f8b67557d279fe6, processorArchitecture=MSIL">
+      <HintPath>packages\SharpGLTF.Toolkit.1.0.2\lib\netstandard2.0\SharpGLTF.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -74,9 +91,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
     <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
@@ -89,7 +103,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
@@ -109,14 +122,11 @@
       <DependentUpon>AmbianceBox.xaml</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="control\ComboBoxBody.xaml.cs">
-      <DependentUpon>ComboBoxBody.xaml</DependentUpon>
+    <Compile Include="control\ComboBoxArmour.xaml.cs">
+      <DependentUpon>ComboBoxArmour.xaml</DependentUpon>
     </Compile>
-    <Compile Include="control\ComboBoxFace.xaml.cs">
-      <DependentUpon>ComboBoxFace.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="control\ComboBoxHair.xaml.cs">
-      <DependentUpon>ComboBoxHair.xaml</DependentUpon>
+    <Compile Include="control\ComboBoxModel.xaml.cs">
+      <DependentUpon>ComboBoxModel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ColourWindow.xaml.cs">
       <DependentUpon>ColourWindow.xaml</DependentUpon>
@@ -126,19 +136,14 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Page>
-    <Page Include="control\ComboBoxBody.xaml">
+    <Page Include="control\ComboBoxArmour.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="control\ComboBoxModel.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="control\ComboBoxFace.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="control\ComboBoxHair.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Page>
     <Page Include="control\Hearts.xaml">
@@ -186,801 +191,804 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="models\body\001.obj">
+    <Resource Include="images\island\p1.sai2">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="models\body\002.obj">
+    <None Include="models\body\001.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\003.obj">
+    </None>
+    <None Include="models\body\002.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\004.obj">
+    </None>
+    <None Include="models\body\003.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\005.obj">
+    </None>
+    <None Include="models\body\004.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\006.obj">
+    </None>
+    <None Include="models\body\005.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\007.obj">
+    </None>
+    <None Include="models\body\006.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\008.obj">
+    </None>
+    <None Include="models\body\007.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\009.obj">
+    </None>
+    <None Include="models\body\008.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\010.obj">
+    </None>
+    <None Include="models\body\009.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\011.obj">
+    </None>
+    <None Include="models\body\010.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\012.obj">
+    </None>
+    <None Include="models\body\011.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\013.obj">
+    </None>
+    <None Include="models\body\012.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\014.obj">
+    </None>
+    <None Include="models\body\013.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\015.obj">
+    </None>
+    <None Include="models\body\014.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\016.obj">
+    </None>
+    <None Include="models\body\015.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\017.obj">
+    </None>
+    <None Include="models\body\016.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\018.obj">
+    </None>
+    <None Include="models\body\017.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\019.obj">
+    </None>
+    <None Include="models\body\018.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\020.obj">
+    </None>
+    <None Include="models\body\019.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\021.obj">
+    </None>
+    <None Include="models\body\020.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\022.obj">
+    </None>
+    <None Include="models\body\021.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\023.obj">
+    </None>
+    <None Include="models\body\022.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\024.obj">
+    </None>
+    <None Include="models\body\023.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\025.obj">
+    </None>
+    <None Include="models\body\024.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\026.obj">
+    </None>
+    <None Include="models\body\025.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\027.obj">
+    </None>
+    <None Include="models\body\026.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\028.obj">
+    </None>
+    <None Include="models\body\027.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\029.obj">
+    </None>
+    <None Include="models\body\028.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\030.obj">
+    </None>
+    <None Include="models\body\029.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\031.obj">
+    </None>
+    <None Include="models\body\030.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\032.obj">
+    </None>
+    <None Include="models\body\031.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\033.obj">
+    </None>
+    <None Include="models\body\032.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\034.obj">
+    </None>
+    <None Include="models\body\033.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\037.obj">
+    </None>
+    <None Include="models\body\034.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\038.obj">
+    </None>
+    <None Include="models\body\037.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\039.obj">
+    </None>
+    <None Include="models\body\038.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\040.obj">
+    </None>
+    <None Include="models\body\039.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\041.obj">
+    </None>
+    <None Include="models\body\040.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\042.obj">
+    </None>
+    <None Include="models\body\041.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\043.obj">
+    </None>
+    <None Include="models\body\042.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\044.obj">
+    </None>
+    <None Include="models\body\043.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\045.obj">
+    </None>
+    <None Include="models\body\044.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\046.obj">
+    </None>
+    <None Include="models\body\045.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\047.obj">
+    </None>
+    <None Include="models\body\046.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\048.obj">
+    </None>
+    <None Include="models\body\047.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\050.obj">
+    </None>
+    <None Include="models\body\048.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\052.obj">
+    </None>
+    <None Include="models\body\050.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\053.obj">
+    </None>
+    <None Include="models\body\052.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\054.obj">
+    </None>
+    <None Include="models\body\053.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\058.obj">
+    </None>
+    <None Include="models\body\054.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\059.obj">
+    </None>
+    <None Include="models\body\058.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\060.obj">
+    </None>
+    <None Include="models\body\059.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\061.obj">
+    </None>
+    <None Include="models\body\060.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\062.obj">
+    </None>
+    <None Include="models\body\061.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\066.obj">
+    </None>
+    <None Include="models\body\062.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\067.obj">
+    </None>
+    <None Include="models\body\066.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\068.obj">
+    </None>
+    <None Include="models\body\067.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\069.obj">
+    </None>
+    <None Include="models\body\068.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\071.obj">
+    </None>
+    <None Include="models\body\069.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\072.obj">
+    </None>
+    <None Include="models\body\071.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\075.obj">
+    </None>
+    <None Include="models\body\072.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\076.obj">
+    </None>
+    <None Include="models\body\075.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\078.obj">
+    </None>
+    <None Include="models\body\076.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\079.obj">
+    </None>
+    <None Include="models\body\078.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\080.obj">
+    </None>
+    <None Include="models\body\079.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\087.obj">
+    </None>
+    <None Include="models\body\080.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\088.obj">
+    </None>
+    <None Include="models\body\087.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\090.obj">
+    </None>
+    <None Include="models\body\088.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\091.obj">
+    </None>
+    <None Include="models\body\090.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\092.obj">
+    </None>
+    <None Include="models\body\091.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\099.obj">
+    </None>
+    <None Include="models\body\092.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\101.obj">
+    </None>
+    <None Include="models\body\099.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\103.obj">
+    </None>
+    <None Include="models\body\101.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\105.obj">
+    </None>
+    <None Include="models\body\103.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\107.obj">
+    </None>
+    <None Include="models\body\105.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\109.obj">
+    </None>
+    <None Include="models\body\107.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\115.obj">
+    </None>
+    <None Include="models\body\109.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\116.obj">
+    </None>
+    <None Include="models\body\115.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\117.obj">
+    </None>
+    <None Include="models\body\116.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\119.obj">
+    </None>
+    <None Include="models\body\117.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\121.obj">
+    </None>
+    <None Include="models\body\119.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\123.obj">
+    </None>
+    <None Include="models\body\121.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\125.obj">
+    </None>
+    <None Include="models\body\123.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\126.obj">
+    </None>
+    <None Include="models\body\125.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\127.obj">
+    </None>
+    <None Include="models\body\126.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\129.obj">
+    </None>
+    <None Include="models\body\127.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\130.obj">
+    </None>
+    <None Include="models\body\129.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\131.obj">
+    </None>
+    <None Include="models\body\130.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\132.obj">
+    </None>
+    <None Include="models\body\131.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\134.obj">
+    </None>
+    <None Include="models\body\132.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\135.obj">
+    </None>
+    <None Include="models\body\134.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\136.obj">
+    </None>
+    <None Include="models\body\135.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\138.obj">
+    </None>
+    <None Include="models\body\136.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\139.obj">
+    </None>
+    <None Include="models\body\138.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\140.obj">
+    </None>
+    <None Include="models\body\139.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\141.obj">
+    </None>
+    <None Include="models\body\140.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\142.obj">
+    </None>
+    <None Include="models\body\141.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\143.obj">
+    </None>
+    <None Include="models\body\142.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\144.obj">
+    </None>
+    <None Include="models\body\143.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\145.obj">
+    </None>
+    <None Include="models\body\144.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\146.obj">
+    </None>
+    <None Include="models\body\145.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\147.obj">
+    </None>
+    <None Include="models\body\146.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\148.obj">
+    </None>
+    <None Include="models\body\147.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\150.obj">
+    </None>
+    <None Include="models\body\148.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\151.obj">
+    </None>
+    <None Include="models\body\150.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\152.obj">
+    </None>
+    <None Include="models\body\151.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\153.obj">
+    </None>
+    <None Include="models\body\152.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\154.obj">
+    </None>
+    <None Include="models\body\153.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\155.obj">
+    </None>
+    <None Include="models\body\154.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\156.obj">
+    </None>
+    <None Include="models\body\155.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\157.obj">
+    </None>
+    <None Include="models\body\156.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\158.obj">
+    </None>
+    <None Include="models\body\157.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\159.obj">
+    </None>
+    <None Include="models\body\158.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\160.obj">
+    </None>
+    <None Include="models\body\159.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\161.obj">
+    </None>
+    <None Include="models\body\160.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\162.obj">
+    </None>
+    <None Include="models\body\161.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\163.obj">
+    </None>
+    <None Include="models\body\162.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\164.obj">
+    </None>
+    <None Include="models\body\163.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\165.obj">
+    </None>
+    <None Include="models\body\164.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\166.obj">
+    </None>
+    <None Include="models\body\165.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\170.obj">
+    </None>
+    <None Include="models\body\166.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\175.obj">
+    </None>
+    <None Include="models\body\170.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\176.obj">
+    </None>
+    <None Include="models\body\175.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\177.obj">
+    </None>
+    <None Include="models\body\176.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\178.obj">
+    </None>
+    <None Include="models\body\177.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\179.obj">
+    </None>
+    <None Include="models\body\178.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\180.obj">
+    </None>
+    <None Include="models\body\179.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\181.obj">
+    </None>
+    <None Include="models\body\180.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\182.obj">
+    </None>
+    <None Include="models\body\181.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\183.obj">
+    </None>
+    <None Include="models\body\182.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\184.obj">
+    </None>
+    <None Include="models\body\183.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\body\185.obj">
+    </None>
+    <None Include="models\body\184.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\001.obj">
+    </None>
+    <None Include="models\body\185.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\002.obj">
+    </None>
+    <None Include="models\face\001.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\003.obj">
+    </None>
+    <None Include="models\face\002.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\004.obj">
+    </None>
+    <None Include="models\face\003.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\005.obj">
+    </None>
+    <None Include="models\face\004.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\006.obj">
+    </None>
+    <None Include="models\face\005.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\007.obj">
+    </None>
+    <None Include="models\face\006.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\008.obj">
+    </None>
+    <None Include="models\face\007.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\009.obj">
+    </None>
+    <None Include="models\face\008.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\010.obj">
+    </None>
+    <None Include="models\face\009.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\011.obj">
+    </None>
+    <None Include="models\face\010.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\012.obj">
+    </None>
+    <None Include="models\face\011.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\013.obj">
+    </None>
+    <None Include="models\face\012.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\014.obj">
+    </None>
+    <None Include="models\face\013.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\015.obj">
+    </None>
+    <None Include="models\face\014.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\016.obj">
+    </None>
+    <None Include="models\face\015.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\017.obj">
+    </None>
+    <None Include="models\face\016.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\018.obj">
+    </None>
+    <None Include="models\face\017.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\019.obj">
+    </None>
+    <None Include="models\face\018.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\024.obj">
+    </None>
+    <None Include="models\face\019.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\025.obj">
+    </None>
+    <None Include="models\face\024.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\026.obj">
+    </None>
+    <None Include="models\face\025.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\027.obj">
+    </None>
+    <None Include="models\face\026.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\028.obj">
+    </None>
+    <None Include="models\face\027.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\029.obj">
+    </None>
+    <None Include="models\face\028.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\030.obj">
+    </None>
+    <None Include="models\face\029.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\031.obj">
+    </None>
+    <None Include="models\face\030.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\031a.obj">
+    </None>
+    <None Include="models\face\031.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\033.obj">
+    </None>
+    <None Include="models\face\032.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\034.obj">
+    </None>
+    <None Include="models\face\033.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\051.obj">
+    </None>
+    <None Include="models\face\034.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\face\051a.obj">
+    </None>
+    <None Include="models\face\051.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\001.obj">
+    </None>
+    <None Include="models\face\051a.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\002.obj">
+    </None>
+    <None Include="models\hair\001.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\003.obj">
+    </None>
+    <None Include="models\hair\002.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\004.obj">
+    </None>
+    <None Include="models\hair\003.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\005.obj">
+    </None>
+    <None Include="models\hair\004.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\006.obj">
+    </None>
+    <None Include="models\hair\005.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\007.obj">
+    </None>
+    <None Include="models\hair\006.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\008.obj">
+    </None>
+    <None Include="models\hair\007.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\009.obj">
+    </None>
+    <None Include="models\hair\008.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\010.obj">
+    </None>
+    <None Include="models\hair\009.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\011.obj">
+    </None>
+    <None Include="models\hair\010.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\012.obj">
+    </None>
+    <None Include="models\hair\011.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\013.obj">
+    </None>
+    <None Include="models\hair\012.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\014.obj">
+    </None>
+    <None Include="models\hair\013.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\015.obj">
+    </None>
+    <None Include="models\hair\014.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\016.obj">
+    </None>
+    <None Include="models\hair\015.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\017.obj">
+    </None>
+    <None Include="models\hair\016.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\018.obj">
+    </None>
+    <None Include="models\hair\017.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\019.obj">
+    </None>
+    <None Include="models\hair\018.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\020.obj">
+    </None>
+    <None Include="models\hair\019.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\021.obj">
+    </None>
+    <None Include="models\hair\020.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\022.obj">
+    </None>
+    <None Include="models\hair\021.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\023.obj">
+    </None>
+    <None Include="models\hair\022.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\024.obj">
+    </None>
+    <None Include="models\hair\023.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\025.obj">
+    </None>
+    <None Include="models\hair\024.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\026.obj">
+    </None>
+    <None Include="models\hair\025.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\027.obj">
+    </None>
+    <None Include="models\hair\026.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\028.obj">
+    </None>
+    <None Include="models\hair\027.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\032.obj">
+    </None>
+    <None Include="models\hair\028.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\033.obj">
+    </None>
+    <None Include="models\hair\032.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\034.obj">
+    </None>
+    <None Include="models\hair\033.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\035.obj">
+    </None>
+    <None Include="models\hair\034.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\036.obj">
+    </None>
+    <None Include="models\hair\035.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\037.obj">
+    </None>
+    <None Include="models\hair\036.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\038.obj">
+    </None>
+    <None Include="models\hair\037.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\039.obj">
+    </None>
+    <None Include="models\hair\038.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\040.obj">
+    </None>
+    <None Include="models\hair\039.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\041.obj">
+    </None>
+    <None Include="models\hair\040.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\042.obj">
+    </None>
+    <None Include="models\hair\041.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\043.obj">
+    </None>
+    <None Include="models\hair\042.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\044.obj">
+    </None>
+    <None Include="models\hair\043.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\045.obj">
+    </None>
+    <None Include="models\hair\044.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\050.obj">
+    </None>
+    <None Include="models\hair\045.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\051.obj">
+    </None>
+    <None Include="models\hair\050.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\052.obj">
+    </None>
+    <None Include="models\hair\051.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\053.obj">
+    </None>
+    <None Include="models\hair\052.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\054.obj">
+    </None>
+    <None Include="models\hair\053.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\055.obj">
+    </None>
+    <None Include="models\hair\054.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\056.obj">
+    </None>
+    <None Include="models\hair\055.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\060.obj">
+    </None>
+    <None Include="models\hair\056.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\061.obj">
+    </None>
+    <None Include="models\hair\060.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\062.obj">
+    </None>
+    <None Include="models\hair\061.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\063.obj">
+    </None>
+    <None Include="models\hair\062.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\064.obj">
+    </None>
+    <None Include="models\hair\063.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\065.obj">
+    </None>
+    <None Include="models\hair\064.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\066.obj">
+    </None>
+    <None Include="models\hair\065.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\067.obj">
+    </None>
+    <None Include="models\hair\066.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\068.obj">
+    </None>
+    <None Include="models\hair\067.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\069.obj">
+    </None>
+    <None Include="models\hair\068.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\070.obj">
+    </None>
+    <None Include="models\hair\069.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\071.obj">
+    </None>
+    <None Include="models\hair\070.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\072.obj">
+    </None>
+    <None Include="models\hair\071.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\073.obj">
+    </None>
+    <None Include="models\hair\072.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\074.obj">
+    </None>
+    <None Include="models\hair\073.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\075.obj">
+    </None>
+    <None Include="models\hair\074.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\076.obj">
+    </None>
+    <None Include="models\hair\075.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\077.obj">
+    </None>
+    <None Include="models\hair\076.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\078.obj">
+    </None>
+    <None Include="models\hair\077.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\079.obj">
+    </None>
+    <None Include="models\hair\078.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\080.obj">
+    </None>
+    <None Include="models\hair\079.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\081.obj">
+    </None>
+    <None Include="models\hair\080.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\082.obj">
+    </None>
+    <None Include="models\hair\081.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\083.obj">
+    </None>
+    <None Include="models\hair\082.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\084.obj">
+    </None>
+    <None Include="models\hair\083.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\085.obj">
+    </None>
+    <None Include="models\hair\084.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\086.obj">
+    </None>
+    <None Include="models\hair\085.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\087.obj">
+    </None>
+    <None Include="models\hair\086.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\088.obj">
+    </None>
+    <None Include="models\hair\087.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\089.obj">
+    </None>
+    <None Include="models\hair\088.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\090.obj">
+    </None>
+    <None Include="models\hair\089.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\091.obj">
+    </None>
+    <None Include="models\hair\090.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\092.obj">
+    </None>
+    <None Include="models\hair\091.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\093.obj">
+    </None>
+    <None Include="models\hair\092.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\094.obj">
+    </None>
+    <None Include="models\hair\093.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\095.obj">
+    </None>
+    <None Include="models\hair\094.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\096.obj">
+    </None>
+    <None Include="models\hair\095.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\097.obj">
+    </None>
+    <None Include="models\hair\096.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\098.obj">
+    </None>
+    <None Include="models\hair\097.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\099.obj">
+    </None>
+    <None Include="models\hair\098.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\100.obj">
+    </None>
+    <None Include="models\hair\099.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\101.obj">
+    </None>
+    <None Include="models\hair\100.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\102.obj">
+    </None>
+    <None Include="models\hair\101.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\103.obj">
+    </None>
+    <None Include="models\hair\102.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\104.obj">
+    </None>
+    <None Include="models\hair\103.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\105.obj">
+    </None>
+    <None Include="models\hair\104.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\106.obj">
+    </None>
+    <None Include="models\hair\105.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\107.obj">
+    </None>
+    <None Include="models\hair\106.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\108.obj">
+    </None>
+    <None Include="models\hair\107.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\109.obj">
+    </None>
+    <None Include="models\hair\108.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="models\hair\110.obj">
+    </None>
+    <None Include="models\hair\109.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
+    <None Include="models\hair\110.glb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -999,8 +1007,6 @@
     <Resource Include="images\body\003.png" />
     <Resource Include="images\body\005.png" />
     <Resource Include="images\body\007.png" />
-    <Resource Include="images\body\009.png" />
-    <Resource Include="images\body\011.png" />
     <Resource Include="images\body\013.png" />
     <Resource Include="images\body\015.png" />
     <Resource Include="images\body\017.png" />
@@ -1010,7 +1016,6 @@
     <Resource Include="images\body\025.png" />
     <Resource Include="images\body\027.png" />
     <Resource Include="images\body\028.png" />
-    <Resource Include="images\body\031.png" />
     <Resource Include="images\body\037.png" />
     <Resource Include="images\body\038.png" />
     <Resource Include="images\resource\open.png">
@@ -1059,10 +1064,18 @@
     <Resource Include="images\resource\save.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="textures\body\c001.png" />
-    <Resource Include="textures\body\c002.png" />
-    <Resource Include="textures\body\c003.png" />
-    <Resource Include="textures\body\c004.png" />
+    <Resource Include="textures\body\c001.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c002.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c003.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c004.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="textures\hair\001.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -1225,25 +1238,13 @@
     <Resource Include="textures\hair\064.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="textures\hair\064_3.dxt5.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="textures\hair\065.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\065_3.dxt5.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="textures\hair\066.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="textures\hair\066_3.dxt5.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="textures\hair\067.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\067_3.dxt5.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="textures\hair\068.dds">
@@ -1321,27 +1322,6 @@
     <Resource Include="textures\hair\109.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="textures\hair\m001.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\m002.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\m008.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\m042.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\m045.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\m051.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\hair\m054.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="images\body\002.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -1417,172 +1397,415 @@
     <Resource Include="textures\body\005.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="textures\body\006.dds" />
-    <Resource Include="textures\body\007.dds" />
-    <Resource Include="textures\body\008.dds" />
-    <Resource Include="textures\body\009.dds" />
-    <Resource Include="textures\body\010.dds" />
-    <Resource Include="textures\body\011.dds" />
-    <Resource Include="textures\body\012.dds" />
-    <Resource Include="textures\body\013.dds" />
-    <Resource Include="textures\body\014.dds" />
-    <Resource Include="textures\body\015.dds" />
-    <Resource Include="textures\body\016.dds" />
-    <Resource Include="textures\body\017.dds" />
-    <Resource Include="textures\body\018.dds" />
-    <Resource Include="textures\body\019.dds" />
-    <Resource Include="textures\body\020.dds" />
-    <Resource Include="textures\body\021.dds" />
-    <Resource Include="textures\body\022.dds" />
-    <Resource Include="textures\body\023.dds" />
-    <Resource Include="textures\body\024.dds" />
-    <Resource Include="textures\body\025.dds" />
-    <Resource Include="textures\body\026.dds" />
-    <Resource Include="textures\body\027.dds" />
-    <Resource Include="textures\body\028.dds" />
-    <Resource Include="textures\body\029.dds" />
-    <Resource Include="textures\body\030.dds" />
-    <Resource Include="textures\body\031.dds" />
-    <Resource Include="textures\body\032.dds" />
-    <Resource Include="textures\body\033.dds" />
-    <Resource Include="textures\body\034.dds" />
-    <Resource Include="textures\body\037.dds" />
-    <Resource Include="textures\body\038.dds" />
-    <Resource Include="textures\body\039.dds" />
-    <Resource Include="textures\body\040.dds" />
-    <Resource Include="textures\body\041.dds" />
-    <Resource Include="textures\body\042.dds" />
-    <Resource Include="textures\body\043.dds" />
-    <Resource Include="textures\body\044.dds" />
-    <Resource Include="textures\body\045.dds" />
-    <Resource Include="textures\body\046.dds" />
-    <Resource Include="textures\body\047.dds" />
-    <Resource Include="textures\body\048.dds" />
+    <Resource Include="textures\body\006.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\007.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\008.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\009.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\010.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\011.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\012.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\013.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\014.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\015.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\016.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\017.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\018.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\019.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\020.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\021.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\022.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\023.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\024.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\025.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\026.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\027.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\028.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\029.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\030.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\031.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\032.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\033.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\034.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\037.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\038.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\039.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\040.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\041.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\042.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\043.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\044.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\045.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\046.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\047.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\048.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="textures\body\050.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="textures\body\052.dds" />
-    <Resource Include="textures\body\053.dds" />
-    <Resource Include="textures\body\054.dds" />
-    <Resource Include="textures\body\058.dds" />
-    <Resource Include="textures\body\058a_1.dxt5.dds" />
-    <Resource Include="textures\body\059.dds" />
-    <Resource Include="textures\body\059a_1.dxt5.dds" />
-    <Resource Include="textures\body\060.dds" />
-    <Resource Include="textures\body\060_1a.dxt5.dds" />
-    <Resource Include="textures\body\061.dds" />
-    <Resource Include="textures\body\061_1a.dxt5.dds" />
-    <Resource Include="textures\body\062.dds" />
-    <Resource Include="textures\body\066.dds" />
-    <Resource Include="textures\body\067.dds" />
-    <Resource Include="textures\body\068.dds" />
-    <Resource Include="textures\body\069.dds" />
-    <Resource Include="textures\body\071.dds" />
-    <Resource Include="textures\body\072.dds" />
-    <Resource Include="textures\body\075.dds" />
-    <Resource Include="textures\body\076.dds" />
-    <Resource Include="textures\body\078.dds" />
-    <Resource Include="textures\body\079.dds" />
-    <Resource Include="textures\body\080.dds" />
-    <Resource Include="textures\body\087.dds" />
-    <Resource Include="textures\body\088.dds" />
-    <Resource Include="textures\body\090.dds" />
-    <Resource Include="textures\body\091.dds" />
-    <Resource Include="textures\body\092.dds" />
-    <Resource Include="textures\body\099.dds" />
-    <Resource Include="textures\body\101.dds" />
-    <Resource Include="textures\body\103.dds" />
-    <Resource Include="textures\body\105.dds" />
-    <Resource Include="textures\body\107.dds" />
-    <Resource Include="textures\body\109.dds" />
-    <Resource Include="textures\body\115.dds" />
-    <Resource Include="textures\body\116.dds" />
-    <Resource Include="textures\body\117.dds" />
-    <Resource Include="textures\body\119.dds" />
-    <Resource Include="textures\body\121.dds" />
-    <Resource Include="textures\body\123.dds" />
-    <Resource Include="textures\body\125.dds" />
-    <Resource Include="textures\body\126.dds" />
-    <Resource Include="textures\body\127.dds" />
-    <Resource Include="textures\body\129.dds" />
-    <Resource Include="textures\body\130.dds" />
-    <Resource Include="textures\body\131.dds" />
-    <Resource Include="textures\body\132.dds" />
-    <Resource Include="textures\body\132_3a.dxt5.dds" />
-    <Resource Include="textures\body\134.dds" />
-    <Resource Include="textures\body\134_3a.dxt5.dds" />
-    <Resource Include="textures\body\135.dds" />
-    <Resource Include="textures\body\135_3a.dxt5.dds" />
-    <Resource Include="textures\body\136.dds" />
-    <Resource Include="textures\body\138.dds" />
-    <Resource Include="textures\body\139.dds" />
-    <Resource Include="textures\body\140.dds" />
-    <Resource Include="textures\body\141.dds" />
-    <Resource Include="textures\body\142.dds" />
-    <Resource Include="textures\body\143.dds" />
-    <Resource Include="textures\body\144.dds" />
-    <Resource Include="textures\body\145.dds" />
-    <Resource Include="textures\body\146.dds" />
-    <Resource Include="textures\body\147.dds" />
-    <Resource Include="textures\body\148.dds" />
-    <Resource Include="textures\body\150.dds" />
-    <Resource Include="textures\body\151.dds" />
-    <Resource Include="textures\body\152.dds" />
-    <Resource Include="textures\body\153.dds" />
-    <Resource Include="textures\body\154.dds" />
-    <Resource Include="textures\body\155.dds" />
-    <Resource Include="textures\body\156.dds" />
-    <Resource Include="textures\body\157.dds" />
-    <Resource Include="textures\body\158.dds" />
-    <Resource Include="textures\body\159.dds" />
-    <Resource Include="textures\body\160.dds" />
-    <Resource Include="textures\body\160_3a.dxt5.dds" />
-    <Resource Include="textures\body\161.dds" />
-    <Resource Include="textures\body\162.dds" />
-    <Resource Include="textures\body\163.dds" />
-    <Resource Include="textures\body\164.dds" />
-    <Resource Include="textures\body\165.dds" />
-    <Resource Include="textures\body\166.dds" />
-    <Resource Include="textures\body\170.dds" />
-    <Resource Include="textures\body\170_1a.dxt5.dds" />
-    <Resource Include="textures\body\175.dds" />
-    <Resource Include="textures\body\176.dds" />
-    <Resource Include="textures\body\177.dds" />
-    <Resource Include="textures\body\178.dds" />
-    <Resource Include="textures\body\179.dds" />
-    <Resource Include="textures\body\180.dds" />
-    <Resource Include="textures\body\181.dds" />
-    <Resource Include="textures\body\182.dds" />
-    <Resource Include="textures\body\183.dds" />
-    <Resource Include="textures\body\184.dds" />
-    <Resource Include="textures\body\185.dds" />
-    <Resource Include="textures\body\m001.dds" />
-    <Resource Include="textures\body\m002.dds" />
-    <Resource Include="textures\body\m003.dds" />
-    <Resource Include="textures\body\m004.dds" />
-    <Resource Include="textures\body\m005.dds" />
-    <Resource Include="textures\body\m006.dds" />
-    <Resource Include="textures\body\m007.dds" />
-    <Resource Include="textures\body\m008.dds" />
-    <Resource Include="textures\body\m013.dds" />
-    <Resource Include="textures\body\m014.dds" />
-    <Resource Include="textures\body\m027.dds" />
-    <Resource Include="textures\body\m028.dds" />
-    <Resource Include="textures\body\m033.dds" />
-    <Resource Include="textures\body\m034.dds" />
-    <Resource Include="textures\body\m039.dds" />
-    <Resource Include="textures\body\m040.dds" />
-    <Resource Include="textures\body\m045.dds" />
-    <Resource Include="textures\body\m046.dds" />
-    <Resource Include="textures\body\m080.dds" />
-    <Resource Include="textures\body\m158.dds" />
-    <Resource Include="textures\body\m159.dds" />
-    <Resource Include="textures\body\m175.dds" />
-    <Resource Include="textures\body\m176.dds" />
-    <Resource Include="textures\body\m181.dds" />
-    <Resource Include="textures\body\m182.dds" />
-    <Resource Include="textures\body\m185.dds" />
-    <Resource Include="textures\body\s138.dds">
+    <Resource Include="textures\body\052.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\053.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\054.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\058.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\058a_1.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\059.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\059a_1.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\060.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\060_1a.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\061.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\061_1a.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\062.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\066.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\067.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\068.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\069.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\071.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\072.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\075.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\076.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\078.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\079.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\080.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\087.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\088.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\090.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\091.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\092.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\099.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\101.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\103.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\105.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\107.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\109.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\115.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\116.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\117.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\119.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\121.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\123.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\125.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\126.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\127.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\129.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\130.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\131.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\132.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\132_3a.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\134.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\134_3a.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\135.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\135_3a.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\136.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\138.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\139.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\140.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\141.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\142.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\143.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\144.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\145.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\146.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\147.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\148.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\150.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\151.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\152.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\153.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\154.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\155.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\156.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\157.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\158.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\159.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\160.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\160_3a.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\161.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\162.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\163.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\164.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\165.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\166.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\170.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\170_1a.dxt5.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\175.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\176.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\177.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\178.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\179.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\180.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\181.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\182.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\183.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\184.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\185.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\body\033.png">
@@ -1672,162 +1895,55 @@
     <Resource Include="images\body\183.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="textures\face\001.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\002.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\003.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\004.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\005.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\006.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\007.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\008.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\009.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\010.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\011.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\012.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\013.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\014.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\015.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\016.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\017.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\018.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\019.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\024.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\025.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\026.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\027.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\028.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\029.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\030.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\031.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\031a_0.dxt5.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\033.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\034.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\051.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\051a_0.dxt5.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m001.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m002.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m004.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m007.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m008.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m009.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m011.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m012.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m013.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m014.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m016.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m017.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m018.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m019.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m026.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m027.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m030.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m033.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m034.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="textures\face\m051.dds">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="textures\face\001.dds" />
+    <Resource Include="textures\face\002.dds" />
+    <Resource Include="textures\face\003.dds" />
+    <Resource Include="textures\face\004.dds" />
+    <Resource Include="textures\face\005.dds" />
+    <Resource Include="textures\face\006.dds" />
+    <Resource Include="textures\face\007.dds" />
+    <Resource Include="textures\face\008.dds" />
+    <Resource Include="textures\face\009.dds" />
+    <Resource Include="textures\face\010.dds" />
+    <Resource Include="textures\face\011.dds" />
+    <Resource Include="textures\face\012.dds" />
+    <Resource Include="textures\face\013.dds" />
+    <Resource Include="textures\face\014.dds" />
+    <Resource Include="textures\face\015.dds" />
+    <Resource Include="textures\face\016.dds" />
+    <Resource Include="textures\face\017.dds" />
+    <Resource Include="textures\face\018.dds" />
+    <Resource Include="textures\face\019.dds" />
+    <Resource Include="textures\face\024.dds" />
+    <Resource Include="textures\face\025.dds" />
+    <Resource Include="textures\face\026.dds" />
+    <Resource Include="textures\face\027.dds" />
+    <Resource Include="textures\face\028.dds" />
+    <Resource Include="textures\face\029.dds" />
+    <Resource Include="textures\face\030.dds" />
+    <Resource Include="textures\face\031.dds" />
+    <Resource Include="textures\face\033.dds" />
+    <Resource Include="textures\face\034.dds" />
+    <Resource Include="textures\face\051a_0.dxt5.dds" />
+    <Resource Include="textures\face\m001.dds" />
+    <Resource Include="textures\face\m002.dds" />
+    <Resource Include="textures\face\m004.dds" />
+    <Resource Include="textures\face\m007.dds" />
+    <Resource Include="textures\face\m008.dds" />
+    <Resource Include="textures\face\m009.dds" />
+    <Resource Include="textures\face\m011.dds" />
+    <Resource Include="textures\face\m012.dds" />
+    <Resource Include="textures\face\m013.dds" />
+    <Resource Include="textures\face\m014.dds" />
+    <Resource Include="textures\face\m016.dds" />
+    <Resource Include="textures\face\m017.dds" />
+    <Resource Include="textures\face\m018.dds" />
+    <Resource Include="textures\face\m019.dds" />
+    <Resource Include="textures\face\m026.dds" />
+    <Resource Include="textures\face\m027.dds" />
+    <Resource Include="textures\face\m030.dds" />
+    <Resource Include="textures\face\m033.dds" />
+    <Resource Include="textures\face\m034.dds" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -1903,9 +2019,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="fancy1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\resource\Heart.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -1960,5 +2073,929 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\island\0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\17.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\19.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\22.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\23.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\26.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\27.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\28.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\29.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\30.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\31.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\island\p4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\body\c005.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c006.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\hair\m001.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\m002.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\m008.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\m045.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\m051.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\body\m001.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m002.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m003.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m004.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m005.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m006.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m007.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m008.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m013.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m014.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m027.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m028.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m033.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m034.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m039.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m040.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m045.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m046.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m080.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m158.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m159.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m175.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m176.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m181.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m182.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\m185.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\face\eBase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\face\e001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\face\032.dds" />
+    <Resource Include="textures\face\m003.dds" />
+    <Resource Include="textures\face\m005.dds" />
+    <Resource Include="textures\face\m006.dds" />
+    <Resource Include="textures\face\m010.dds" />
+    <Resource Include="textures\face\m015.dds" />
+    <Resource Include="textures\face\m024.dds" />
+    <Resource Include="textures\face\m025.dds" />
+    <Resource Include="textures\face\m029.dds" />
+    <Resource Include="textures\face\e005.png" />
+    <Resource Include="textures\face\e007.png" />
+    <Resource Include="textures\face\e009.png" />
+    <Resource Include="textures\face\e010.png" />
+    <Resource Include="textures\face\e011.png" />
+    <Resource Include="textures\face\e012.png" />
+    <Resource Include="textures\face\e013.png" />
+    <Resource Include="textures\face\e014.png" />
+    <Resource Include="textures\face\e015.png" />
+    <Resource Include="textures\face\e016.png" />
+    <Resource Include="textures\face\e017.png" />
+    <Resource Include="textures\face\e018.png" />
+    <Resource Include="textures\face\e024.png" />
+    <Resource Include="textures\face\e029.png" />
+    <Resource Include="textures\face\e033.png" />
+    <Resource Include="textures\face\e034.png" />
+    <Resource Include="textures\face\m050.dds" />
+    <Resource Include="textures\face\e004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\hair\c054.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\dyecolour.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\hair\c001.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c002.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\body\c007.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c008.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c011.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\body\c012.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c013.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c014.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\body\c015.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c016.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c017.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c018.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c023.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c024.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c027.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c028.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c029.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c030.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c031.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c032.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c033.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c034.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c037.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c038.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c039.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c040.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c041.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c042.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c043.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c044.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c045.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c046.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c047.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c048.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c052.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c053.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c054.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c058.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c059.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c060.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c061.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c062.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c066.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c067.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c068.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c075.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c076.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c078.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c079.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c080.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c087.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c088.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c090.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c091.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c092.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c099.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c101.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c107.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c109.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c115.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c116.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c117.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c119.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c121.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c123.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c125.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c126.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c127.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c129.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c130.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c131.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c132.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c134.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c135.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c136.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c138.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c139.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c141.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c142.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c143.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c151.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c153.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c154.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c155.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c156.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c157.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c158.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c159.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c160.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c161.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c162.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c164.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c165.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c166.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c175.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c176.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c177.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c178.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c179.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c180.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c181.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c182.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c183.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c184.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\body\c185.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\hair\003.png" />
+    <Resource Include="images\hair\004.png" />
+    <Resource Include="images\hair\005.png" />
+    <Resource Include="images\hair\006.png" />
+    <Resource Include="images\hair\007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\hair\009.png" />
+    <Resource Include="images\hair\010.png" />
+    <Resource Include="images\hair\012.png" />
+    <Resource Include="images\hair\013.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\hair\022.png" />
+    <Resource Include="images\hair\023.png" />
+    <Resource Include="images\hair\024.png" />
+    <Resource Include="images\hair\025.png" />
+    <Resource Include="images\hair\026.png" />
+    <Resource Include="images\hair\027.png" />
+    <Resource Include="images\hair\028.png" />
+    <Resource Include="images\hair\033.png" />
+    <Resource Include="images\hair\034.png" />
+    <Resource Include="images\hair\035.png" />
+    <Resource Include="images\hair\036.png" />
+    <Resource Include="images\hair\038.png" />
+    <Resource Include="images\hair\039.png" />
+    <Resource Include="images\hair\040.png" />
+    <Resource Include="images\hair\041.png" />
+    <Resource Include="images\hair\042.png" />
+    <Resource Include="images\hair\043.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\hair\045.png" />
+    <Resource Include="images\hair\050.png" />
+    <Resource Include="images\hair\051.png" />
+    <Resource Include="images\hair\052.png" />
+    <Resource Include="images\hair\053.png" />
+    <Resource Include="images\hair\054.png" />
+    <Resource Include="images\hair\060.png" />
+    <Resource Include="images\hair\061.png" />
+    <Resource Include="images\hair\062.png" />
+    <Resource Include="images\hair\063.png" />
+    <Resource Include="images\hair\064.png" />
+    <Resource Include="images\hair\065.png" />
+    <Resource Include="images\hair\066.png" />
+    <Resource Include="images\hair\067.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\hair\086.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\face\001.png" />
+    <Resource Include="images\face\002.png" />
+    <Resource Include="images\face\003.png" />
+    <Resource Include="images\face\004.png" />
+    <Resource Include="images\face\005.png" />
+    <Resource Include="images\face\006.png" />
+    <Resource Include="images\face\007.png" />
+    <Resource Include="images\face\008.png" />
+    <Resource Include="images\face\009.png" />
+    <Resource Include="images\face\010.png" />
+    <Resource Include="images\face\011.png" />
+    <Resource Include="images\face\012.png" />
+    <Resource Include="images\face\013.png" />
+    <Resource Include="images\face\014.png" />
+    <Resource Include="images\face\015.png" />
+    <Resource Include="images\face\016.png" />
+    <Resource Include="images\face\017.png" />
+    <Resource Include="images\face\018.png" />
+    <Resource Include="images\face\019.png" />
+    <Resource Include="images\face\024.png" />
+    <Resource Include="images\face\025.png" />
+    <Resource Include="images\face\026.png" />
+    <Resource Include="images\face\027.png" />
+    <Resource Include="images\face\028.png" />
+    <Resource Include="images\face\029.png" />
+    <Resource Include="images\face\030.png" />
+    <Resource Include="images\face\031.png" />
+    <Resource Include="images\face\032.png" />
+    <Resource Include="images\face\033.png" />
+    <Resource Include="images\face\034.png" />
+    <Resource Include="images\face\051.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\dyecolourResource.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="textures\body\c071.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\face\051.dds" />
+    <Resource Include="textures\hair\c060.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c061.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c062.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c063.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c064.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c068.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c069.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c070.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c080.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c081.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c082.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c084.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c085.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c086.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c090.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c092.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c003.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c005.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c006.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c008.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c009.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c010.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c012.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c013.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c018.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c022.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c023.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c024.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c025.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c026.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c027.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c033.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c036.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c038.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c039.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c040.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c042.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c044.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c045.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="textures\hair\c051.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\hair\c065.png" />
+    <Resource Include="textures\hair\c066.png" />
+    <Resource Include="textures\hair\c067.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\050.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\009.png" />
+    <Resource Include="images\body\011.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\031.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\078.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\200.png" />
+    <Resource Include="images\body\201.png" />
+    <Resource Include="images\body\210.png" />
+    <Resource Include="images\body\220.png" />
+    <Resource Include="images\body\230.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\hair\m042.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textures\face\e051.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\202.png" />
+    <Resource Include="images\body\203.png" />
+    <Resource Include="images\body\204.png" />
+    <Resource Include="images\body\205.png" />
+    <Resource Include="images\body\206.png" />
+    <Resource Include="images\body\207.png" />
+    <Resource Include="images\body\208.png" />
+    <Resource Include="images\body\209.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\211.png" />
+    <Resource Include="images\body\212.png" />
+    <Resource Include="images\body\213.png" />
+    <Resource Include="images\body\214.png" />
+    <Resource Include="images\body\215.png" />
+    <Resource Include="images\body\216.png" />
+    <Resource Include="images\body\217.png" />
+    <Resource Include="images\body\218.png" />
+    <Resource Include="images\body\219.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\221.png" />
+    <Resource Include="images\body\222.png" />
+    <Resource Include="images\body\223.png" />
+    <Resource Include="images\body\224.png" />
+    <Resource Include="images\body\225.png" />
+    <Resource Include="images\body\226.png" />
+    <Resource Include="images\body\227.png" />
+    <Resource Include="images\body\228.png" />
+    <Resource Include="images\body\229.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\body\231.png" />
+    <Resource Include="images\body\232.png" />
+    <Resource Include="images\body\233.png" />
+    <Resource Include="images\body\234.png" />
+    <Resource Include="images\body\235.png" />
+    <Resource Include="images\body\236.png" />
+    <Resource Include="images\body\237.png" />
+    <Resource Include="images\body\240.png" />
+    <Resource Include="images\body\241.png" />
+    <Resource Include="images\body\242.png" />
+    <Resource Include="images\body\243.png" />
+    <Resource Include="images\body\244.png" />
+    <Resource Include="images\body\245.png" />
+    <Resource Include="images\body\246.png" />
+    <Resource Include="images\body\247.png" />
+    <Resource Include="images\body\250.png" />
+    <Resource Include="images\body\251.png" />
+    <Resource Include="images\body\252.png" />
+    <Resource Include="images\body\253.png" />
+    <Resource Include="images\body\254.png" />
+    <Resource Include="images\body\255.png" />
+    <Resource Include="images\body\256.png" />
+    <Resource Include="images\body\260.png" />
+    <Resource Include="images\body\261.png" />
+    <Resource Include="images\body\262.png" />
+    <Resource Include="images\body\263.png" />
+    <Resource Include="images\body\264.png" />
+    <Resource Include="images\body\265.png" />
+    <Resource Include="images\body\266.png" />
+    <Resource Include="images\body\267.png" />
+    <Resource Include="images\body\268.png" />
+    <Resource Include="images\body\269.png" />
+    <Resource Include="images\body\270.png" />
+    <Resource Include="images\body\271.png" />
+    <Resource Include="images\body\272.png" />
+    <Resource Include="images\body\273.png" />
+    <Resource Include="images\body\274.png" />
+    <Resource Include="images\body\275.png" />
+    <Resource Include="images\body\276.png" />
+    <Resource Include="images\body\280.png" />
+    <Resource Include="images\body\281.png" />
+    <Resource Include="images\body\282.png" />
+    <Resource Include="images\body\283.png" />
+    <Resource Include="images\body\284.png" />
+    <Resource Include="images\body\285.png" />
+    <Resource Include="images\body\286.png" />
+    <Resource Include="images\body\287.png" />
+    <Resource Include="images\body\288.png" />
+    <Resource Include="images\body\289.png" />
+    <Resource Include="images\body\290.png" />
+    <Resource Include="images\body\291.png" />
+    <Resource Include="images\body\292.png" />
+    <Resource Include="images\body\293.png" />
+    <Resource Include="images\body\294.png" />
+    <Resource Include="images\body\295.png" />
+    <Resource Include="images\body\296.png" />
+    <Resource Include="images\body\297.png" />
+    <Resource Include="images\body\298.png" />
+    <Resource Include="images\body\299.png" />
+    <Resource Include="images\body\300.png" />
+    <Resource Include="images\body\301.png" />
+    <Resource Include="images\body\302.png" />
+    <Resource Include="images\body\303.png" />
+    <Resource Include="images\body\304.png" />
+    <Resource Include="images\body\305.png" />
+    <Resource Include="images\body\306.png" />
+    <Resource Include="images\body\307.png" />
+    <Resource Include="images\body\308.png" />
+    <Resource Include="images\body\309.png" />
+    <Resource Include="images\body\310.png" />
+    <Resource Include="images\body\311.png" />
+    <Resource Include="images\body\312.png" />
+    <Resource Include="images\body\313.png" />
+    <Resource Include="images\body\314.png" />
+    <Resource Include="images\body\315.png" />
+    <Resource Include="images\body\316.png" />
+    <Resource Include="images\body\317.png" />
+    <Resource Include="images\body\318.png" />
+    <Resource Include="images\body\319.png" />
+    <Resource Include="images\body\320.png" />
+    <Resource Include="images\body\321.png" />
+    <Resource Include="images\body\322.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\info.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets'))" />
+  </Target>
 </Project>

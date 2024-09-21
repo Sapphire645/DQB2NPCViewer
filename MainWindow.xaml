@@ -9,13 +9,13 @@
         xmlns:control="clr-namespace:DQB2NPCViewer.control"
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Class="DQB2NPCViewer.MainWindow"
         mc:Ignorable="d"
-        Title="DQB2 NPC Viewer Pre-Alpha 0" Height="600" Width="1000" MinHeight="530" MinWidth="1000">
+        Title="DQB2 NPC Viewer Pre-Alpha 3" Height="618" Width="1100" MinHeight="618" MinWidth="1100">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="450*"/>
         </Grid.RowDefinitions>
-        <ToolBar HorizontalAlignment="Center" Height="38" VerticalAlignment="Center" Width="980">
+        <ToolBar VerticalAlignment="Center">
             <Button Height="32" Width="32" Click="Open_Click">
                 <Image Source="/images/resource/open.png" />
             </Button>
@@ -27,167 +27,206 @@
             <TabItem Header="General">
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="305"/>
-                        <ColumnDefinition Width="326"/>
+                        <ColumnDefinition Width="335"/>
+                        <ColumnDefinition Width="350"/>
                         <ColumnDefinition Width="363*"/>
                     </Grid.ColumnDefinitions>
-
-                    <Rectangle Grid.Column="0" Height="20" Margin="20,11,140,0" Fill="#E5E5E5"  VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <TextBlock x:Name="TextBoxConsole" Grid.Column="0" Margin="24,8,141,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Text="Thing Done!" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.ColumnSpan="2"/>
-
-                    <TextBlock  Grid.Column="0" HorizontalAlignment="Left" Margin="15,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" Text="Name" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"/>
-                    <TextBox x:Name="TextBoxName" Grid.Column="0" Margin="60,40,10,0" Text="{Binding NameNPC, BindsDirectlyToSource=True, FallbackValue=-, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" TextChanged="TextBoxName_TextChanged"/>
-                    <TextBlock Grid.Column="0"  HorizontalAlignment="Left" Margin="15,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Language="es-es" Text="Sex"/></TextBlock>
-                    <ComboBox x:Name="ComboBoxGender" Grid.Column="0" Margin="60,70,10,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxGender_SelectionChanged">
-                        <ComboBoxItem Content="Male"/>
-                        <ComboBoxItem Content="Female"/>
-                    </ComboBox>
-                    <TextBlock Grid.Column="0"  HorizontalAlignment="Left" Margin="15,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="HP"/></TextBlock>
-                    <TextBox x:Name="TextBoxHP" Grid.Column="0" Margin="60,100,10,0" TextWrapping="Wrap" Text="{Binding HP, BindsDirectlyToSource=True, FallbackValue=0, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" TextChanged="TextBoxHP_TextChanged"/>
-                    <TextBlock Grid.Column="0"  HorizontalAlignment="Left" Margin="15,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Job"/></TextBlock>
-                    <ComboBox  Name="ComboBoxJob" Grid.Column="0" Margin="60,130,10,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxJob_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Path="JobId" />
-                                            <Binding Path="JobName" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <ComboBox Name="ComboBoxTypeLock" Grid.Column="0" Margin="60,160,10,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxTypeLock_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Path="typeID" />
-                                            <Binding Path="name" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBlock Grid.Column="0"  HorizontalAlignment="Left" Margin="15,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Foreground="#FFFFA600"><Run Text="Type"/></TextBlock>
-                    <ComboBox Name="ComboBoxHome" Margin="60,190,41,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxHome_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Path="IslandId" />
-                                            <Binding Path="IslandName" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Image Name="HomeImageBox" Stretch="Uniform" Height="26" Margin="0,190,10,0" VerticalAlignment="Top" Width="26" Source="{Binding Path=HomeImage, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="15,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Home"/></TextBlock>
-                    <ComboBox Name="ComboBoxIsland" Margin="60,220,41,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxIsland_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Path="IslandId" />
-                                            <Binding Path="IslandName" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Image Name="IslandImageBox" Stretch="Uniform" Height="26" Margin="0,220,10,0" VerticalAlignment="Top" Width="26" Source="{Binding Path=IslandImage, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="15,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Island"/></TextBlock>
-                    <ComboBox Name="ComboBoxPlace" Margin="60,250,41,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxPlace_SelectionChanged">
-                        <ComboBoxItem Content="Null"/>
-                        <ComboBoxItem Content="Green Gardens"/>
-                        <ComboBoxItem Content="Scarlet Sands"/>
-                        <ComboBoxItem Content="Cerulean Steppe"/>
-                        <ComboBoxItem Content="Beach"/>
-                    </ComboBox>
-                    <Image Name="PlaceImageBox" Height="26" Margin="0,250,10,0" VerticalAlignment="Top" Width="26" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="15,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Place"/></TextBlock>
-
-                    <CheckBox Name="LockCheck" Content="Lock Appearance" HorizontalAlignment="Left" Margin="193,11,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="112" Height="15" Grid.Column="1" Checked="LockCheck_Checked" Unchecked="LockCheck_Unchecked"/>
-
-                    <TextBlock  HorizontalAlignment="Left" Margin="15,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Voice"/></TextBlock>
-                    <TextBox x:Name="TextBoxVoice" Margin="60,280,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" TextChanged="TextBoxVoice_TextChanged"/>
-
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Face Model"/></TextBlock>
-                    <ComboBox Name="ComboBoxFace" Grid.Column="1" Margin="71,40,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxFace_SelectionChanged" SelectedItem="{Binding SelectedFace, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.FaceList, RelativeSource={RelativeSource AncestorType=Window}}" />
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Hair Model"/></TextBlock>
-                    <ComboBox Name="ComboBoxHair" Grid.Column="1" Margin="71,70,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxHair_SelectionChanged" SelectedItem="{Binding SelectedHair, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.HairList, RelativeSource={RelativeSource AncestorType=Window}}" />
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Body Model"/></TextBlock>
-                    <ComboBox Name="ComboBoxBody" Grid.Column="1" Margin="71,100,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ComboBoxBody_SelectionChanged" SelectedItem="{Binding SelectedBody, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.BodyList, RelativeSource={RelativeSource AncestorType=Window}}" />
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Eye Colour"/></TextBlock>
-                    <Button Name="ButtonEye" Grid.Column="1" Content="Select Colour" Margin="71,130,0,0" VerticalAlignment="Top" Height="26" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonEye_Click" Width="161" HorizontalAlignment="Left"/>
-                    <Rectangle Name="RectangleEye" Grid.Column="1" Margin="237,130,21,0" Stroke="#FFACACAC" VerticalAlignment="Top" Height="26"/>
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Hair Colour"/></TextBlock>
-                    <Button Name="ButtonHair" Grid.Column="1" Content="Select Colour" Margin="71,160,0,0" VerticalAlignment="Top" Height="26" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonHair_Click" Width="161" HorizontalAlignment="Left"/>
-                    <Rectangle Name="RectangleHair" Grid.Column="1" Margin="237,160,21,0" Stroke="#FFACACAC" VerticalAlignment="Top" Height="26"/>
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Skin Colour"/></TextBlock>
-                    <Button Name="ButtonSkin" Grid.Column="1" Content="Select Colour" Margin="71,190,0,0" VerticalAlignment="Top" Height="26" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonSkin_Click" Width="161" HorizontalAlignment="Left" />
-                    <Rectangle Name="RectangleSkin" Grid.Column="1" Margin="237,190,21,0" Stroke="#FFACACAC" VerticalAlignment="Top" Height="26"/>
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Weapon"/></TextBlock>
-                    <ComboBox Name="WeaponBox" Grid.Column="1" Margin="71,220,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="WeaponBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Path="ID" />
-                                            <Binding Path="Name" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Image Grid.Column="2" HorizontalAlignment="Left" Height="26" Margin="5,219,0,0" VerticalAlignment="Top" Width="26" Source="/images/resource/open.png"/>
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="65" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Armour"/></TextBlock>
-                    <ComboBox Name="ArmourBox" Grid.Column="1" Margin="71,250,21,0" VerticalAlignment="Top" Height="26" SelectionChanged="ArmourBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Path="ID" />
-                                            <Binding Path="Name" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Image Grid.Column="2" HorizontalAlignment="Left" Height="26" Margin="5,249,0,0" VerticalAlignment="Top" Width="26" Source="/images/resource/open.png"/>
-
-                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left" Margin="0,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="50" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0"><Run Text="Dialogue"/></TextBlock>
-                    <TextBox Name="TextBoxDialogue" Grid.Column="1" Margin="71,280,21,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="26" VerticalContentAlignment="Center" TextChanged="TextBoxDialogue_TextChanged"/>
-                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="71,325,21,0">
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <TextBlock  TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Room Size"/></TextBlock>
-                            <ComboBox Name="SizeBox" Grid.Column="1" VerticalAlignment="Top" Width="142" Height="26" HorizontalAlignment="Right" SelectionChanged="SizeBox_SelectionChanged"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="380"/>
+                        <RowDefinition Height="363*"/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.Column="0" Height="20" Margin="20,11,20,0" Fill="#E5E5E5"  VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="TextBoxConsole" Grid.Column="0" Margin="24,8,24,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Text="Thing Done!" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.ColumnSpan="2"/>
+                    <StackPanel Orientation="Vertical" Margin="10,40,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Name ="BName" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" Name" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <TextBox x:Name="TextBoxName" Grid.Column="0" Text="{Binding NameNPC, BindsDirectlyToSource=True, FallbackValue=-, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Height="30" MinWidth="265" VerticalContentAlignment="Center" TextChanged="TextBoxName_TextChanged"/>
                         </StackPanel>
-                        <Image Name="SizeImage" Grid.Column="1" Margin="0,5,0,5" Height="10"/>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Fanciness"/></TextBlock>
-                            <ComboBox Name="FancinessBox" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="142" Height="26" SelectionChanged="FancinessBox_SelectionChanged"></ComboBox>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BSex" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" Sex" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox x:Name="ComboBoxGender" MinWidth="265" Grid.Column="0" VerticalAlignment="Center" Height="30" SelectionChanged="ComboBoxGender_SelectionChanged">
+                                <ComboBoxItem Content="Male"/>
+                                <ComboBoxItem Content="Female"/>
+                            </ComboBox>
                         </StackPanel>
-                        <Image Name="FancyImage" Grid.Column="1" Margin="0,5,0,5" Height="10"/>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Ambience"/></TextBlock>
-                            <ComboBox Name="AmbianceBox" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="142" Height="26" SelectionChanged="ComboBoxAmbiance_SelectionChanged"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BHP" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" HP" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <TextBox x:Name="TextBoxHP" MinWidth="265" Grid.Column="0" TextWrapping="Wrap" Text="{Binding HP, BindsDirectlyToSource=True, FallbackValue=0, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" TextChanged="TextBoxHP_TextChanged"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BJob" Content=" Job" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox  Name="ComboBoxJob" MinWidth="265" Grid.Column="0" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxJob_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="IJId" />
+                                                    <Binding Path="IJName" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BType" Content=" Type" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}" Foreground="#FFFF8A00"/>
+                            <ComboBox Name="ComboBoxTypeLock" Grid.Column="0" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxTypeLock_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="typeID" />
+                                                    <Binding Path="name" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BHome" Content=" Home" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="ComboBoxHome"  MinWidth="228" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxHome_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="IJId" />
+                                                    <Binding Path="IJName" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Image Name="HomeImageBox" Stretch="Uniform" Height="30" VerticalAlignment="Top" Width="30" Source="{Binding Path=HomeImage, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Right" Margin="6,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BIsland" Content=" Island" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="ComboBoxIsland"  MinWidth="228" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxIsland_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="IJId" />
+                                                    <Binding Path="IJName" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Image Name="IslandImageBox" Stretch="Uniform" Height="30" Margin="6,0,0,0" VerticalAlignment="Top" Width="30" Source="{Binding Path=IslandImage, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BPlace" Content=" Place" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="ComboBoxPlace"   MinWidth="228" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxPlace_SelectionChanged">
+                                <ComboBoxItem Content="Null"/>
+                                <ComboBoxItem Content="Green Gardens"/>
+                                <ComboBoxItem Content="Scarlet Sands"/>
+                                <ComboBoxItem Content="Cerulean Steppe"/>
+                                <ComboBoxItem Content="Beach"/>
+                            </ComboBox>
+                            <Image Name="PlaceImageBox" Height="30.3" VerticalAlignment="Top"  Margin="6,0,0,0" Width="30" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BVoice" Content=" Voice" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <TextBox x:Name="TextBoxVoice" TextWrapping="Wrap" MinWidth="265" Text="0" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" TextChanged="TextBoxVoice_TextChanged"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Right">
+                            <Button Name ="BFlags" Content=" Flags:" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="17" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,-2,0,0" BorderBrush="#FFCED0D6" Margin="0,0,49,0" Background="{x:Null}"/>
+                            <CheckBox Name="ClothCheck" Content="Has Clothes" Margin="0,0,9,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="91" Height="15" Grid.Column="1" Checked="ClothCheck_Checked" Unchecked="ClothCheck_Unchecked" HorizontalAlignment="Right"/>
+                            <CheckBox Name="LockCheck" Content="Lock Appearance" Margin="0,0,3,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="112" Height="15" Grid.Column="1" Checked="LockCheck_Checked" Unchecked="LockCheck_Unchecked" HorizontalAlignment="Right"/>
                         </StackPanel>
                     </StackPanel>
-                    <HelixToolkit:HelixViewport3D x:Name="MyHelixViewport" Grid.Column="2" Background="DarkGray" Margin="0,3,7,5">
+                    <Border Grid.Row ="1" Grid.ColumnSpan ="2" BorderBrush="#FFABADB3" BorderThickness="1,1,1,1" Margin="5,0,277,5"  >
+                        <StackPanel Orientation="Vertical" >
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Information: " Margin="5,2,0,0" FontWeight="Bold" />
+                                <TextBlock Name="InfoName" Margin="0,2,0,0" FontWeight="Bold" />
+                            </StackPanel>
+                            <TextBlock Name="InfoBox" Margin="5,4,5,0" TextWrapping="WrapWithOverflow" Height="100"/>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="3,40,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Name ="BFaceModel" Content=" FaceModel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="ComboBoxFace" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxFace_SelectionChanged" SelectedItem="{Binding SelectedFace, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.FaceList, RelativeSource={RelativeSource AncestorType=Window}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BHairModel" Content=" HairModel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="ComboBoxHair" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxHair_SelectionChanged" SelectedItem="{Binding SelectedHair, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.HairList, RelativeSource={RelativeSource AncestorType=Window}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BBodyModel" Content=" BodyModel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="ComboBoxBody" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxBody_SelectionChanged" SelectedItem="{Binding SelectedBody, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.BodyList, RelativeSource={RelativeSource AncestorType=Window}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BEyeColour" Content=" EyeColour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <Button Name="ButtonEye"   Content="Select Colour" VerticalAlignment="Center" Height="30" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonEye_Click" Width="161" HorizontalAlignment="Left"/>
+                            <Rectangle Name="RectangleEye" MinWidth="101" Stroke="#FFACACAC" VerticalAlignment="Top" Height="30" Margin="3,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BHairColour" Content=" HairColour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <Button Name="ButtonHair"   Content="Select Colour"  VerticalAlignment="Top" Height="30" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonHair_Click" Width="161" HorizontalAlignment="Left"/>
+                            <Rectangle Name="RectangleHair" MinWidth="101" Stroke="#FFACACAC" VerticalAlignment="Top" Margin="3,0,0,0" Height="30"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BSkinColour" Content=" SkinColour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <Button Name="ButtonSkin"   Content="Select Colour" VerticalAlignment="Top" Height="30" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonSkin_Click" Width="161" HorizontalAlignment="Left" />
+                            <Rectangle Name="RectangleSkin" MinWidth="101" Stroke="#FFACACAC" VerticalAlignment="Top" Height="30" Margin="3,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BWeapon" Content=" Weapon" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="WeaponBox" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="WeaponBox_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="ID" />
+                                                    <Binding Path="Name" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BArmour" Content=" Armour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <ComboBox Name="ArmourBox"  MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ArmourBox_SelectionChanged">
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Button Name ="BDialogue" Content=" Dialogue" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
+                            <TextBox Name="TextBoxDialogue" MinWidth="265" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" TextChanged="TextBoxDialogue_TextChanged"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical" Margin="100,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock  TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Room Size"/></TextBlock>
+                                <ComboBox Name="SizeBox" Grid.Column="1" VerticalAlignment="Top" Width="147" Height="26" HorizontalAlignment="Right" SelectionChanged="SizeBox_SelectionChanged"/>
+                            </StackPanel>
+                            <Image Name="SizeImage" Margin="0,5,12,5" Height="10"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Fanciness"/></TextBlock>
+                                <ComboBox Name="FancinessBox"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="147" Height="26" SelectionChanged="FancinessBox_SelectionChanged"></ComboBox>
+                            </StackPanel>
+                            <Image Name="FancyImage" Grid.Column="1" Margin="0,5,12,5" Height="10"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Ambience"/></TextBlock>
+                                <ComboBox Name="AmbianceBox" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="147" Height="26" SelectionChanged="ComboBoxAmbiance_SelectionChanged"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                    <HelixToolkit:HelixViewport3D x:Name="MyHelixViewport" Grid.RowSpan ="2" Grid.Column="2" Background="DarkGray" Margin="0,3,7,5">
                         <!-- Define a camera for viewing the model -->
                         <HelixToolkit:HelixViewport3D.Camera>
                             <PerspectiveCamera Position="2,0,0.8" LookDirection="-1,0,0" UpDirection="0,0,1" FieldOfView="45"/>
@@ -211,9 +250,6 @@
                             <!-- Content will be set in the code-behind -->
                         </ModelVisual3D>
                     </HelixToolkit:HelixViewport3D>
-
-
-
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" Foreground="Red">
