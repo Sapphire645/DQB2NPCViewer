@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DQB2NPCViewer;
+using System;
 using System.IO;
-using DQB2NPCViewer;
 
 
 public static class DQB2DataEditor
@@ -26,11 +26,13 @@ public static class DQB2DataEditor
         MainWindow.Type = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
         TwoBytes[0] = fileBytes[0x92];
         TwoBytes[1] = fileBytes[0x93];
-        MainWindow.HP = (ushort)(BitConverter.ToUInt16(TwoBytes,0));
-
+        MainWindow.HP = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
+        if ((fileBytes[0x9C]) == 0) MainWindow.ClothVisual = false;
+        else MainWindow.ClothVisual = true;
         TwoBytes[0] = fileBytes[0xC7];
         TwoBytes[1] = fileBytes[0xC8];
         MainWindow.Weapon = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
+
         TwoBytes[0] = fileBytes[0xCF];
         TwoBytes[1] = fileBytes[0xD0];
         MainWindow.Armour = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
@@ -84,6 +86,9 @@ public static class DQB2DataEditor
         TwoBytes = BitConverter.GetBytes(MainWindow.HP);
         fileBytes[0x92] = TwoBytes[0];
         fileBytes[0x93] = TwoBytes[1];
+
+        if (MainWindow.ClothVisual) fileBytes[0x9C] = 0x40;
+        else fileBytes[0x9C] = 0x00;
 
         fileBytes[0xDF] = (byte)MainWindow.Island;
 
