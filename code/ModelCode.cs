@@ -1,24 +1,31 @@
-﻿using System;
+﻿using HelixToolkit.Wpf;
+using SharpGLTF.Schema2;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Resources;
-using HelixToolkit.Wpf;
 
 
 public static class DQB2ModelRendering
 {
-    public static Color EyeImage {  get; set; }
-    public static Color SkinImage { get; set; }
-    public static Color HairImage { get; set; }
+    public static System.Windows.Media.Color EyeImage { get; set; }
+    public static System.Windows.Media.Color SkinImage { get; set; }
+    public static System.Windows.Media.Color HairImage { get; set; }
+    public static System.Windows.Media.Color ClothImage { get; set; }
     private static Model3DGroup FaceModel { get; set; }
     private static Model3DGroup HairModel { get; set; }
     private static Model3DGroup BodyModel { get; set; }
     private static Transform3DGroup transformGroup { get; set; }
 
-
+    public static void ModelCodeC()
+    {
+        EyeImage = Colors.White;
+        SkinImage = Colors.White;
+        HairImage = Colors.White;
+        ClothImage = Colors.White;
+    }
     /// <summary>
     /// ALL COLOR TRANSFORMATIONS I HAVE NOT CODED MYSELF.
     /// THEY ARE TEMPORARY.
@@ -47,7 +54,7 @@ public static class DQB2ModelRendering
             return bitmapImage;
         }
     }
-    public static BitmapSource CreateSolidColorBitmap(int width, int height, Color color)
+    public static BitmapSource CreateSolidColorBitmap(int width, int height, System.Windows.Media.Color color)
     {
         // Create a DrawingVisual to hold the drawing
         DrawingVisual drawingVisual = new DrawingVisual();
@@ -64,59 +71,6 @@ public static class DQB2ModelRendering
         renderTargetBitmap.Render(drawingVisual);
 
         return renderTargetBitmap;
-    }
-    public static BitmapSource OverlayImages(BitmapSource baseImage, BitmapSource overlayImage)
-    {
-        int width = baseImage.PixelWidth;
-        int height = baseImage.PixelHeight;
-
-        // Convert images to pixel data
-        var basePixels = new byte[width * height * 4];
-        var overlayPixels = new byte[width * height * 4];
-        baseImage.CopyPixels(basePixels, width * 4, 0);
-        overlayImage.CopyPixels(overlayPixels, width * 4, 0);
-
-        // Ensure the base image is fully opaque
-        for (int i = 3; i < basePixels.Length; i += 4)
-        {
-            basePixels[i] = 255; // Set alpha to fully opaque
-        }
-
-        // Apply blending mode (Overlay)
-        for (int i = 0; i < basePixels.Length; i += 4)
-        {
-            byte baseA = basePixels[i + 3];
-            byte baseR = basePixels[i];
-            byte baseG = basePixels[i + 1];
-            byte baseB = basePixels[i + 2];
-
-            byte overlayR = overlayPixels[i];
-            byte overlayG = overlayPixels[i + 1];
-            byte overlayB = overlayPixels[i + 2];
-
-            // Normalize base color components (since alpha is now 255)
-            float baseRNorm = baseR / 255f;
-            float baseGNorm = baseG / 255f;
-            float baseBNorm = baseB / 255f;
-
-            // Normalize overlay color components
-            float overlayRNorm = overlayR / 255f;
-            float overlayGNorm = overlayG / 255f;
-            float overlayBNorm = overlayB / 255f;
-
-            // Apply overlay blending mode
-            float resultR = (baseRNorm < 0.5f) ? (2 * baseRNorm * overlayRNorm) : (1 - 2 * (1 - baseRNorm) * (1 - overlayRNorm));
-            float resultG = (baseGNorm < 0.5f) ? (2 * baseGNorm * overlayGNorm) : (1 - 2 * (1 - baseGNorm) * (1 - overlayGNorm));
-            float resultB = (baseBNorm < 0.5f) ? (2 * baseBNorm * overlayBNorm) : (1 - 2 * (1 - baseBNorm) * (1 - overlayBNorm));
-
-            // Convert back to byte
-            basePixels[i] = (byte)(resultR * 255);
-            basePixels[i + 1] = (byte)(resultG * 255);
-            basePixels[i + 2] = (byte)(resultB * 255);
-        }
-
-        // Create a new BitmapSource with the blended pixels
-        return BitmapSource.Create(width, height, baseImage.DpiX, baseImage.DpiY, PixelFormats.Bgra32, null, basePixels, width * 4);
     }
     public static BitmapSource MultiplyImages(BitmapSource baseImage, BitmapSource overlayImage)
     {
@@ -170,7 +124,7 @@ public static class DQB2ModelRendering
         // Create a new BitmapSource with the blended pixels
         return BitmapSource.Create(width, height, baseImage.DpiX, baseImage.DpiY, PixelFormats.Bgra32, null, basePixels, width * 4);
     }
-    public static BitmapSource MergeImages(BitmapSource baseImage, BitmapSource overlayImage,ushort x = 0, ushort y = 0)
+    public static BitmapSource MergeImages(BitmapSource baseImage, BitmapSource overlayImage, ushort x = 0, ushort y = 0)
     {
         var visual = new DrawingVisual();
         using (var context = visual.RenderOpen())
@@ -190,95 +144,37 @@ public static class DQB2ModelRendering
 
         return bitmap;
     }
-
-    public static float Clamp(float value, float min, float max)
-    {
-        if (value < min) return min;
-        if (value > max) return max;
-        return value;
-    }
-    public static BitmapSource LinearLightImages(BitmapSource baseImage, BitmapSource overlayImage)
+    public static BitmapSource ApplyClippingMask(BitmapSource baseImage, BitmapSource maskImage)
     {
         int width = baseImage.PixelWidth;
         int height = baseImage.PixelHeight;
 
         // Convert images to pixel data
         var basePixels = new byte[width * height * 4];
-        var overlayPixels = new byte[width * height * 4];
+        var maskPixels = new byte[width * height * 4];
         baseImage.CopyPixels(basePixels, width * 4, 0);
-        overlayImage.CopyPixels(overlayPixels, width * 4, 0);
+        maskImage.CopyPixels(maskPixels, width * 4, 0);
 
-        // Ensure the base image is fully opaque
-        for (int i = 3; i < basePixels.Length; i += 4)
-        {
-            basePixels[i] = 255; // Set alpha to fully opaque
-        }
-
-        // Apply Linear Light blending mode
+        // Apply the alpha from the mask image to the base image
         for (int i = 0; i < basePixels.Length; i += 4)
         {
+            // Base image RGB components remain unchanged
             byte baseR = basePixels[i];
             byte baseG = basePixels[i + 1];
             byte baseB = basePixels[i + 2];
 
-            byte overlayR = overlayPixels[i];
-            byte overlayG = overlayPixels[i + 1];
-            byte overlayB = overlayPixels[i + 2];
+            // Get the alpha value from the mask image (using its R, G, or B channel)
+            // Assuming the mask image has grayscale values for the mask, any of the R, G, or B channels will work
+            byte maskAlpha = maskPixels[i];  // Or maskPixels[i + 1] or maskPixels[i + 2], since it's grayscale
 
-            // Normalize color components
-            float baseRNorm = baseR / 255f;
-            float baseGNorm = baseG / 255f;
-            float baseBNorm = baseB / 255f;
-
-            float overlayRNorm = overlayR / 255f;
-            float overlayGNorm = overlayG / 255f;
-            float overlayBNorm = overlayB / 255f;
-
-            // Calculate Linear Light blending
-            float resultR, resultG, resultB;
-
-            if (overlayRNorm > 0.5f)
-            {
-                resultR = baseRNorm + 2 * (overlayRNorm - 0.5f);
-            }
-            else
-            {
-                resultR = baseRNorm - 2 * (0.5f - overlayRNorm);
-            }
-
-            if (overlayGNorm > 0.5f)
-            {
-                resultG = baseGNorm + 2 * (overlayGNorm - 0.5f);
-            }
-            else
-            {
-                resultG = baseGNorm - 2 * (0.5f - overlayGNorm);
-            }
-
-            if (overlayBNorm > 0.5f)
-            {
-                resultB = baseBNorm + 2 * (overlayBNorm - 0.5f);
-            }
-            else
-            {
-                resultB = baseBNorm - 2 * (0.5f - overlayBNorm);
-            }
-
-            // Clamp the results to [0, 1]
-            resultR = Clamp(resultR, 0f, 1f);
-            resultG = Clamp(resultG, 0f, 1f);
-            resultB = Clamp(resultB, 0f, 1f);
-
-            // Convert back to byte
-            basePixels[i] = (byte)(resultR * 255);
-            basePixels[i + 1] = (byte)(resultG * 255);
-            basePixels[i + 2] = (byte)(resultB * 255);
+            // Set the base image's alpha to the mask alpha
+            basePixels[i + 3] = maskAlpha;  // The alpha channel of the base image is set to the mask's grayscale value
         }
 
-        // Create a new BitmapSource with the blended pixels
+        // Create a new BitmapSource with the modified pixels
         return BitmapSource.Create(width, height, baseImage.DpiX, baseImage.DpiY, PixelFormats.Bgra32, null, basePixels, width * 4);
     }
-    private static DiffuseMaterial LoadTexture(Color ColorB, String Texture_Path, String TextureMask_Path, String TextureClotheMask_Path, ushort Case, Color ColorEye)
+    private static System.Windows.Media.Media3D.DiffuseMaterial LoadTexture(System.Windows.Media.Color ColorB, String Texture_Path, String TextureMask_Path, String TextureClotheMask_Path, ushort Case, bool cloth)
     {
         BitmapImage texture, textureMask, textureCloth;
         try
@@ -287,52 +183,70 @@ public static class DQB2ModelRendering
         }
         catch
         {
-            texture = BitmapSourceToBitmapImage(CreateSolidColorBitmap(50, 50, ColorB));
+            texture = BitmapSourceToBitmapImage(CreateSolidColorBitmap(50, 50, Colors.White));
         }
-        try
+        int width = texture.PixelWidth;
+        int height = texture.PixelHeight;
+
+        try //FOR AROUND EYE AND CLOTHES COLOUR
         {
             textureMask = new BitmapImage(new Uri(TextureMask_Path));
         }
         catch
         {
-            textureMask = BitmapSourceToBitmapImage(CreateSolidColorBitmap(50, 50, ColorB));
+            textureMask = BitmapSourceToBitmapImage(CreateSolidColorBitmap(1, 1, Colors.White));
         }
-        int width = texture.PixelWidth;
-        int height = texture.PixelHeight;
+        try //FOR EYEBROWS AND CLOTHES NOT SKIN COLOUR 
+        {
+            textureCloth = new BitmapImage(new Uri(TextureClotheMask_Path));
+        }
+        catch
+        {
+            if (cloth)
+            {
+                textureCloth = new BitmapImage(new Uri("pack://application:,,,/textures/face/eBase.png"));
+            }
+            else
+            {
+                if (Case == 0)
+                {
+                    textureCloth = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height, Colors.Transparent));
+                }
+                else{
+                    textureCloth = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height, Colors.White));
+                }
+                
+            };
+        }
         var baseImage = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height, ColorB));
         BitmapSource mergedImage;
-        switch(Case){
+        switch (Case)
+        {
             case 0: //Hair
-                var white = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height,Color.FromRgb(255,255,255)));
-                var textureWhite = MergeImages(white, texture, 0, 0);
-                mergedImage = MultiplyImages(baseImage, textureWhite);
+                var baseImage2 = MergeImages(baseImage, textureCloth,0,0); //Color + Normal hair
+                var ClothHairColourImage = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height, ClothImage)); //Cloth Colour
+                var ClothColourClip2 = ApplyClippingMask(ClothHairColourImage, textureMask); //Clip to dye cloth mask
+
+                baseImage2 = MergeImages(baseImage2, ClothColourClip2,0,0);
+                mergedImage = MultiplyImages(baseImage2, texture);
                 break;
             case 1: //Face
-                var EyeImage = BitmapSourceToBitmapImage(CreateSolidColorBitmap(128, 128,ColorEye));
-                var mergedImagePrev = MergeImages(baseImage, EyeImage,256,256);
-                mergedImage = OverlayImages(texture, mergedImagePrev);
-                //try
-                //{
-                //    var textureMask = new BitmapImage(new Uri(TextureMask_Path));
-                //    mergedImage = MergeImages(mergedImage, textureMask, 256, 256);
-                //}
-                //catch
-                //{
-                //    width = texture.PixelWidth; //fix or smth
-                //}
+                var EyeImageIm = BitmapSourceToBitmapImage(CreateSolidColorBitmap(128, 128, EyeImage)); //eye colour
+                var mergedImageColor = MergeImages(baseImage, EyeImageIm, 256, 256); //add Eye colour to skin colour
+                EyeImageIm = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height, HairImage)); //create hair colour
+                var EyebrowImage = ApplyClippingMask(EyeImageIm, textureCloth); //Clip to eyebrow mask
+                mergedImageColor = MergeImages(mergedImageColor, EyebrowImage, 0, 0); //All colours
+                mergedImage = MultiplyImages(texture, mergedImageColor); //Multiply
+                mergedImage = MergeImages(mergedImage, textureMask, 256, 256); //Set eye overlay
                 break;
             default: //Body
-                try
-                {
-                    textureCloth = new BitmapImage(new Uri(TextureClotheMask_Path));
-                }
-                catch
-                {
-                    textureCloth = BitmapSourceToBitmapImage(CreateSolidColorBitmap(50, 50, ColorB));
-                }
+                var ClothColourImage = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height, ClothImage)); //Cloth Colour
                 mergedImage = MergeImages(baseImage, textureCloth, 0, 0);
-                mergedImage = MergeImages(baseImage, textureMask,0,0); //SET COLOUR CLOTH (LEAVE FOR NOW)
-                mergedImage = OverlayImages(texture, mergedImage);
+
+                var ClothColourClip = ApplyClippingMask(ClothColourImage, textureMask); //Clip to dye cloth mask
+                mergedImage = MergeImages(mergedImage, ClothColourClip, 0, 0); //SET COLOUR CLOTH
+                mergedImage = MultiplyImages(mergedImage, texture);
+
                 break;
         }
 
@@ -342,51 +256,38 @@ public static class DQB2ModelRendering
             ViewportUnits = BrushMappingMode.Absolute,
             TileMode = TileMode.Tile
         };
-        var material = new DiffuseMaterial(imageBrush);
+        var material = new System.Windows.Media.Media3D.DiffuseMaterial(imageBrush);
 
         material.Brush.Opacity = 1.0;
         return material;
     }
-
-
-    //PLACEHOLDER CODE, OBJ FILES MAY CHANGE TO A BETTER, LIGHTER FORMAT
-    private static Model3DGroup LoadObjFile(string relativeUri)
+    private static void LoadGlbFromResources(string Model, string Type)
     {
-        // Construct the URI for the resource (pack URI)
-        Uri uri = new Uri(relativeUri, UriKind.RelativeOrAbsolute);
+        var model = ModelRoot.Load(Model);
 
-        // Get the resource stream from the embedded resource
-        StreamResourceInfo resourceInfo = Application.GetResourceStream(uri);
-        if (resourceInfo != null)
-        {
-            using (Stream stream = resourceInfo.Stream)
-            {
-                // Use HelixToolkit ObjReader to read the OBJ file
-                var reader = new ObjReader();
-                var modelGroup = reader.Read(stream);  // Reads from the stream
-
-                return modelGroup;  // Returns the loaded 3D model
-            }
-        }
-
-        throw new FileNotFoundException("Resource not found.");
+        if (File.Exists(Type))
+        { File.Delete(Type); }
+        try
+        { model.SaveAsWavefront(Type); }
+        catch{}
     }
-    private static Model3DGroup LoadModel(DiffuseMaterial material, String Model_Path)
+    private static Model3DGroup LoadModel(System.Windows.Media.Media3D.DiffuseMaterial material, String Model_Path, String Type)
     {
         var importer = new ModelImporter();
         try
         {
             var objReader = new HelixToolkit.Wpf.ObjReader();
-            var model = LoadObjFile(Model_Path);
+            LoadGlbFromResources(Model_Path, Type);
+            var model = objReader.Read(Type);
             //var model = objReader.Read(new Uri(Model_Path));
 
             if (model is Model3DGroup modelGroup)
             {
                 foreach (var geometry in modelGroup.Children)
                 {
-                    if (geometry is GeometryModel3D geomModel)
+                    if (geometry is System.Windows.Media.Media3D.GeometryModel3D geomModel)
                     {
-                            geomModel.Material = material;
+                        geomModel.Material = material;
                     }
                 }
             }
@@ -401,8 +302,8 @@ public static class DQB2ModelRendering
     }
     public static void Rotate()
     {
-        double angleX = 90; 
-        double angleY = 0; 
+        double angleX = 90;
+        double angleY = 0;
         double angleZ = 90;
 
         var rotationX = new AxisAngleRotation3D(new Vector3D(1, 0, 0), angleX);
@@ -414,18 +315,18 @@ public static class DQB2ModelRendering
         transformGroup.Children.Add(new RotateTransform3D(rotationY));
         transformGroup.Children.Add(new RotateTransform3D(rotationZ));
     }
-    public static Model3DGroup GroupModels(ushort face, ushort hair, ushort body,bool Face, bool Hair,bool Body)
+    public static Model3DGroup GroupModels(ushort face, ushort hair, ushort body, bool Face, bool Hair, bool Body)
     {
         var importer = new ModelImporter();
         var modelGroup = new Model3DGroup();
-        DiffuseMaterial material;
+        System.Windows.Media.Media3D.DiffuseMaterial material;
         try
         {
             // Load and add the first model
             if (Body == true)
             {
-                material = LoadTexture(SkinImage, "pack://application:,,,/textures/body/" + body.ToString("D3") + ".dds", "pack://application:,,,/textures/body/m" + body.ToString("D3") + ".dds", "pack://application:,,,/textures/body/c" + body.ToString("D3") + ".png", 2, SkinImage);
-                BodyModel = LoadModel(material, "models/body/" + body.ToString("D3") + ".obj");
+                material = LoadTexture(SkinImage, "pack://application:,,,/textures/body/" + body.ToString("D3") + ".dds", "pack://application:,,,/textures/body/m" + body.ToString("D3") + ".png", "pack://application:,,,/textures/body/c" + body.ToString("D3") + ".png", 2,false);
+                BodyModel = LoadModel(material, "models/body/" + body.ToString("D3") + ".glb", "MeshBody.obj");
             }
             if (BodyModel != null)
             {
@@ -436,8 +337,8 @@ public static class DQB2ModelRendering
 
             if (Hair == true)
             {
-                material = LoadTexture(HairImage, "pack://application:,,,/textures/hair/" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/hair/m" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/body/c" + body.ToString("D3") + ".png", 0, HairImage);
-                HairModel = LoadModel(material, "pack://application:,,,/models/hair/" + hair.ToString("D3") + ".obj");
+                material = LoadTexture(HairImage, "pack://application:,,,/textures/hair/" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/hair/m" + hair.ToString("D3") + ".png", "pack://application:,,,/textures/hair/c" + hair.ToString("D3") + ".png", 0,false);
+                HairModel = LoadModel(material, "models/hair/" + hair.ToString("D3") + ".glb", "MeshHair.obj");
             }
             if (HairModel != null)
             {
@@ -447,16 +348,16 @@ public static class DQB2ModelRendering
             // Load and add the third model
             if (Face == true)
             {
-                material = LoadTexture(SkinImage, "pack://application:,,,/textures/face/" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/m" + face.ToString("D3") + ".dds", "NULL", 1, EyeImage);
-                FaceModel = LoadModel(material, "pack://application:,,,/models/face/" + face.ToString("D3") + ".obj");
+                material = LoadTexture(SkinImage, "pack://application:,,,/textures/face/" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/m" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/e" + face.ToString("D3") + ".png", 1,true);
+                FaceModel = LoadModel(material, "models/face/" + face.ToString("D3") + ".glb", "MeshFace.obj");
             }
             if (FaceModel != null)
-                {
-                    modelGroup.Children.Add(FaceModel);
-                }
+            {
+                modelGroup.Children.Add(FaceModel);
+            }
 
-            if (BodyModel == null || FaceModel == null || HairModel == null) 
-                            return LoadModel(new DiffuseMaterial(), "pack://application:,,,/models/Unknown.obj");
+            //if (BodyModel == null || FaceModel == null || HairModel == null)
+            //    return LoadModel(new System.Windows.Media.Media3D.DiffuseMaterial(), "/models/Unknown.glb", "MeshUnk.obj");
             return modelGroup;
 
         }

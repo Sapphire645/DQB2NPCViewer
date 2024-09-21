@@ -1,17 +1,10 @@
 ﻿
-public class Job
+public class IslandJob
 {
-    public string JobName { get; set; }
-    public string JobDescription { get; set; }  
-    public ushort JobId { get; set; }
-}
-
-public class Island
-{
-    public string IslandName { get; set; }
-    public string IslandDescription { get; set; } = "N/A";
-    public ushort IslandId { get; set; }
-    public bool IslandValid { get; set; } 
+    public string IJName { get; set; }
+    public string IJDescription { get; set; } = "N/A";
+    public ushort IJId { get; set; }
+    public bool IJValid { get; set; }
 }
 
 public class Colour
@@ -30,33 +23,32 @@ public class TypeSet
     public ushort jobID { get; set; }
     public string name { get; set; }
 }
-public class BodyModelClass
+public class ModelClass
 {
     public ushort ID { get; set; }
     public ushort ImageID { get; set; } = 0;
-    public string BodyName { get; set; }
-    public string BodyImage => $"/images/body/{ImageID:000}.png";
-}
-public class FaceModelClass
-{
-    public ushort ID { get; set; }
-    public ushort ImageID { get; set; } = 0;
-    public string FaceName { get; set; }
-    public string FaceImage => $"/images/face/{ImageID:000}.png";
-}
-public class HairModelClass
-{
-    public ushort ID { get; set; }
-    public ushort ImageID { get; set; } = 0;
-    public string HairName { get; set; }
-    public string HairImage => $"/images/hair/{ImageID:000}.png";
+    public string ModelName { get; set; } = "--";
+    public string StringImage { get; set; } = "hair";
+    public string ModelImage => $"/images/{StringImage}/{ImageID:000}.png";
 }
 
+public class ArmourSub
+{
+    public ushort ImageIDFem { get; set; }
+    public string ImageFem => $"/images/body/{ImageIDFem:000}.png";
+    public ushort ModelIDFemale { get; set; }
+    public ushort ColourIDMale { get; set; }
+    public ushort ColourIDFemale { get; set; }
+}
 public class Equipment
 {
     public ushort ID { get; set; }
-    public ushort ModelID { get; set; }
+    public ushort ModelIDMale { get; set; }
     public ushort ImageID { get; set; }
-    public string Image => $"/images/hair/{ImageID:000}.png";
+    public string Image => $"/images/body/{ImageID:000}.png";
     public string Name { get; set; }
+    public ArmourSub ArmourValues { get; set; }
+
+    public bool Change => ImageID == ArmourValues.ImageIDFem;
 }
+

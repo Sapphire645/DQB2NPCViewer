@@ -94,6 +94,7 @@
 371	Merry Medic	0	0	0	0	2	FALSE
 372	Noble Knight	0	0	0	0	2	FALSE
 373	Proud Paladin	0	0	0	0	2	FALSE
+460	FurrowPrincess	39	18	138	0	2	FALSE
 461	Part-time Plougher	0	0	0	0	2	FALSE
 462	Intrepid Townsperson	0	0	0	0	2	FALSE
 463	Fanciful Farmer	0	0	0	0	2	FALSE

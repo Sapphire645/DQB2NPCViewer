@@ -16,23 +16,26 @@
                 <UniformGrid x:Name="ButtonGrid" Columns="25" Rows="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </ScrollViewer>
-        <TextBlock Name="GuideText" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Margin="10,7,0,0" Width="151">
-            <TextBlock.Text>
-                <MultiBinding StringFormat="Select {0} colour: (certain colours aren't mapped yet!)">
-                    <Binding Path="TextAdd" RelativeSource="{RelativeSource AncestorType=Window}" />
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
-        <Rectangle Name="ColorSelection" Height="35" Margin="0,9,37,0" Grid.Row="1" Stroke="#FFACACAC" VerticalAlignment="Top" HorizontalAlignment="Right" Width="159"/>
-        <TextBlock Name="ColorText" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Margin="0,7,0,0" Width="174">
-            <TextBlock.Text>
-                <MultiBinding StringFormat="Selected colour: {0}">
-                    <Binding Path="ColourPicked" RelativeSource="{RelativeSource AncestorType=Window}" />
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
-        <Button Name="Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="179,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="160" Height="20" Visibility="Hidden" Click="Confirm_Click"/>
-
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Name="GuideText" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,7,0,0" Width="151">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Select {0} colour: (certain colours aren't mapped yet!)">
+                        <Binding Path="TextAdd" RelativeSource="{RelativeSource AncestorType=Window}" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Name="ColorText" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,7,0,0">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="Selected colour: {0}">
+                            <Binding Path="ColourPicked" RelativeSource="{RelativeSource AncestorType=Window}" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Button Name="Confirm" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="20" Visibility="Hidden" Click="Confirm_Click"/>
+                </StackPanel>
+             <Rectangle Name="ColorSelection" Height="35" Margin="0,9,37,0" Stroke="#FFACACAC" VerticalAlignment="Top" HorizontalAlignment="Right" Width="159"/>
+        </StackPanel>
 
 
 

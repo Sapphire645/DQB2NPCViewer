@@ -2,40 +2,68 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
+using System.Linq;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace DQB2NPCViewer.code
 {
     public class ListText
     {
-        public List<Island> IslandList = new List<Island>();
-        public List<Job> JobList = new List<Job>();
-        public ObservableCollection<ComboBoxBody> BodyList = new ObservableCollection<ComboBoxBody>();
-        public ObservableCollection<ComboBoxFace> FaceList = new ObservableCollection<ComboBoxFace>();
-        public ObservableCollection<ComboBoxHair> HairList = new ObservableCollection<ComboBoxHair>();
+        public List<IslandJob> IslandList = new List<IslandJob>();
+        public List<IslandJob> JobList = new List<IslandJob>();
+        public ObservableCollection<ComboBoxModel> BodyList = new ObservableCollection<ComboBoxModel>();
+        public ObservableCollection<ComboBoxModel> FaceList = new ObservableCollection<ComboBoxModel>();
+        public ObservableCollection<ComboBoxModel> HairList = new ObservableCollection<ComboBoxModel>();
         public List<Colour> ColorList = new List<Colour>();
+        public List<Colour> DyesList = new List<Colour>();
         public List<AmbianceBox> AmbianceList = new List<AmbianceBox>();
         public List<TypeSet> TypeLockList = new List<TypeSet>();
+        public List<String> InfoText = new List<String>();
 
         public List<Equipment> WeaponList = new List<Equipment>();
-        public List<Equipment> ArmourList = new List<Equipment>();
+        public ObservableCollection<ComboBoxArmour> ArmourList = new ObservableCollection<ComboBoxArmour>();
 
         public Colour getColorVal(ushort ID) { return ColorList[ID]; }
+
+        public Color getColorDyeVal(ushort ID) { return (Color)ColorConverter.ConvertFromString(DyesList.FirstOrDefault(x => x.ID == ID).color); }
+
+        //Welcome to "Screw JSONs I want to do the think the save editor does.
+        //Code from "Info.cs" in Turtle-Insect's save editor.
         public void setList(string filename0, string filename1, string filename2, string filename3,
             string filename4, string filename5, string filename6, string filename7, string filename8, string filename9)
         {
-            ConstructBodyNames("data/" + filename0 + ".txt");
-            ConstructColorNames("data/" + filename1 + ".txt");
-            ConstructFaceNames("data/" + filename2 + ".txt");
-            ConstructHairNames("data/" + filename3 + ".txt");
-            ConstructIslandNames("data/" + filename4 + ".txt");
-            ConstructJobNames("data/" + filename5 + ".txt");
+
+            ConstructColorNames("data/" + filename1 + ".txt", ColorList);
+            ConstructColorNames("data/dyecolourResource.txt", DyesList);
+
+            ConstructModelNames("data/" + filename0 + ".txt", "body", BodyList);
+            ConstructModelNames("data/" + filename2 + ".txt", "face", FaceList);
+            ConstructModelNames("data/" + filename3 + ".txt", "hair", HairList);
+
+            ConstructIJNames("data/" + filename4 + ".txt", IslandList);
+            ConstructIJNames("data/" + filename5 + ".txt", JobList);
             ConstructAmbiance("data/" + filename6 + ".txt");
             ConstructTypeLock("data/" + filename7 + ".txt");
             ConstructEquipmentNames("data/" + filename8 + ".txt", WeaponList);
-            ConstructEquipmentNames("data/" + filename9 + ".txt", ArmourList);
+            ConstructArmourNames("data/" + filename9 + ".txt", ArmourList);
+
+            ConstructInfo("data/info.txt");
         }
+        private void ConstructInfo(string filename)
+        {
+            if (!System.IO.File.Exists(filename)) return;
+            String[] lines = System.IO.File.ReadAllLines(filename);
+            foreach (String line in lines)
+            {
+                if (line.Length < 3) continue;
+                if (line[0] == '#') continue;
+                String[] values = line.Split('\t');
+                InfoText.Add(values[0]);
+                InfoText.Add(values[1]);
+            }
+        }
+
         private void ConstructEquipmentNames(string filename, List<Equipment> EquipmentList)
         {
             if (!System.IO.File.Exists(filename)) return;
@@ -45,19 +73,15 @@ namespace DQB2NPCViewer.code
                 if (line.Length < 3) continue;
                 if (line[0] == '#') continue;
                 String[] values = line.Split('\t');
-                var EquVal = new Equipment()
+                EquipmentList.Add(new Equipment()
                 {
-                    ID = (ushort)Convert.ToInt16(values[0]),
-                    ModelID = (ushort)Convert.ToInt16(values[1]),
-                    Name = values[2]
-                };
-                EquipmentList.Add(EquVal);
+                        ID = (ushort)Convert.ToInt16(values[0]),
+                        ModelIDMale = (ushort)Convert.ToInt16(values[1]),
+                        Name = values[2]
+                    });
             }
         }
-
-        //Welcome to "Screw JSONs I want to do the think the save editor does.
-        //Code from "Info.cs" in Turtle-Insect's save editor.
-        private void ConstructIslandNames(string filename)
+        private void ConstructArmourNames(string filename, ObservableCollection<ComboBoxArmour> EquipmentList)
         {
             if (!System.IO.File.Exists(filename)) return;
             String[] lines = System.IO.File.ReadAllLines(filename);
@@ -66,16 +90,57 @@ namespace DQB2NPCViewer.code
                 if (line.Length < 3) continue;
                 if (line[0] == '#') continue;
                 String[] values = line.Split('\t');
-                var IslandValue = new Island()
+                var Female = (ushort)Convert.ToInt16(values[6]);
+                if (values.Length == 8)
                 {
-                    IslandName = values[1],
-                    IslandId = (ushort)Convert.ToInt16(values[0]),
-                    IslandValid = Convert.ToBoolean(values[2])
+                    Female = (ushort)Convert.ToInt16(values[7]);
+                }
+                var Arm = new ComboBoxArmour()
+                {
+                    ID = (ushort)Convert.ToInt16(values[0]),
+                    Armour = new Equipment()
+                    {
+                        ID = (ushort)Convert.ToInt16(values[0]),
+                        ModelIDMale = (ushort)Convert.ToInt16(values[1]),
+                        ImageID = (ushort)Convert.ToInt16(values[3]),
+                        Name = values[5],
+                        ArmourValues = new ArmourSub()
+                        {
+                            ImageIDFem = (ushort)Convert.ToInt16(values[4]),
+                            ColourIDMale = (ushort)Convert.ToInt16(values[6]),
+                            ColourIDFemale = Female,
+                            ModelIDFemale = (ushort)Convert.ToInt16(values[2])
+                        }
+
+                    }
                 };
-                IslandList.Add(IslandValue);
+                Arm.Image = Arm.Armour.Image;
+                Arm.Colour = getColorDyeVal(Arm.Armour.ArmourValues.ColourIDMale);
+                Arm.SetImage();
+                EquipmentList.Add(Arm);
             }
         }
-        private void ConstructColorNames(string filename)
+
+        private void ConstructIJNames(string filename, List<IslandJob> List)
+        {
+            if (!System.IO.File.Exists(filename)) return;
+            String[] lines = System.IO.File.ReadAllLines(filename);
+            foreach (String line in lines)
+            {
+                if (line.Length < 3) continue;
+                if (line[0] == '#') continue;
+                String[] values = line.Split('\t');
+                var IJValue = new IslandJob()
+                {
+                    IJName = values[1],
+                    IJId = (ushort)Convert.ToInt16(values[0]),
+                    IJDescription = values[2],
+                    IJValid = Convert.ToBoolean(values[3])
+                };
+                List.Add(IJValue);
+            }
+        }
+        private void ConstructColorNames(string filename, List<Colour> List)
         {
             if (!System.IO.File.Exists(filename)) return;
             String[] lines = System.IO.File.ReadAllLines(filename);
@@ -89,30 +154,10 @@ namespace DQB2NPCViewer.code
                     ID = (ushort)Convert.ToInt16(values[0]),
                     color = values[1]
                 };
-                ColorList.Add(ColorValue);
+                List.Add(ColorValue);
             }
         }
-        private void ConstructJobNames(string filename)
-        {
-            if (!System.IO.File.Exists(filename)) return;
-            String[] lines = System.IO.File.ReadAllLines(filename);
-            String Description = "N/A";
-            foreach (String line in lines)
-            {
-                if (line.Length < 3) continue;
-                if (line[0] == '#') continue;
-                String[] values = line.Split('\t');
-                if (values.Length == 3) { Description = values[2]; } else { Description = "N/A"; };
-                var JobValue = new Job()
-                {
-                    JobId = (ushort)Convert.ToInt16(values[0]),
-                    JobName = values[1],
-                    JobDescription = Description
-                };
-                JobList.Add(JobValue);
-            }
-        }
-        private void ConstructBodyNames(string filename)
+        private void ConstructModelNames(string filename, string image, ObservableCollection<ComboBoxModel> List)
         {
             if (!System.IO.File.Exists(filename)) return;
             String[] lines = System.IO.File.ReadAllLines(filename);
@@ -121,56 +166,15 @@ namespace DQB2NPCViewer.code
                 if (line.Length < 3) continue;
                 if (line[0] == '#') continue;
                 String[] values = line.Split('\t');
-                BodyList.Add(new ComboBoxBody
+                List.Add(new ComboBoxModel
                 {
                     ID = (ushort)Convert.ToInt16(values[0]),
-                    BodyModelClassV = new BodyModelClass()
+                    ModelClassV = new ModelClass()
                     {
                         ID = (ushort)Convert.ToInt16(values[0]),
                         ImageID = (ushort)Convert.ToInt16(values[1]),
-                        BodyName = values[2]
-                    }
-                });
-            }
-        }
-            private void ConstructFaceNames(string filename)
-            {
-                if (!System.IO.File.Exists(filename)) return;
-                String[] lines = System.IO.File.ReadAllLines(filename);
-                foreach (String line in lines)
-                {
-                    if (line.Length < 3) continue;
-                    if (line[0] == '#') continue;
-                    String[] values = line.Split('\t');
-                    FaceList.Add(new ComboBoxFace
-                    {
-                        ID = (ushort)Convert.ToInt16(values[0]),
-                        FaceModelClassV = new FaceModelClass()
-                        {
-                            ID = (ushort)Convert.ToInt16(values[0]),
-                            ImageID = (ushort)Convert.ToInt16(values[1]),
-                            FaceName = values[2]
-                        }
-                    });
-                }
-            }
-        private void ConstructHairNames(string filename)
-        {
-            if (!System.IO.File.Exists(filename)) return;
-            String[] lines = System.IO.File.ReadAllLines(filename);
-            foreach (String line in lines)
-            {
-                if (line.Length < 3) continue;
-                if (line[0] == '#') continue;
-                String[] values = line.Split('\t');
-                HairList.Add(new ComboBoxHair
-                {
-                    ID = (ushort)Convert.ToInt16(values[0]),
-                    HairModelClassV = new HairModelClass()
-                    {
-                        ID = (ushort)Convert.ToInt16(values[0]),
-                        ImageID = (ushort)Convert.ToInt16(values[1]),
-                        HairName = values[2]
+                        ModelName = values[2],
+                        StringImage = image
                     }
                 });
             }
@@ -205,18 +209,19 @@ namespace DQB2NPCViewer.code
                 {
                     var typeLockVal = new TypeSet()
                     {
-                        typeID =    (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
-                        name =      (1 < values.Length) ? values[1] : "???",
-                        hairID =    (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
+                        typeID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
+                        name = (1 < values.Length) ? values[1] : "???",
+                        hairID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
                         faceID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
-                        bodyID =    (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
-                        jobID =  (5 < values.Length) ? (ushort)Convert.ToInt16(values[5]) : (ushort)0,
-                        Tier =    (6 < values.Length) ? (ushort)Convert.ToInt16(values[6]) : (ushort)0,
+                        bodyID = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
+                        jobID = (5 < values.Length) ? (ushort)Convert.ToInt16(values[5]) : (ushort)0,
+                        Tier = (6 < values.Length) ? (ushort)Convert.ToInt16(values[6]) : (ushort)0,
                         Monster = (7 < values.Length) ? Convert.ToBoolean(values[7]) : false
                     };
                     TypeLockList.Add(typeLockVal);
                 }
-                catch (Exception ex) {
+                catch
+                {
                     var typeLockVal = new TypeSet();
                     TypeLockList.Add(typeLockVal);
                 }
