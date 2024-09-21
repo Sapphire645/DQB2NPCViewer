@@ -2,17 +2,16 @@
 NPC editor with a visual component for feedback. Info taken from [the save editor](https://github.com/turtle-insect/DQB2) by turtle-insect.
 
 ## Progress report:
+### Alpha build now available!
 
-### Pre-Alpha build is avaliable.</br>
-<img src="./Screenshots/PreAlpha1.png"> </br>
+Documentation coming soon. As of now every option has info attached to it, so use that if you really need to.
 
-Has basic Save and Load functionality. Every value should be edited and loaded proterly.
-
-Note: I only have formal knowdledge on some Python and base C. Everything else is self-taught. If some code hurts the eyes I would be grateful for any suggestions.
-
-### Progress
-
-I lost the text and dont have time to rewrite. Go check out prealpha 3
+**MISSING:**
+- Inventory
+- Body Images
+- Type locks
+- Weapons
+- Monsters
 
 ## Current screenshots:
 - Menu </br>
