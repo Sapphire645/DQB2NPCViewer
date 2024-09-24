@@ -1,148 +1,211 @@
-#TypeID	Name	HairID	FaceID	BodyID	JobID	Tier	Monster
-0	--	0	0	0	0	0	FALSE
-1	Malroth	3	3	50	18	3	FALSE
-2	Bonanzo	4	4	0	0	3	FALSE
-4	Rosie	0	0	0	0	3	FALSE
-5	Brownbeard	0	0	0	0	0	FALSE
-6	Perry	0	0	0	0	3	FALSE
-7	Wrigley	0	0	0	0	3	TRUE
-14	Lulu	18	16	139	0	3	FALSE
-24	Sapphron	0	0	0	0	3	FALSE
-26	Lillian	0	0	0	0	3	FALSE
-41	Rough Rancher	0	0	0	0	2	FALSE
-42	Avid Agriculturalist	0	0	0	0	2	FALSE
-43	Fervent Farmer	0	0	0	0	2	FALSE
-26	Lillian	0	0	0	0	3	FALSE
-57	Britney	0	0	0	0	3	FALSE
-59	Clayton	0	0	0	0	3	FALSE
-67	Virtuous Villager	0	0	0	0	2	FALSE
-68	Reliable Resident	0	0	0	0	2	FALSE
-69	Civil Citicen	0	0	0	0	2	FALSE
-73	Ghostly Guest	0	0	0	0	3	TRUE
-89	Molly	0	0	0	0	3	FALSE
-90	Splodginton	0	0	0	0	3	TRUE
-91	Smashley	0	0	0	0	3	TRUE
-92	Gottfried	0	0	0	0	3	TRUE
-105	Den	0	0	0	0	3	FALSE
-106	Magrog	0	0	0	0	3	FALSE
-107	Serge	0	0	0	0	3	FALSE
-110	Dougie	0	0	0	0	3	FALSE
-111	Babs	0	0	0	0	3	FALSE
-116	Digby	0	0	0	0	3	FALSE
-119	Beefy Bloke	0	0	0	0	2	FALSE
-155	Mighty Meathead	0	0	0	0	2	FALSE
-156	Hylking Hunk	0	0	0	0	2	FALSE
-157	Tanned Toughie	0	0	0	0	2	FALSE
-158	Bif Beefcake	0	0	0	0	2	FALSE
-159	Macho Chap	0	0	0	0	2	FALSE
-160	Swole Soul	0	0	0	0	2	FALSE
-161	Strapping Specimen	0	0	0	0	2	FALSE
-162	Jacked Jock	0	0	0	0	2	FALSE
-163	Fir Fellow	0	0	0	0	2	FALSE
-169	Slime	0	0	0	0	1	TRUE
-171	Healslime	0	0	0	0	1	TRUE
-173	Killing Robot	0	0	0	0	1	TRUE
-175	Golem	0	0	0	0	1	TRUE
-176	Liquid Metal Slime	0	0	0	0	1	TRUE
-177	Great Sabrecat	0	0	0	0	1	TRUE
-178	Muddy Hand	0	0	0	0	1	TRUE
-179	Powie Yowie	0	0	0	0	1	TRUE
-191	Hunky He-Man	0	0	0	0	2	FALSE
-214	Showy Showgirl	0	0	0	0	2	FALSE
-215	Perky Performer	0	0	0	0	2	FALSE
-216	Dazzling Dancer	0	0	0	0	2	FALSE
-217	Ordelia	0	0	0	0	3	FALSE
-218	Goodybag(KH)	0	0	0	0	3	TRUE
-256	King	0	0	0	0	3	FALSE
-257	Jeremiah	0	0	0	0	3	FALSE
-258	Esther	0	0	0	0	3	FALSE
-262	Zara	0	0	0	0	3	FALSE
-263	Muscly Man	0	0	0	0	2	FALSE
-265	Haydin	0	0	0	0	3	FALSE
-266	Carefree Commoner	0	0	0	0	2	FALSE
-267	Tireless Trader	0	0	0	0	2	FALSE
-269	Anessa	0	0	0	0	3	FALSE
-276	Cunning Cadet	0	0	0	0	2	FALSE
-277	Fierce Fighter	0	0	0	0	2	FALSE
-278	Fearless Footman	0	0	0	0	2	FALSE
-279	Timid Trooper	0	0	0	0	2	FALSE
-280	Eager Ensign	0	0	0	0	2	FALSE
-281	Stern Soldier	0	0	0	0	2	FALSE
-282	Skilled Swordsman	0	0	0	0	2	FALSE
-283	Raw Recruit	0	0	0	0	2	FALSE
-285	Wily Warrior	0	0	0	0	2	FALSE
-295	Villager	0	0	0	0	1	FALSE
-296	Pet	0	0	0	0	1	TRUE
-297	Livestock	0	0	0	0	1	TRUE
-299	Bold Barman	0	0	0	0	2	FALSE
-300	Passionate Publican	0	0	0	0	2	FALSE
-305	Stout Sort	0	0	0	0	2	FALSE
-306	Flexing Fellow	0	0	0	0	2	FALSE
-307	Burly Blighter	0	0	0	0	2	FALSE
-308	Potent Pitman	0	0	0	0	2	FALSE
-309	Buff Bro	0	0	0	0	2	FALSE
-311	Gentle Giant	0	0	0	0	2	FALSE
-335	Ambitious Agrarian	0	0	0	0	2	FALSE
-336	Reliable Rancher	0	0	0	0	2	FALSE
-337	Friendly Farmhand	0	0	0	0	2	FALSE
-338	Capable Cultivator	0	0	0	0	2	FALSE
-345	Manic Miner	0	0	0	0	2	FALSE
-346	Great Sabrecub	0	0	0	0	1	TRUE
-365	Competent Conscript	0	0	0	0	2	FALSE
-369	Brave Battler	0	0	0	0	2	FALSE
-370	Helpful Healer	0	0	0	0	2	FALSE
-371	Merry Medic	0	0	0	0	2	FALSE
-372	Noble Knight	0	0	0	0	2	FALSE
-373	Proud Paladin	0	0	0	0	2	FALSE
-460	FurrowPrincess	39	18	138	0	2	FALSE
-461	Part-time Plougher	0	0	0	0	2	FALSE
-462	Intrepid Townsperson	0	0	0	0	2	FALSE
-463	Fanciful Farmer	0	0	0	0	2	FALSE
-464	Magnanimous Merchant	0	0	0	0	2	FALSE
-465	Respectful Resident	0	0	0	0	2	FALSE
-466	Slick Shipkeeper	0	0	0	0	2	FALSE
-467	Delightful Dweller	0	0	0	0	2	FALSE
-468	Dreamy Dancer	0	0	0	0	2	FALSE
-471	Trusting Townsperson	0	0	0	0	2	FALSE
-560	Princess	0	0	0	0	3	FALSE
-512	Arisplotle	0	0	0	0	3	TRUE
-514	Grisword	0	0	0	0	3	TRUE
-515	Chasmonaut	0	0	0	0	2	TRUE
-516	Chasmonaut	0	0	0	0	2	TRUE
-517	Hellen	0	0	0	0	3	TRUE
-518	Zebadee	0	0	0	0	3	TRUE
-519	Gremville	0	0	0	0	3	TRUE
-520	Grimlin D	0	0	0	0	2	TRUE
-521	Grimlin A	0	0	0	0	2	TRUE
-522	Grimlin B	0	0	0	0	2	TRUE
-523	Grimlin C	0	0	0	0	2	TRUE
-524	Whitebones	0	0	0	0	3	TRUE
-525	Slime A	0	0	0	0	2	TRUE
-526	Slime B	0	0	0	0	2	TRUE
-527	Drackson	0	0	0	0	2	TRUE
-528	Silvapithecus A	0	0	0	0	2	TRUE
-529	Badboon	0	0	0	0	2	TRUE
-530	Hood	0	0	0	0	2	TRUE
-532	Silvapithecus B	0	0	0	0	2	TRUE
-533	Adamn	0	0	0	0	3	TRUE
-541	Hargon	0	0	0	0	0	TRUE
-578	Slime C	0	0	0	0	2	TRUE
-579	Slime D	0	0	0	0	2	TRUE
-580	Grimlin E	0	0	0	0	2	TRUE
-581	Gargoyle D	0	0	0	0	2	TRUE
-582	Badboon	0	0	0	0	2	TRUE
-583	Chasmonaut	0	0	0	0	2	TRUE
-584	Mean Spirit	0	0	0	0	2	TRUE
-640	Doughty Defender	0	0	0	0	2	TRUE
-641	Gallant Guardian	0	0	0	0	2	TRUE
-669	Gerome	0	0	0	0	3	TRUE
-764	Gargoyle B	0	0	0	0	2	TRUE
-765	Grimlin F	0	0	0	0	2	TRUE
-766	Gargoyle B	0	0	0	0	2	TRUE
-811	Cosmic Chimaera	0	0	0	0	1	TRUE
-812	Big Killing Machine	0	0	0	0	1	TRUE
-813	Corpse Corporeal	0	0	0	0	1	TRUE
-815	Stone Golem	0	0	0	0	1	TRUE
-816	Gold Golem	0	0	0	0	1	TRUE
-817	Bloody Hand	0	0	0	0	1	TRUE
-818	Stone Guardian	0	0	0	0	1	TRUE
+#TypeID	Name	HairID	FaceID	BodyID	Tier	Monster
+0	--	0	0	0	0	FALSE
+1	Malroth	3	3	50	3	FALSE
+2	Bonanzo	4	4	52	3	FALSE
+3	Prestidigator	0	0	0	3	TRUE
+4	Rosie	21	30	109	3	FALSE
+5	Brownbeard	5	5	54	0	FALSE
+6	Perry	15	12	107	3	FALSE
+7	Wrigley	0	0	0	3	TRUE
+8	Furrow Retriever	0	0	0	3	TRUE
+14	Lulu	18	16	139	3	FALSE
+22	TBA	0	0	0	3	TRUE
+23	Bodkin Archer	0	0	0	3	TRUE
+24	Saffron	19	18	87	3	FALSE
+25	Fat Rat	0	0	0	3	TRUE
+26	Lillian	35	27	127	3	FALSE
+27	TBA	0	0	0	3	TRUE
+28	Fat Rat	0	0	0	3	TRUE
+34	Pastor Al	0	0	0	3	TRUE
+35	Fat Rat	0	0	0	3	TRUE
+36	Bodkin Archer	0	0	0	3	TRUE
+37	Fat Rat	0	0	0	3	TRUE
+38	Fat Rat	0	0	0	3	TRUE
+39	Orc	0	0	0	3	TRUE
+40	Bodkin Archer	0	0	0	3	TRUE
+41	Rough Rancher	26	15	107	2	FALSE
+42	Avid Agriculturalist	26	14	107	2	FALSE
+43	Fervent Farmer	27	19	107	2	FALSE
+44	Slime	0	0	0	3	TRUE
+45	Orc	0	0	0	3	TRUE
+46	Fat Rat	0	0	0	3	TRUE
+57	Britney	25	16	105	3	FALSE
+59	Clayton	14	13	107	3	FALSE
+67	Virtuous Villager	32	24	115	2	FALSE
+68	Reliable Resident	20	17	88	2	FALSE
+69	Civil Citicen	33	25	119	2	FALSE
+71	Fat Rat	0	0	0	3	TRUE
+73	Ghostly Guest	0	0	0	3	TRUE
+89	Molly	6	6	164	3	FALSE
+90	Splodger Splodgington Oozequire	0	0	0	3	TRUE
+91	Smashley	0	0	0	3	TRUE
+92	Gottfried	0	0	0	3	TRUE
+105	Den	7	7	62	3	FALSE
+106	Magrog	32	9	69	3	FALSE
+107	Serge	16	12	162	3	FALSE
+110	Dougie	37	28	132	3	FALSE
+111	Babs	10	8	68	3	FALSE
+116	Digby	37	28	132	3	FALSE
+117	Goldirox	0	0	0	3	TRUE
+119	Beefy Bloke	32	31	160	2	FALSE
+120	Deadnaut	0	0	0	3	TRUE
+121	Magus	0	0	0	3	TRUE
+122	Magus	0	0	0	3	TRUE
+124	Deadnaut	0	0	0	3	TRUE
+125	Deadnaut	0	0	0	3	TRUE
+126	Skeleton	0	0	0	3	TRUE
+127	Wrecktor	0	0	0	3	TRUE
+128	Slime	0	0	0	3	TRUE
+129	Dracky	0	0	0	3	TRUE
+130	Spirit	0	0	0	3	TRUE
+131	Gremlin	0	0	0	3	TRUE
+132	Gremlin	0	0	0	3	TRUE
+134	Spirit	0	0	0	3	TRUE
+135	Spirit	0	0	0	3	TRUE
+146	Dirty Rat	0	0	0	3	TRUE
+148	Fat Rat	0	0	0	3	TRUE
+149	Fat Rat	0	0	0	3	TRUE
+150	Fat Rat	0	0	0	3	TRUE
+151	Fat Rat	0	0	0	3	TRUE
+153	Fat Rat	0	0	0	3	TRUE
+154	Fat Rat	0	0	0	3	TRUE
+155	Mighty Meathead	32	31	160	2	FALSE
+156	Hylking Hunk	32	31	160	2	FALSE
+157	Tanned Toughie	32	31	160	2	FALSE
+158	Big Beefcake	32	31	160	2	FALSE
+159	Macho Chap	32	31	160	2	FALSE
+160	Swole Soul	32	31	160	2	FALSE
+161	Strapping Specimen	32	31	160	2	FALSE
+162	Jacked Jock	32	31	160	2	FALSE
+163	Fit Fellow	32	31	160	2	FALSE
+165	Fat Rat	0	0	0	3	TRUE
+166	Fat Rat	0	0	0	3	TRUE
+169	Slime	0	0	0	1	TRUE
+171	Healslime	0	0	0	1	TRUE
+173	Killing Machine	0	0	0	1	TRUE
+175	Golem	0	0	0	1	TRUE
+176	Liquid Metal Slime	0	0	0	1	TRUE
+177	Great Sabrecat	0	0	0	1	TRUE
+178	Muddy Hand	0	0	0	1	TRUE
+179	Powie Yowie	0	0	0	1	TRUE
+186	Lulu Tutorial Ship	18	16	139	3	FALSE
+191	Hunky He-Man	32	31	160	2	FALSE
+214	Showy Showgirl	64	18	66	2	FALSE
+215	Perky Performer	66	18	66	2	FALSE
+216	Dazzling Dancer	65	17	66	2	FALSE
+217	Ordelia	67	19	161	3	FALSE
+218	Jules	0	0	0	3	TRUE
+221	Bodkin Archer	0	0	0	3	TRUE
+222	Fat Rat	0	0	0	3	TRUE
+223	Fat Rat	0	0	0	3	TRUE
+256	King	12	10	71	3	FALSE
+257	Jeremiah	43	29	140	3	FALSE
+258	Esther	38	16	136	3	FALSE
+262	Zara	20	16	146	3	FALSE
+263	Muscly Man	32	28	148	2	FALSE
+265	Haydin	19	14	131	3	FALSE
+266	Carefree Commoner	18	17	105	2	FALSE
+267	Tireless Trader	22	12	103	2	FALSE
+269	Anessa	13	17	72	3	FALSE
+276	Cunning Cadet	24	12	104	2	FALSE
+277	Fierce Fighter	24	13	104	2	FALSE
+278	Fearless Footman	24	14	104	2	FALSE
+279	Timid Trooper	68	15	104	2	FALSE
+280	Eager Ensign	25	17	105	2	FALSE
+281	Stern Soldier	25	18	105	2	FALSE
+282	Skilled Swordsman	24	13	104	2	FALSE
+283	Raw Recruit	24	14	104	2	FALSE
+285	Wily Warrior	25	17	105	2	FALSE
+290	Fat Rat	0	0	0	3	TRUE
+291	Fat Rat	0	0	0	3	TRUE
+292	Bodkin Archer	0	0	0	3	TRUE
+293	Bodkin Archer	0	0	0	3	TRUE
+294	Bodkin Archer	0	0	0	3	TRUE
+295	Villager	0	0	0	1	FALSE
+296	Pet	0	0	0	1	TRUE
+297	Livestock	0	0	0	1	TRUE
+299	Bold Barman	17	13	141	2	FALSE
+300	Passionate Publican	14	14	142	2	FALSE
+302	Healslime	0	0	0	3	TRUE
+305	Stout Sort	32	31	160	2	FALSE
+306	Flexing Fellow	32	31	160	2	FALSE
+307	Burly Blighter	32	31	160	2	FALSE
+308	Potent Pitman	32	31	160	2	FALSE
+309	Buff Bro	32	31	160	2	FALSE
+311	Gentle Giant	32	31	160	2	FALSE
+335	Ambitious Agrarian	26	12	107	2	FALSE
+336	Reliable Rancher	26	14	107	2	FALSE
+337	Friendly Farmhand	27	17	109	2	FALSE
+338	Capable Cultivator	27	18	109	2	FALSE
+345	Manic Miner	32	31	160	2	FALSE
+346	Great Sabrecub	0	0	0	1	TRUE
+348	Hairy Hermit	0	0	0	3	TRUE
+365	Competent Conscript	24	14	104	2	FALSE
+369	Brave Battler	25	17	105	2	FALSE
+370	Helpful Healer	61	12	145	2	FALSE
+371	Merry Medic	63	17	147	2	FALSE
+372	Noble Knight	60	12	144	2	FALSE
+373	Proud Paladin	60	13	144	2	FALSE
+377	Hargon	0	0	0	3	TRUE
+378	God of Destruction	0	0	0	3	TRUE
+396	Slime	0	0	0	3	TRUE
+397	Gremlin	0	0	0	3	TRUE
+455	Healslime	0	0	0	3	TRUE
+456	Healslime	0	0	0	3	TRUE
+460	FurrowPrincess	39	18	138	2	FALSE
+461	Part-time Plougher	26	13	107	2	FALSE
+462	Intrepid Townsperson	16	14	75	2	FALSE
+463	Fanciful Farmer	27	18	109	2	FALSE
+464	Magnanimous Merchant	20	17	87	2	FALSE
+465	Respectful Resident	17	15	88	2	FALSE
+466	Slick Shipkeeper	22	12	99	2	FALSE
+467	Delightful Dweller	20	18	88	2	FALSE
+468	Dreamy Dancer	65	18	66	2	FALSE
+471	Trusting Townsperson	14	13	76	2	FALSE
+512	Arisplotle	0	0	0	3	TRUE
+514	Grisword	0	0	0	3	TRUE
+515	Chasmonaut	0	0	0	2	TRUE
+516	Chasmonaut	0	0	0	2	TRUE
+517	Hellen	0	0	0	3	TRUE
+518	Zebadee	0	0	0	3	TRUE
+519	Gremville	0	0	0	3	TRUE
+520	Grimlin D	0	0	0	2	TRUE
+521	Grimlin A	0	0	0	2	TRUE
+522	Grimlin B	0	0	0	2	TRUE
+523	Grimlin C	0	0	0	2	TRUE
+524	Whitebones	0	0	0	3	TRUE
+525	Slime A	0	0	0	2	TRUE
+526	Slime B	0	0	0	2	TRUE
+527	Drackson	0	0	0	2	TRUE
+528	Silvapithecus A	0	0	0	2	TRUE
+529	Badboon	0	0	0	2	TRUE
+530	Hood	0	0	0	2	TRUE
+532	Silvapithecus B	0	0	0	2	TRUE
+533	Adamn	0	0	0	3	TRUE
+541	Hargon	0	0	0	0	TRUE
+578	Slime C	0	0	0	2	TRUE
+579	Slime D	0	0	0	2	TRUE
+580	Grimlin E	0	0	0	2	TRUE
+581	Gargoyle D	0	0	0	2	TRUE
+582	Badboon	0	0	0	2	TRUE
+583	Chasmonaut	0	0	0	2	TRUE
+584	Mean Spirit	0	0	0	2	TRUE
+640	Doughty Defender	62	18	146	2	TRUE
+641	Gallant Guardian	62	18	146	2	TRUE
+669	Gerome	32	24	105	3	FALSE
+733	Fat Rat	0	0	0	3	TRUE
+756	Hairy Hermit	0	0	0	3	TRUE
+764	Gargoyle B	0	0	0	2	TRUE
+765	Grimlin F	0	0	0	2	TRUE
+766	Gargoyle C	0	0	0	2	TRUE
+808	She-Slime	0	0	0	3	TRUE
+811	Cosmic Chimaera	0	0	0	1	TRUE
+812	Hunter Mech	0	0	0	1	TRUE
+813	Corpse Corporeal	0	0	0	1	TRUE
+815	Stone Golem	0	0	0	1	TRUE
+816	Gold Golem	0	0	0	1	TRUE
+817	Bloody Hand	0	0	0	1	TRUE
+818	Stone Guardian	0	0	0	1	TRUE
+886	Malroth Clone	3	3	50	3	FALSE
+889	Gillian	86	34	178	3	FALSE
+890	Finn	32	28	132	3	FALSE

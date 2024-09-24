@@ -29,7 +29,8 @@
 27	Slime	No abilities.	TRUE
 28	Farmer	Rosie's job.	TRUE
 30	Villager (Red dress)	Saffron's job.	TRUE
-32	Crater/Cat??	Unused.	TRUE
+31	Gold Golem	GoldGolem	TRUE
+32	Cat	Cat	TRUE
 33	Kitten		TRUE
 34	Puppy		TRUE
 35	Child		TRUE
