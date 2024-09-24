@@ -18,7 +18,7 @@ namespace DQB2NPCViewer.code
         public List<Colour> ColorList = new List<Colour>();
         public List<Colour> DyesList = new List<Colour>();
         public List<AmbianceBox> AmbianceList = new List<AmbianceBox>();
-        public List<TypeSet> TypeLockList = new List<TypeSet>();
+        public ObservableCollection<ComboBoxColour> TypeLockList = new ObservableCollection<ComboBoxColour>();
         public List<String> InfoText = new List<String>();
 
         public List<Equipment> WeaponList = new List<Equipment>();
@@ -207,23 +207,28 @@ namespace DQB2NPCViewer.code
                 String[] values = line.Split('\t');
                 try
                 {
-                    var typeLockVal = new TypeSet()
+                    var typeLockVal = new ComboBoxColour()
                     {
-                        typeID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
-                        name = (1 < values.Length) ? values[1] : "???",
-                        hairID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
-                        faceID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
-                        bodyID = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
-                        jobID = (5 < values.Length) ? (ushort)Convert.ToInt16(values[5]) : (ushort)0,
-                        Tier = (6 < values.Length) ? (ushort)Convert.ToInt16(values[6]) : (ushort)0,
-                        Monster = (7 < values.Length) ? Convert.ToBoolean(values[7]) : false
+                        ID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
+                        TypeListing = new TypeSet()
+                        {
+                            typeID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
+                            name = (1 < values.Length) ? values[1] : "???",
+                            hairID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
+                            faceID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
+                            bodyID = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
+                            Tier = (6 < values.Length) ? (ushort)Convert.ToInt16(values[5]) : (ushort)0,
+                            Monster = (7 < values.Length) ? Convert.ToBoolean(values[6]) : false
+                        }
                     };
+                    if (typeLockVal.TypeListing.faceID == 0 && typeLockVal.TypeListing.hairID == 0 && typeLockVal.TypeListing.bodyID == 0)
+                    {
+                        typeLockVal.Background = new SolidColorBrush(Colors.LightCoral);
+                    }
                     TypeLockList.Add(typeLockVal);
                 }
                 catch
                 {
-                    var typeLockVal = new TypeSet();
-                    TypeLockList.Add(typeLockVal);
                 }
 
             }

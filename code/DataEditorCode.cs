@@ -8,12 +8,12 @@ public static class DQB2DataEditor
 
     private static byte[] fileBytes;
     public static string LoadedFile;
-    public static void LoadFile(string filename)
+    public static bool LoadFile(string filename)
     {
         fileBytes = File.ReadAllBytes(filename);
         if (fileBytes.Length != 608)
         {
-            return;
+            return false;
         }
         LoadedFile = filename;
         var NameBytes = new byte[30];
@@ -27,8 +27,13 @@ public static class DQB2DataEditor
         TwoBytes[0] = fileBytes[0x92];
         TwoBytes[1] = fileBytes[0x93];
         MainWindow.HP = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        if ((fileBytes[0x9C]) == 0) MainWindow.ClothVisual = false;
-        else MainWindow.ClothVisual = true;
+
+        if ((byte)(fileBytes[0x9C] & 0x40) == 0x40) MainWindow.ClothVisual = true;
+        else MainWindow.ClothVisual = false;
+
+        if ((byte)(fileBytes[0x9C] & 0x02) == 0x02) MainWindow.RagVisual = true;
+        else MainWindow.RagVisual = false;
+
         TwoBytes[0] = fileBytes[0xC7];
         TwoBytes[1] = fileBytes[0xC8];
         MainWindow.Weapon = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
@@ -70,6 +75,7 @@ public static class DQB2DataEditor
         else MainWindow.TypeVisual = false;
 
         MainWindow.Place = fileBytes[0x144];
+        return true;
     }
     public static void SaveFile(string filename)
     {
@@ -77,7 +83,7 @@ public static class DQB2DataEditor
         var NameBytes = new byte[30];
 
         NameBytes = System.Text.Encoding.Default.GetBytes(MainWindow.NameNPC);
-        Array.Copy(NameBytes, 0, fileBytes, 0, 30);
+        Array.Copy(NameBytes, 0, fileBytes, 0, NameBytes.Length);
 
         TwoBytes = BitConverter.GetBytes(MainWindow.Type);
         fileBytes[0x90] = TwoBytes[0];
@@ -87,8 +93,11 @@ public static class DQB2DataEditor
         fileBytes[0x92] = TwoBytes[0];
         fileBytes[0x93] = TwoBytes[1];
 
-        if (MainWindow.ClothVisual) fileBytes[0x9C] = 0x40;
-        else fileBytes[0x9C] = 0x00;
+        if (MainWindow.ClothVisual) fileBytes[0x9C] = (byte)(fileBytes[0x9C] | 0x40);
+        else fileBytes[0x9C] = (byte)(fileBytes[0x9C] & 0xBF);
+
+        if (MainWindow.RagVisual) fileBytes[0x9C] = (byte)(fileBytes[0x9C] | 0x02);
+        else fileBytes[0x9C] = (byte)(fileBytes[0x9C] & 0xFD);
 
         fileBytes[0xDF] = (byte)MainWindow.Island;
 

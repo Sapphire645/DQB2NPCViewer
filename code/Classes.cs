@@ -20,7 +20,6 @@ public class TypeSet
     public ushort bodyID { get; set; }
     public bool Monster { get; set; }
     public ushort Tier { get; set; }
-    public ushort jobID { get; set; }
     public string name { get; set; }
 }
 public class ModelClass

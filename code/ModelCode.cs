@@ -279,7 +279,6 @@ public static class DQB2ModelRendering
             var objReader = new HelixToolkit.Wpf.ObjReader();
             LoadGlbFromResources(Model_Path, Type);
             var model = objReader.Read(Type);
-            //var model = objReader.Read(new Uri(Model_Path));
 
             if (model is Model3DGroup modelGroup)
             {
@@ -288,6 +287,7 @@ public static class DQB2ModelRendering
                     if (geometry is System.Windows.Media.Media3D.GeometryModel3D geomModel)
                     {
                         geomModel.Material = material;
+                        geomModel.BackMaterial = material;
                     }
                 }
             }
@@ -334,30 +334,31 @@ public static class DQB2ModelRendering
             }
 
             // Load and add the second model
+            if (body <= 200)
+            {
+                if (Hair == true)
+                {
+                    material = LoadTexture(HairImage, "pack://application:,,,/textures/hair/" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/hair/m" + hair.ToString("D3") + ".png", "pack://application:,,,/textures/hair/c" + hair.ToString("D3") + ".png", 0, false);
+                    HairModel = LoadModel(material, "models/hair/" + hair.ToString("D3") + ".glb", "MeshHair.obj");
+                }
+                if (HairModel != null)
+                {
+                    modelGroup.Children.Add(HairModel);
+                }
 
-            if (Hair == true)
-            {
-                material = LoadTexture(HairImage, "pack://application:,,,/textures/hair/" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/hair/m" + hair.ToString("D3") + ".png", "pack://application:,,,/textures/hair/c" + hair.ToString("D3") + ".png", 0,false);
-                HairModel = LoadModel(material, "models/hair/" + hair.ToString("D3") + ".glb", "MeshHair.obj");
+                // Load and add the third model
+                if (Face == true)
+                {
+                    material = LoadTexture(SkinImage, "pack://application:,,,/textures/face/" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/m" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/e" + face.ToString("D3") + ".png", 1, true);
+                    FaceModel = LoadModel(material, "models/face/" + face.ToString("D3") + ".glb", "MeshFace.obj");
+                }
+                if (FaceModel != null)
+                {
+                    modelGroup.Children.Add(FaceModel);
+                }
+                //if (BodyModel == null || FaceModel == null || HairModel == null)
+                //    return LoadModel(new System.Windows.Media.Media3D.DiffuseMaterial(), "/models/Unknown.glb", "MeshUnk.obj");
             }
-            if (HairModel != null)
-            {
-                modelGroup.Children.Add(HairModel);
-            }
-
-            // Load and add the third model
-            if (Face == true)
-            {
-                material = LoadTexture(SkinImage, "pack://application:,,,/textures/face/" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/m" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/e" + face.ToString("D3") + ".png", 1,true);
-                FaceModel = LoadModel(material, "models/face/" + face.ToString("D3") + ".glb", "MeshFace.obj");
-            }
-            if (FaceModel != null)
-            {
-                modelGroup.Children.Add(FaceModel);
-            }
-
-            //if (BodyModel == null || FaceModel == null || HairModel == null)
-            //    return LoadModel(new System.Windows.Media.Media3D.DiffuseMaterial(), "/models/Unknown.glb", "MeshUnk.obj");
             return modelGroup;
 
         }
