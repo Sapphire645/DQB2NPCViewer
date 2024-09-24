@@ -9,7 +9,7 @@
         xmlns:control="clr-namespace:DQB2NPCViewer.control"
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Class="DQB2NPCViewer.MainWindow"
         mc:Ignorable="d"
-        Title="DQB2 NPC Viewer Pre-Alpha 3" Height="618" Width="1100" MinHeight="618" MinWidth="1100">
+        Title="DQB2 NPC Viewer Alpha 1" Height="618" Width="1100" MinHeight="618" MinWidth="1100" Icon="images/resource/icon.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -40,7 +40,7 @@
                     <StackPanel Orientation="Vertical" Margin="10,40,0,0">
                         <StackPanel Orientation="Horizontal">
                             <Button Name ="BName" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" Name" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <TextBox x:Name="TextBoxName" Grid.Column="0" Text="{Binding NameNPC, BindsDirectlyToSource=True, FallbackValue=-, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Height="30" MinWidth="265" VerticalContentAlignment="Center" TextChanged="TextBoxName_TextChanged"/>
+                            <TextBox x:Name="TextBoxName" Grid.Column="0" VerticalAlignment="Center" Height="30" MinWidth="265" VerticalContentAlignment="Center" TextChanged="TextBoxName_TextChanged"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                             <Button Name ="BSex" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" Sex" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
@@ -73,19 +73,7 @@
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                             <Button Name ="BType" Content=" Type" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}" Foreground="#FFFF8A00"/>
                             <ComboBox Name="ComboBoxTypeLock" Grid.Column="0" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxTypeLock_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} - {1}">
-                                                    <Binding Path="typeID" />
-                                                    <Binding Path="name" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                        </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                             <Button Name ="BHome" Content=" Home" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
@@ -139,8 +127,9 @@
                             <TextBox x:Name="TextBoxVoice" TextWrapping="Wrap" MinWidth="265" Text="0" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" TextChanged="TextBoxVoice_TextChanged"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Right">
-                            <Button Name ="BFlags" Content=" Flags:" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="17" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,-2,0,0" BorderBrush="#FFCED0D6" Margin="0,0,49,0" Background="{x:Null}"/>
-                            <CheckBox Name="ClothCheck" Content="Has Clothes" Margin="0,0,9,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="91" Height="15" Grid.Column="1" Checked="ClothCheck_Checked" Unchecked="ClothCheck_Unchecked" HorizontalAlignment="Right"/>
+                            <Button Name ="BFlags" Content=" Flags:" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="17" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,-2,0,0" BorderBrush="#FFCED0D6" Background="{x:Null}" Margin="0,0,0.2,0"/>
+                            <CheckBox Name="ClothCheck" Content="Has Clothes" Margin="0,0,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="91" Height="15" Grid.Column="1" Checked="ClothCheck_Checked" Unchecked="ClothCheck_Unchecked" HorizontalAlignment="Right"/>
+                            <CheckBox Name="RaggedCheck" Content="In Rags" Margin="0,0,3,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="61" Height="15" Grid.Column="1" Checked="RaggedCheck_Checked" Unchecked="RaggedCheck_Unchecked" HorizontalAlignment="Right"/>
                             <CheckBox Name="LockCheck" Content="Lock Appearance" Margin="0,0,3,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="112" Height="15" Grid.Column="1" Checked="LockCheck_Checked" Unchecked="LockCheck_Unchecked" HorizontalAlignment="Right"/>
                         </StackPanel>
                     </StackPanel>

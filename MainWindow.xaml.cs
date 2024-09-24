@@ -3,6 +3,7 @@ using DQB2NPCViewer.control;
 using Microsoft.Win32;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -40,6 +41,8 @@ namespace DQB2NPCViewer
         public static ListText Lists { get; set; } = new ListText();
         public static bool TypeVisual { get; set; }
         public static bool ClothVisual { get; set; }
+        public static bool RagVisual { get; set; }
+        public static bool Loading { get; set; } = false;
         public static Equipment ColorBackup { get; set; } = new Equipment();
 
         public MainWindow()
@@ -70,7 +73,7 @@ namespace DQB2NPCViewer
             AmbianceBox.ItemsSource = Lists.AmbianceList;
 
             ComboBoxTypeLock.ItemsSource = Lists.TypeLockList;
-            ComboBoxTypeLock.SelectedValuePath = "typeID";
+            ComboBoxTypeLock.SelectedValuePath = "ID";
 
             ComboBoxBody.ItemsSource = Lists.BodyList;
             ComboBoxBody.SelectedValuePath = "ModelClassV.ID";
@@ -121,69 +124,78 @@ namespace DQB2NPCViewer
                 {
                     return;
                 }
+                Loading = true;
+                if (DQB2DataEditor.LoadFile(openFileDialog.FileName))
+                {
+                    //I tried to do the weird binding thing but it doesn't work?? So wohoo copypaste time
+                    TextBoxName.Text = NameNPC;
+                    ComboBoxGender.SelectedIndex = (int)Sex - 1;
+                    if (ComboBoxGender.SelectedItem == null) { ComboBoxGender.SelectedIndex = 0; }
+                    TextBoxHP.Text = Convert.ToString(HP);
+                    TextBoxVoice.Text = Convert.ToString(Voice);
+                    TextBoxDialogue.Text = Convert.ToString(Dialogue);
+                    ComboBoxJob.SelectedValue = Job;
+                    if (ComboBoxJob.SelectedItem == null) { ComboBoxJob.SelectedIndex = 0; }
+                    ComboBoxHome.SelectedValue = Home;
+                    if (ComboBoxHome.SelectedItem == null) { ComboBoxHome.SelectedIndex = 0; }
+                    ComboBoxIsland.SelectedValue = Island;
+                    if (ComboBoxIsland.SelectedItem == null) { ComboBoxIsland.SelectedIndex = 0; }
+                    ComboBoxPlace.SelectedIndex = Place;
+                    if (ComboBoxPlace.SelectedItem == null) { ComboBoxPlace.SelectedIndex = 0; }
+                    ComboBoxTypeLock.SelectedValue = Type;
+                    if (ComboBoxTypeLock.SelectedItem == null) { ComboBoxTypeLock.SelectedIndex = 0; }
 
-                DQB2DataEditor.LoadFile(openFileDialog.FileName);
+                    ArmourBox.SelectedValue = Armour;
+                    if (ArmourBox.SelectedItem == null) { ArmourBox.SelectedIndex = 0; }
+                    WeaponBox.SelectedValue = Weapon;
+                    if (WeaponBox.SelectedItem == null) { WeaponBox.SelectedIndex = 0; }
 
-                //I tried to do the weird binding thing but it doesn't work?? So wohoo copypaste time
-                TextBoxName.Text = NameNPC;
-                ComboBoxGender.SelectedIndex = (int)Sex - 1;
-                if (ComboBoxGender.SelectedItem == null) { ComboBoxGender.SelectedIndex = 0; }
-                TextBoxHP.Text = Convert.ToString(HP);
-                TextBoxVoice.Text = Convert.ToString(Voice);
-                TextBoxDialogue.Text = Convert.ToString(Dialogue);
-                ComboBoxJob.SelectedValue = Job;
-                if (ComboBoxJob.SelectedItem == null) { ComboBoxJob.SelectedIndex = 0; }
-                ComboBoxHome.SelectedValue = Home;
-                if (ComboBoxHome.SelectedItem == null) { ComboBoxHome.SelectedIndex = 0; }
-                ComboBoxIsland.SelectedValue = Island;
-                if (ComboBoxIsland.SelectedItem == null) { ComboBoxIsland.SelectedIndex = 0; }
-                ComboBoxPlace.SelectedIndex = Place;
-                if (ComboBoxPlace.SelectedItem == null) { ComboBoxPlace.SelectedIndex = 0; }
-                ComboBoxTypeLock.SelectedValue = Type;
-                if (ComboBoxTypeLock.SelectedItem == null) { ComboBoxTypeLock.SelectedIndex = 0; }
+                    var TypeBackup = TypeVisual;
 
-                ArmourBox.SelectedValue = Armour;
-                if (ArmourBox.SelectedItem == null) { ArmourBox.SelectedIndex = 0; }
-                WeaponBox.SelectedValue = Weapon;
-                if (WeaponBox.SelectedItem == null) { WeaponBox.SelectedIndex = 0; }
+                    SizeBox.SelectedIndex = RoomSize - 1;
+                    if (SizeBox.SelectedItem == null) { SizeBox.SelectedIndex = 0; }
+                    AmbianceBox.SelectedIndex = RoomAmbience;
+                    if (AmbianceBox.SelectedItem == null) { AmbianceBox.SelectedIndex = 0; }
+                    FancinessBox.SelectedIndex = RoomFanciness - 1;
+                    if (FancinessBox.SelectedItem == null) { FancinessBox.SelectedIndex = 0; }
 
-                var TypeBackup = TypeVisual;
+                    ButtonEye.Content = EyeColor;
+                    var ColorList = Lists.getColorVal(EyeColor);
+                    RectangleEye.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                    DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
 
-                SizeBox.SelectedIndex = RoomSize - 1;
-                if (SizeBox.SelectedItem == null) { SizeBox.SelectedIndex = 0; }
-                AmbianceBox.SelectedIndex = RoomAmbience;
-                if (AmbianceBox.SelectedItem == null) { AmbianceBox.SelectedIndex = 0; }
-                FancinessBox.SelectedIndex = RoomFanciness - 1;
-                if (FancinessBox.SelectedItem == null) { FancinessBox.SelectedIndex = 0; }
+                    ButtonSkin.Content = SkinColor;
+                    ColorList = Lists.getColorVal(SkinColor);
+                    RectangleSkin.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                    DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
 
-                ButtonEye.Content = EyeColor;
-                var ColorList = Lists.getColorVal(EyeColor);
-                RectangleEye.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
-                DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
-
-                ButtonSkin.Content = SkinColor;
-                ColorList = Lists.getColorVal(SkinColor);
-                RectangleSkin.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
-                DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
-
-                ButtonHair.Content = HairColor;
-                ColorList = Lists.getColorVal(HairColor);
-                RectangleHair.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
-                DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
+                    ButtonHair.Content = HairColor;
+                    ColorList = Lists.getColorVal(HairColor);
+                    RectangleHair.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(ColorList.color);
+                    DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ColorList.color);
 
 
-                ComboBoxBody.SelectedValue = BodyModel;
-                if (ComboBoxBody.SelectedItem == null) { ComboBoxBody.SelectedIndex = 0; }
-                ComboBoxFace.SelectedValue = FaceModel;
-                if (ComboBoxFace.SelectedItem == null) { ComboBoxHair.SelectedIndex = 0; }
-                ComboBoxHair.SelectedValue = HairModel;
-                if (ComboBoxHair.SelectedItem == null) { ComboBoxHair.SelectedIndex = 0; }
+                    ComboBoxBody.SelectedValue = BodyModel;
+                    if (ComboBoxBody.SelectedItem == null) { ComboBoxBody.SelectedIndex = 0; }
+                    ComboBoxFace.SelectedValue = FaceModel;
+                    if (ComboBoxFace.SelectedItem == null) { ComboBoxHair.SelectedIndex = 0; }
+                    ComboBoxHair.SelectedValue = HairModel;
+                    if (ComboBoxHair.SelectedItem == null) { ComboBoxHair.SelectedIndex = 0; }
 
-                LockCheck.IsChecked = TypeVisual;
-                ClothCheck.IsChecked = ClothVisual;
+                    LockCheck.IsChecked = TypeVisual;
+                    ClothCheck.IsChecked = ClothVisual;
+                    RaggedCheck.IsChecked = RagVisual;
 
-                TextBoxConsole.Text = "Loaded File!";
-                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+                    TextBoxConsole.Text = "Loaded File!";
+                    TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+                    Loading = false;
+                    PriorityCodeSetModel(true, true, true);
+                }
+                else
+                {
+                    TextBoxConsole.Text = "Not a valid file";
+                    TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+                }
             }
             catch (Exception ex)
             {
@@ -227,8 +239,9 @@ namespace DQB2NPCViewer
         {
             try
             {
-                NameNPC = TextBoxName.Text;
+                NameNPC = TextBoxName.Text.Length > 30 ? TextBoxName.Text.Substring(0, 30) : TextBoxName.Text; 
                 TextBoxConsole.Text = "Changed Name to " + NameNPC + "!";
+                TextBoxName.Text = NameNPC;
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
             }
             catch (Exception ex)
@@ -386,39 +399,47 @@ namespace DQB2NPCViewer
 
         private void PriorityCodeSetModel(bool Face, bool Hair, bool Body)
         {
-            var HairVisual = HairModel;
-            var FaceVisual = FaceModel;
-            var BodyVisual = BodyModel;
-            if (TypeVisual == true)
-            {
-                var TypeLockCurrent = (ComboBoxTypeLock.SelectedItem as TypeSet);
-                if (TypeLockCurrent.faceID != 0)
+            if(Loading == false) {
+                var HairVisual = HairModel;
+                var FaceVisual = FaceModel;
+                var BodyVisual = BodyModel;
+                if (TypeVisual == true)
                 {
-                    FaceVisual = TypeLockCurrent.faceID;
+                    var TypeLockCurrent = (ComboBoxTypeLock.SelectedItem as ComboBoxColour).TypeListing;
+                    if (TypeLockCurrent.faceID != 0)
+                    {
+                        FaceVisual = TypeLockCurrent.faceID;
+                    }
+                    if (TypeLockCurrent.bodyID != 0)
+                    {
+                        BodyVisual = TypeLockCurrent.bodyID;
+                    }
+                    if (TypeLockCurrent.hairID != 0)
+                    {
+                        HairVisual = TypeLockCurrent.hairID;
+                    }
                 }
-                if (TypeLockCurrent.bodyID != 0)
+                if (RagVisual == true)
                 {
-                    BodyVisual = TypeLockCurrent.bodyID;
+                    BodyVisual = 31;
                 }
-                if (TypeLockCurrent.hairID != 0)
-                {
-                    HairVisual = TypeLockCurrent.hairID;
-                }
-            }
-            if (Armour != 0 && ClothVisual == true)
-            {
-                var ArmourClass = Lists.ArmourList.FirstOrDefault(x => x.ID == Armour);
-                if (Sex == 1)
-                {
-                    BodyVisual = ArmourClass.Armour.ModelIDMale;
-                }
-                else
-                {
-                    BodyVisual = ArmourClass.Armour.ArmourValues.ModelIDFemale;
-                }
+                else {
+                    if (Armour != 0 && ClothVisual == true)
+                    {
+                        var ArmourClass = Lists.ArmourList.FirstOrDefault(x => x.ID == Armour);
+                        if (Sex == 1)
+                        {
+                            BodyVisual = ArmourClass.Armour.ModelIDMale;
+                        }
+                        else
+                        {
+                            BodyVisual = ArmourClass.Armour.ArmourValues.ModelIDFemale;
+                        }
+                    }
 
+                }
+                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceVisual, HairVisual, BodyVisual, Face, Hair, Body);
             }
-            ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceVisual, HairVisual, BodyVisual, Face, Hair, Body);
         }
 
         private void ComboBoxPlace_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -614,8 +635,8 @@ namespace DQB2NPCViewer
         {
             try
             {
-                Type = (ComboBoxTypeLock.SelectedItem as TypeSet).typeID;
-                TextBoxConsole.Text = "Changed type to '" + (ComboBoxTypeLock.SelectedItem as TypeSet).name + " type'!";
+                Type = (ComboBoxTypeLock.SelectedItem as ComboBoxColour).ID;
+                TextBoxConsole.Text = "Changed type to '" + (ComboBoxTypeLock.SelectedItem as ComboBoxColour).TypeListing.name + " type'!";
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
                 PriorityCodeSetModel(true, true, true);
             }
@@ -631,7 +652,7 @@ namespace DQB2NPCViewer
         {
             try
             {
-                if ((ComboBoxTypeLock.SelectedItem as TypeSet).Tier == 3)
+                if ((ComboBoxTypeLock.SelectedItem as ComboBoxColour).TypeListing.Tier == 3)
                 {
                     TypeVisual = true;
                 }
@@ -709,7 +730,12 @@ namespace DQB2NPCViewer
         {
             try
             {
-                ColorBackup = (ArmourBox.SelectedItem as ComboBoxArmour).Armour;
+                var Test = (ArmourBox.SelectedItem);
+                if (Test != null)
+                {
+
+                    ColorBackup = (Test as ComboBoxArmour).Armour;
+                }
                 Armour = ColorBackup.ID;
                 TextBoxConsole.Text = "Changed armour to " + ColorBackup.Name + "!";
                 TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
@@ -830,6 +856,37 @@ namespace DQB2NPCViewer
             {
                 InfoName.Text = Lists.InfoText[36];
                 InfoBox.Text = Lists.InfoText[37];
+            }
+        }
+
+        private void RaggedCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RagVisual = true;
+                PriorityCodeSetModel(false, false, true);
+                TextBoxConsole.Text = "Raggs added!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            catch
+            {
+                TextBoxConsole.Text = "Error (Ragg Change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+        private void RaggedCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RagVisual = false;
+                PriorityCodeSetModel(false, false, true);
+                TextBoxConsole.Text = "Raggs removed!";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            catch
+            {
+                TextBoxConsole.Text = "Error (Ragg Change)";
+                TextBoxConsole.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
     }
