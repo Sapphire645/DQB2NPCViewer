@@ -1,7 +1,7 @@
 #ID	ImageID	Name
 0	0	---
-1	1	Male Historic Hat
-2	2	Female Historic Hairband
+1	1	Historic Hat  ♂
+2	2	Historic Hairband ♀
 3	3	Malroth
 4	4	Bonanzo
 5	5	Brownbeard
@@ -20,16 +20,16 @@
 19	19	Saffron/Haydin
 20	20	Zara
 21	21	Rosie
-22	22	Male Merchant
-23	23	Female Merchant
-24	24	Male Blue Soldier
-25	25	Female Blue Soldier
-26	26	Male Farmer
-27	27	Female Farmer
+22	22	Merchant ♂
+23	23	Merchant ♀
+24	24	Blue Soldier ♂
+25	25	Blue Soldier ♀
+26	26	Farmer ♂
+27	27	Farmer ♀
 28	28	Ordelia/Original
 32	0	(Bald)
-33	33	Female Elder
-34	34	Male Child
+33	33	Elder ♀
+34	34	Child ♂
 35	35	Lillian/Female Child
 36	36	Haydin/Bard
 37	0	(Bald)
@@ -41,24 +41,24 @@
 43	43	Jeremiah(including beard)
 44	44	Block Head
 45	45	Babs/Original
-50	50	Male Builder without bangs
-51	51	Male Builder under Historic Hat
-52	52	Female Builder under hats
-53	53	Male  Builder under hats
-54	54	Female Builder without ponytails
-55	26	Male Farmer
-56	27	Female Farmer
-60	60	Male Red Soldier
-61	61	Male Green Soldier
-62	62	Female Red Soldier
-63	63	Female Green Soldier
+50	50	Builder without bangs ♂
+51	51	Builder under Historic Hat ♂
+52	52	Builder under hats ♀
+53	53	Builder under hats ♂
+54	54	Builder without ponytails ♀
+55	26	Farmer ♂
+56	27	Farmer ♀
+60	60	Red Soldier ♂
+61	61	Green Soldier ♂
+62	62	Red Soldier ♀
+63	63	Green Soldier ♀
 64	64	Lulu with Bunny Ears
 65	65	Saffron/Haydin with Bunny Ears
 66	66	Zarawith Bunny Ears
 67	67	Ordelia/Bunny Ears
-68	24	Male Blue Soldier
-69	60	Male Red Soldier
-70	61	Male Green Soldier
+68	24	Blue Soldier ♂
+69	60	Red Soldier ♂
+70	61	Green Soldier ♂
 71	19	Saffron/Haydin
 72	15	White ClassicCurtianswithoutbangs
 73	18	White LuluwithBunnyEarswithoutbangs
@@ -68,12 +68,12 @@
 77	19	White Saffron/Haydenwithoutbangs
 78	21	White Rosiewithoutbangs
 79	21	White Rosiewithhairbandwithoutbangs
-80	80	Thug'sMug
-81	81	MaleStrawHat
-82	81	FemaleStrawHat
+80	80	Thug's Mug
+81	81	Straw Hat ♂
+82	81	Straw Hat ♀
 83	16	MussedMopwithoutbangs
-84	84	HipsterPonytail
-85	85	PrettyPonytail
+84	84	Hipster Ponytail
+85	85	Pretty Ponytail
 86	86	Gillian
 87	81	WhiteMaleStrawHat
 88	81	WhiteFemaleStrawHat
@@ -81,21 +81,21 @@
 90	85	PrettyPonytail
 91	85	WhitePrettyPonytailwithoutbangs
 92	84	HipsterPonytail
-93	93	DandoDo
-94	94	WavyLocks
-95	94	WavyLocks
-96	93	DandoDo
+93	93	Dandy Do
+94	94	Wavy Locks
+95	94	Wavy Locks
+96	93	Dandy Do
 97	94	WhiteWavyLockswithoutbangs
 98	94	WhiteWavyLockswithoutbangs
-99	14	CurlyQuiff
-100	15	ClassicCurtains
+99	14	Curly Quiff
+100	15	Classic Curtains
 101	15	WhiteClassicCurtainswithoutbangs
-102	16	MussedMop
-103	17	BackcombedCut
-104	18	LopsidedPonytail
+102	16	Mussed Mop
+103	17	Backcombed Cut
+104	18	Lopsided Ponytail
 105	18	WhiteLopsidesPonytailwithoutbangs
-106	19	FashionableFlick
+106	19	Fashionable Flick
 107	19	WhiteFashionableFlickwithoutbangs
-108	20	BonnyBobCut
-109	21	ImpressiveTresses
+108	20	Bonny Bob Cut
+109	21	Impressive Tresses
 110	21	WhiteImpressiveTresseswithoutbangs

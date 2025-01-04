@@ -2,10 +2,13 @@
 using SharpGLTF.Schema2;
 using System;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
+using System.Windows.Media.TextFormatting;
 
 
 public static class DQB2ModelRendering
@@ -17,7 +20,14 @@ public static class DQB2ModelRendering
     private static Model3DGroup FaceModel { get; set; }
     private static Model3DGroup HairModel { get; set; }
     private static Model3DGroup BodyModel { get; set; }
+    private static Model3DGroup Accesory1Model { get; set; }
+    private static Model3DGroup Accesory2Model { get; set; }
+    private static Model3DGroup Accesory3Model { get; set; }
+    private static Model3DGroup AccesoryExtraModel { get; set; }
     private static Transform3DGroup transformGroup { get; set; }
+    private static Transform3DGroup transformGroupAccesory { get; set; }
+
+    private static bool CurrentError = true;
 
     public static void ModelCodeC()
     {
@@ -174,6 +184,29 @@ public static class DQB2ModelRendering
         // Create a new BitmapSource with the modified pixels
         return BitmapSource.Create(width, height, baseImage.DpiX, baseImage.DpiY, PixelFormats.Bgra32, null, basePixels, width * 4);
     }
+
+    private static System.Windows.Media.Media3D.DiffuseMaterial LoadTextureBasic(String Texture_Path)
+    {
+        BitmapImage texture = new BitmapImage(new Uri(Texture_Path));
+
+        int width = texture.PixelWidth;
+        int height = texture.PixelHeight;
+
+        var baseImage = BitmapSourceToBitmapImage(CreateSolidColorBitmap(width, height, Colors.White));
+        BitmapSource mergedImage = MultiplyImages(baseImage, texture); //Not transparent
+
+        ImageBrush imageBrush = new ImageBrush(mergedImage)
+        {
+            Opacity = 1.0,
+            ViewportUnits = BrushMappingMode.Absolute,
+            TileMode = TileMode.Tile
+        };
+
+        var material = new System.Windows.Media.Media3D.DiffuseMaterial(imageBrush);
+
+        material.Brush.Opacity = 1.0;
+        return material;
+    }
     private static System.Windows.Media.Media3D.DiffuseMaterial LoadTexture(System.Windows.Media.Color ColorB, String Texture_Path, String TextureMask_Path, String TextureClotheMask_Path, ushort Case, bool cloth)
     {
         BitmapImage texture, textureMask, textureCloth;
@@ -265,20 +298,19 @@ public static class DQB2ModelRendering
     {
         var model = ModelRoot.Load(Model);
 
-        if (File.Exists(Type))
-        { File.Delete(Type); }
+        if (File.Exists("models/" + Type))
+        { File.Delete("models/" + Type); }
         try
-        { model.SaveAsWavefront(Type); }
+        { model.SaveAsWavefront("models/"+Type); }
         catch{}
     }
     private static Model3DGroup LoadModel(System.Windows.Media.Media3D.DiffuseMaterial material, String Model_Path, String Type)
     {
-        var importer = new ModelImporter();
         try
         {
             var objReader = new HelixToolkit.Wpf.ObjReader();
             LoadGlbFromResources(Model_Path, Type);
-            var model = objReader.Read(Type);
+            var model = objReader.Read("models/"+Type);
 
             if (model is Model3DGroup modelGroup)
             {
@@ -296,7 +328,35 @@ public static class DQB2ModelRendering
         }
         catch
         {
-            MessageBox.Show($"Model does not exist! NPC will not appear.");
+            CurrentError = true;
+            return null;
+        }
+    }
+    private static Model3DGroup LoadModelAccesory(System.Windows.Media.Media3D.DiffuseMaterial material, String Model_Path, String Type)
+    {
+        try
+        {
+            var objReader = new HelixToolkit.Wpf.ObjReader();
+            LoadGlbFromResources(Model_Path, Type);
+            var model = objReader.Read(Type);
+
+            if (model is Model3DGroup modelGroup)
+            {
+                foreach (var geometry in modelGroup.Children)
+                {
+                    if (geometry is System.Windows.Media.Media3D.GeometryModel3D geomModel)
+                    {
+                        geomModel.Material = material;
+                        geomModel.BackMaterial = material;
+                    }
+                }
+            }
+            model.Transform = transformGroupAccesory;
+            return model;
+        }
+        catch
+        {
+            CurrentError = true;
             return null;
         }
     }
@@ -315,27 +375,50 @@ public static class DQB2ModelRendering
         transformGroup.Children.Add(new RotateTransform3D(rotationY));
         transformGroup.Children.Add(new RotateTransform3D(rotationZ));
     }
+    public static void RotateAccesory()
+    {
+        double angleX = -90;
+        double angleY = 0;
+        double angleZ = 0;
+
+        var rotationX = new AxisAngleRotation3D(new Vector3D(1, 0, 0), angleX);
+        var rotationY = new AxisAngleRotation3D(new Vector3D(0, 1, 0), angleY);
+        var rotationZ = new AxisAngleRotation3D(new Vector3D(0, 0, 1), angleZ);
+
+        transformGroupAccesory = new Transform3DGroup();
+        transformGroupAccesory.Children.Add(new RotateTransform3D(rotationX));
+        transformGroupAccesory.Children.Add(new RotateTransform3D(rotationY));
+        transformGroupAccesory.Children.Add(new RotateTransform3D(rotationZ));
+
+        transformGroupAccesory.Children.Add(new TranslateTransform3D(0,0,1.125));
+    }
     public static Model3DGroup GroupModels(ushort face, ushort hair, ushort body, bool Face, bool Hair, bool Body)
     {
         var importer = new ModelImporter();
         var modelGroup = new Model3DGroup();
         System.Windows.Media.Media3D.DiffuseMaterial material;
+        if (CurrentError)
+        {
+            CurrentError = false;
+            Face = true;
+            Hair = true;
+            Body = true;
+        }
         try
         {
-            // Load and add the first model
-            if (Body == true)
+            if (body < 200)
             {
-                material = LoadTexture(SkinImage, "pack://application:,,,/textures/body/" + body.ToString("D3") + ".dds", "pack://application:,,,/textures/body/m" + body.ToString("D3") + ".png", "pack://application:,,,/textures/body/c" + body.ToString("D3") + ".png", 2,false);
-                BodyModel = LoadModel(material, "models/body/" + body.ToString("D3") + ".glb", "MeshBody.obj");
-            }
-            if (BodyModel != null)
-            {
-                modelGroup.Children.Add(BodyModel);
-            }
-
-            // Load and add the second model
-            if (body <= 200)
-            {
+                // Load and add the first model
+                if (Body == true)
+                {
+                    material = LoadTexture(SkinImage, "pack://application:,,,/textures/body/" + body.ToString("D3") + ".dds", "pack://application:,,,/textures/body/m" + body.ToString("D3") + ".png", "pack://application:,,,/textures/body/c" + body.ToString("D3") + ".png", 2, false);
+                    BodyModel = LoadModel(material, "models/body/" + body.ToString("D3") + ".glb", "MeshBody.obj");
+                }
+                if (BodyModel != null)
+                {
+                    modelGroup.Children.Add(BodyModel);
+                }
+                // Load and add the second model
                 if (Hair == true)
                 {
                     material = LoadTexture(HairImage, "pack://application:,,,/textures/hair/" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/hair/m" + hair.ToString("D3") + ".png", "pack://application:,,,/textures/hair/c" + hair.ToString("D3") + ".png", 0, false);
@@ -359,12 +442,212 @@ public static class DQB2ModelRendering
                 //if (BodyModel == null || FaceModel == null || HairModel == null)
                 //    return LoadModel(new System.Windows.Media.Media3D.DiffuseMaterial(), "/models/Unknown.glb", "MeshUnk.obj");
             }
+            else
+            {
+                // Load and add the first model
+                if (Body == true)
+                {
+                    material = LoadTexture(SkinImage, "pack://application:,,,/textures/monster/" + body.ToString("D3") + ".dds", "pack://application:,,,/textures/monster/m" + body.ToString("D3") + ".png", "pack://application:,,,/textures/monster/c" + body.ToString("D3") + ".png", 2, false);
+                    BodyModel = LoadModel(material, "models/monster/" + body.ToString("D3") + ".glb", "MeshBody.obj");
+                }
+                if (BodyModel != null)
+                {
+                    modelGroup.Children.Add(BodyModel);
+                }
+            }
+            if (CurrentError)
+            {
+                modelGroup = new Model3DGroup();
+                var objReader = new HelixToolkit.Wpf.ObjReader();
+                var model = objReader.Read("models/Question.obj");
+                model.Transform = transformGroup;
+                modelGroup.Children.Add(model);
+            }
             return modelGroup;
-
         }
         catch
         {
+            modelGroup = new Model3DGroup();
+            var objReader = new HelixToolkit.Wpf.ObjReader();
+            var model = objReader.Read("models/Question.obj");
+            model.Transform = transformGroup;
+            modelGroup.Children.Add(model);
             return modelGroup;
         }
     }
+    public static Model3DGroup GroupModelsBuilder(ushort face, ushort hair, ushort body,
+                                            ushort accesory1, ushort accesory2, ushort accesory3, ushort accesoryE,
+                                                bool Face, bool Hair, bool Body,
+                                                bool Baccesory1, bool Baccesory2, bool Baccesory3, bool BaccesoryE)
+    {
+        var importer = new ModelImporter();
+        var modelGroup = new Model3DGroup();
+        System.Windows.Media.Media3D.DiffuseMaterial material;
+        if (CurrentError)
+        {
+            CurrentError = false;
+            Face = true;
+            Hair = true;
+            Body = true;
+        }
+        try
+        {
+            // Load and add the first model
+            if (Body == true)
+            {
+                material = LoadTexture(SkinImage, "pack://application:,,,/textures/body/" + body.ToString("D3") + ".dds", "pack://application:,,,/textures/body/m" + body.ToString("D3") + ".png", "pack://application:,,,/textures/body/c" + body.ToString("D3") + ".png", 2, false);
+                BodyModel = LoadModel(material, "models/body/" + body.ToString("D3") + ".glb", "MeshBody.obj");
+            }
+            if (BodyModel != null)
+            {
+                modelGroup.Children.Add(BodyModel);
+            }
+            // Load and add the second model
+            if (Hair == true)
+            {
+                material = LoadTexture(HairImage, "pack://application:,,,/textures/hair/" + hair.ToString("D3") + ".dds", "pack://application:,,,/textures/hair/m" + hair.ToString("D3") + ".png", "pack://application:,,,/textures/hair/c" + hair.ToString("D3") + ".png", 0, false);
+                HairModel = LoadModel(material, "models/hair/" + hair.ToString("D3") + ".glb", "MeshHair.obj");
+            }
+            if (HairModel != null)
+            {
+                modelGroup.Children.Add(HairModel);
+            }
+
+            // Load and add the third model
+            if (Face == true)
+            {
+                material = LoadTexture(SkinImage, "pack://application:,,,/textures/face/" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/m" + face.ToString("D3") + ".dds", "pack://application:,,,/textures/face/e" + face.ToString("D3") + ".png", 1, true);
+                FaceModel = LoadModel(material, "models/face/" + face.ToString("D3") + ".glb", "MeshFace.obj");
+            }
+            if (FaceModel != null)
+            {
+                modelGroup.Children.Add(FaceModel);
+            }
+
+            // Load and add the accesories
+            if (Baccesory1 == true)
+            {
+                if (accesory1 > 0)
+                {
+                    material = LoadTextureBasic("pack://application:,,,/textures/builder/" + (accesory1 - 1).ToString("D2") + ".dds");
+                    Accesory1Model = LoadModelAccesory(material, "models/builder/" + (accesory1 - 1).ToString("D2") + ".glb", "MeshA1.obj");
+                }
+                else
+                    Accesory1Model = null;
+
+            }
+            if (Accesory1Model != null)
+            {
+                modelGroup.Children.Add(Accesory1Model);
+            }
+            if (Baccesory2 == true)
+            {
+                if (accesory2 > 0)
+                {
+                    material = LoadTextureBasic("pack://application:,,,/textures/builder/" + (accesory2-1).ToString("D2") + ".dds");
+                    Accesory2Model = LoadModelAccesory(material, "models/builder/" + (accesory2 - 1).ToString("D2") + ".glb", "MeshA2.obj");
+                }
+                else
+                    Accesory2Model = null;
+
+            }
+            if (Accesory2Model != null)
+            {
+                modelGroup.Children.Add(Accesory2Model);
+            }
+            if (Baccesory3 == true)
+            {
+                if (accesory3 > 0)
+                {
+                    material = LoadTextureBasic("pack://application:,,,/textures/builder/" + (accesory3 - 1).ToString("D2") + ".dds");
+                    Accesory3Model = LoadModelAccesory(material, "models/builder/" + (accesory3 - 1).ToString("D2") + ".glb", "MeshA3.obj");
+                }
+                else
+                    Accesory3Model = null;
+
+            }
+            if (Accesory3Model != null)
+            {
+                modelGroup.Children.Add(Accesory3Model);
+            }
+            if (BaccesoryE == true)
+            {
+                if (accesoryE > 0)
+                {
+                    material = LoadTextureBasic("pack://application:,,,/textures/builder/" + (accesoryE - 1).ToString("D2") + ".dds");
+                    AccesoryExtraModel = LoadModelAccesory(material, "models/builder/" + (accesoryE - 1).ToString("D2") + ".glb", "MeshAE.obj");
+                }
+                else
+                    AccesoryExtraModel = null;
+
+            }
+            if (AccesoryExtraModel != null)
+            {
+                modelGroup.Children.Add(AccesoryExtraModel);
+            }
+
+            if (CurrentError)
+            {
+                modelGroup = new Model3DGroup();
+                var objReader = new HelixToolkit.Wpf.ObjReader();
+                var model = objReader.Read("models/Question.obj");
+                model.Transform = transformGroup;
+                modelGroup.Children.Add(model);
+            }
+
+            return modelGroup;
+        }
+        catch
+        {
+            modelGroup = new Model3DGroup();
+            var objReader = new HelixToolkit.Wpf.ObjReader();
+            var model = objReader.Read("models/Question.obj");
+            model.Transform = transformGroup;
+            modelGroup.Children.Add(model);
+            return modelGroup;
+        }
+    }
+
+    //Colour blend code for the skin
+    public static string Multiply(string hexColor2)
+        {
+            string hexColor1 = "#EFC294";
+
+            // Convert the hex strings to RGB components
+            (int r1, int g1, int b1) = HexToRGB(hexColor1);
+            (int r2, int g2, int b2) = HexToRGB(hexColor2);
+
+            // Apply the multiply filter
+            int rResult = MultiplyColors(r1, r2);
+            int gResult = MultiplyColors(g1, g2);
+            int bResult = MultiplyColors(b1, b2);
+
+            // Convert the result back to a hex color
+            return RGBToHex(rResult, gResult, bResult);
+        }
+
+        private static  (int, int, int) HexToRGB(string hex)
+        {
+            // Remove the # if present
+            hex = hex.TrimStart('#');
+
+            // Convert hex to integer for R, G, B
+            int r = Convert.ToInt32(hex.Substring(0, 2), 16);
+            int g = Convert.ToInt32(hex.Substring(2, 2), 16);
+            int b = Convert.ToInt32(hex.Substring(4, 2), 16);
+
+            return (r, g, b);
+        }
+
+    private static int MultiplyColors(int component1, int component2)
+        {
+            // Multiply the components and divide by 255 to normalize the result
+            return (component1 * component2) / 255;
+        }
+
+    private static string RGBToHex(int r, int g, int b)
+        {
+            // Convert the RGB values back to hex
+            return $"#{r:X2}{g:X2}{b:X2}";
+        }
 }
