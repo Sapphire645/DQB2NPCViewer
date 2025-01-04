@@ -264,9 +264,6 @@
     <Compile Include="control\ComboBoxColour.xaml.cs">
       <DependentUpon>ComboBoxColour.xaml</DependentUpon>
     </Compile>
-    <Compile Include="control\ComboBoxAccesory.xaml.cs">
-      <DependentUpon>ComboBoxAccesory.xaml</DependentUpon>
-    </Compile>
     <Compile Include="control\ComboBoxModel.xaml.cs">
       <DependentUpon>ComboBoxModel.xaml</DependentUpon>
     </Compile>
@@ -287,11 +284,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Page>
     <Page Include="control\ComboBoxColour.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="control\ComboBoxAccesory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -367,9 +359,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="images\island\p1.sai2">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <None Include="models\body\001.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1391,6 +1380,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\weapon\709.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\resource\icon\08.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Content Include="models\monster\200.glb">

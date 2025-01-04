@@ -47,7 +47,7 @@
                             <RowDefinition Height ="6*"/>
                             <RowDefinition Height ="150"/>
                         </Grid.RowDefinitions>
-                        <TabControl Margin="5,5,5,5">
+                        <TabControl Name="TabNPC" Margin="5,5,5,5">
                             <TabItem Name="TabEditingGeneral" Header="General">
                                 <Grid Name="EditingGrid">
                                     <Grid.ColumnDefinitions>
@@ -131,7 +131,10 @@
                                         <TextBox Text="{Binding EditingNPC.Value.messages}" Height="25" Padding="2,2,0,0"/>
                                     </StackPanel>
                                     <StackPanel Name="TabListToGo" Grid.Column="1" Orientation="Vertical" Margin="5,5,5,5">
-                                        <Button Content="Character Type" Click="InfoPanel_Click" Tag="4" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Grid>
+                                            <Button Content="Character Type" Click="InfoPanel_Click" Tag="4" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <TextBox Text="{Binding EditingNPC.Value.charType}" Margin="90,0,0,0" Padding="5,2,5,2" Background="{x:Null}" IsReadOnly="True" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        </Grid>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,5,5,5">
                                         <Button Content="Room Size" Tag="20" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>

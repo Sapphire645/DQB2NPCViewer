@@ -72,14 +72,16 @@ List<TypeSet> ListFilter3, string Filter3)
                     },
                     Background = Colour
                 };
-                 
-                ButtonList.Add(ComboBoxColour);
                 ComboBoxColour.Click += Button_Click;
+                ButtonList.Add(ComboBoxColour);
+                
             }
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ButtonClicked?.Invoke(sender, EventArgs.Empty);
+            Button Button = sender as Button;
+            ComboBoxColour ComboBox = Button.Content as ComboBoxColour;
+            ButtonClicked?.Invoke(ComboBox.ID, EventArgs.Empty);
         }
         private void FilterOne_Checked(object sender, RoutedEventArgs e){AddBlocks(BlockListFilter1);}
         private void FilterOne_Unchecked(object sender, RoutedEventArgs e){ RemoveBlocks(BlockListFilter1); }

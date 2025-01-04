@@ -22,6 +22,7 @@ using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 using System.Reflection;
 using System.Windows.Media.Media3D;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DQB2NPCViewer
 {
@@ -58,6 +59,17 @@ namespace DQB2NPCViewer
 
         private bool builder = false;
 
+        private void ConsoleCommand(string text, bool error, bool warning)
+        {
+            ConsoleText.Value = "text";
+            if (error)
+                ConsoleColour.Value = Brushes.Red;
+            else if (warning)
+                ConsoleColour.Value = Brushes.Orange;
+            else
+                ConsoleColour.Value = Brushes.Green;
+
+        }
         private void VisualChangeCheck(object sender, MouseButtonEventArgs e)
         {
             _isUserInitiated = true;
@@ -139,8 +151,7 @@ namespace DQB2NPCViewer
                     }
                     catch (Exception ex)
                     {
-                        ConsoleText.Value = "Cannot find color on 'Clothes Colour'.";
-                        ConsoleColour.Value = Brushes.Orange;
+                        ConsoleCommand("NOTE: Cannot find color on 'Clothes Colour'. Please ignore.", false, true);
                     }
                     PriorityCodeSetModelBuilder(false, true, true);
                 }
@@ -154,8 +165,7 @@ namespace DQB2NPCViewer
                     }
                     catch (Exception ex)
                     {
-                        ConsoleText.Value = "Cannot find color on 'Clothes Colour'.";
-                        ConsoleColour.Value = Brushes.Orange;
+                        ConsoleCommand("NOTE: Cannot find color on 'Clothes Colour'. Please ignore.", false, true);
                     }
                     PriorityCodeSetModel(false, true, true);
                 }
@@ -171,6 +181,7 @@ namespace DQB2NPCViewer
             CharacterTabList();
             this.SizeChanged += OnWindowSizeChanged;
             SelectionList.ReturnSelectedTile += SelectedNPC_OnClick;
+            
             DQB2ModelRendering.ModelCodeC();
             DQB2ModelRendering.Rotate();
             DQB2ModelRendering.RotateAccesory();
@@ -194,7 +205,9 @@ namespace DQB2NPCViewer
                     Hum.Add(a.TypeListing);
                 }
             }
-            this.TabListToGo.Children.Add(new MenuListType(Hum, "Human", An, "Animal", Mon, "Monster"));
+            MenuListType menu = new MenuListType(Hum, "Human", An, "Animal", Mon, "Monster");
+            menu.ButtonClicked += ChangeChar_OnClick;
+            this.TabListToGo.Children.Add(menu);
         }
         private async void CMNDAT_Open_Click(object sender, RoutedEventArgs e)
         {
@@ -230,6 +243,7 @@ namespace DQB2NPCViewer
             swapGender(EditingBuilder.Value.sex, ListText.ArmourBuilderListMirror);
             EditingBuilder.NotifyValue();
 
+            ConsoleCommand("Loaded CMNDAT!", false, false);
             MainGrid.IsEnabled = true;
             LoadingImage.Visibility = Visibility.Collapsed;
 
@@ -245,6 +259,7 @@ namespace DQB2NPCViewer
             SelectionList.StoryChar = DQB2DataEditor.LoadCMNDATStory();
             SelectionList.GenericChar = DQB2DataEditor.LoadCMNDATGeneric();
             EditingBuilder.Value = DQB2DataEditor.LoadCMNDATBuilder();
+            
 
         }
         private async void CMNDAT_Save_Click(object sender, RoutedEventArgs e)
@@ -270,22 +285,24 @@ namespace DQB2NPCViewer
                 await Task.Run(() => DQB2DataEditor.SaveFile(saveFileDialog.FileName, EditingBuilder.Value));
                 MainGrid.IsEnabled = true;
                 Saving.Visibility = Visibility.Collapsed;
+                ConsoleCommand("Saved CMNDAT!", false, false);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                ConsoleCommand("Failed to save CMNDAT", true, false);
                 MessageBox.Show(ex.Message, "Failed to save file", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
-
+            ConsoleCommand("Not implemented", true, false);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-
+            ConsoleCommand("Not implemented", true, false);
         }
         protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -303,12 +320,13 @@ namespace DQB2NPCViewer
             }
             catch (Exception ex)
             {
-
+                ConsoleCommand("NOTE : Error on window size change. Please ignore.", false, true);
             }
         }
         private void SelectedNPC_OnClick(NPCDataMinimum NewSelectedNPC)
         {
             SelectedNPC.Value = new CharacterButton(NewSelectedNPC);
+            ConsoleCommand("Selected NPC slot "+ NewSelectedNPC.offset, false, false);
 
         }
         private void SwapToNPC()
@@ -325,10 +343,10 @@ namespace DQB2NPCViewer
                 DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.skinColour).color);
                 SkinColour.Value = new SolidColorBrush(DQB2ModelRendering.SkinImage);
                 SkinColourFilter.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingNPC.Value.skinColour).color)));
-
                 try
                 {
                     DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboArmour.SelectedItem)).Colour;
+                    ConsoleCommand("NPC model loaded.", false, false);
                 }
                 catch (Exception ex)
                 {
@@ -337,6 +355,7 @@ namespace DQB2NPCViewer
                     if (EditingNPC.Value.sex == 1)
                         IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
                     DQB2ModelRendering.ClothImage = ListText.getColorDyeVal(IDColour);
+                    ConsoleCommand("NOTE: Cloth colour not found on ComboArmour. Fallback code ran.", false, true);
                 }
                 ClothColour.Value = new SolidColorBrush(DQB2ModelRendering.ClothImage);
             }
@@ -355,7 +374,7 @@ namespace DQB2NPCViewer
 
                 DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingBuilder.Value.skinColour).color);
                 SkinColourBuilder.Value = new SolidColorBrush(DQB2ModelRendering.SkinImage);
-                SkinColourFilterBuilder.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingBuilder.Value.skinColour).color)));
+                SkinColourFilterBuilder.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingBuilder.Value.skinColour).color)));    
                 try
                 {
                     if (EditingBuilder.Value.mirrorClothes == 0)
@@ -365,6 +384,7 @@ namespace DQB2NPCViewer
                             DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderArmour.SelectedItem)).Colour;
                     else
                         DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderMirrorArmour.SelectedItem)).Colour;
+                    ConsoleCommand("Builder model loaded.", false, false);
                 }
                 catch (Exception ex)
                 {
@@ -380,6 +400,7 @@ namespace DQB2NPCViewer
                     if (EditingBuilder.Value.sex == 1)
                         IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
                     DQB2ModelRendering.ClothImage = ListText.getColorDyeVal(IDColour);
+                    ConsoleCommand("NOTE: Cloth colour not found on ComboBuilderArmour. Fallback code ran.", false, true);
                 }
             }
 
@@ -393,12 +414,14 @@ namespace DQB2NPCViewer
 
             PriorityCodeSetModel(true, true, true);
             MyHelixViewport.ZoomExtents();
+            ConsoleCommand("NPC loaded!", false, false);
         }
         private void SaveSelectedNPC_Click(object sender, RoutedEventArgs e)
         {
             EditingNPC.Value.offset = SelectedNPC.Value.NPC.Value.offset;
             DQB2DataEditor.SaveCMNDATOffset(EditingNPC.Value);
             SelectedNPC.Value = new CharacterButton(SelectionList.UpdateCharButton(EditingNPC.Value.offset, EditingNPC.Value));
+            ConsoleCommand("NPC saved!", false, false);
         }
         private void PriorityCodeSetModel(bool Face, bool Hair, bool Body)
         {
@@ -450,6 +473,7 @@ namespace DQB2NPCViewer
 
                 }
                 ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceVisual, HairVisual, BodyVisual, Face, Hair, Body);
+                ConsoleCommand("Updated NPC model.", false, false);
             }
 
         }
@@ -512,6 +536,7 @@ namespace DQB2NPCViewer
                     Accesory1, Accesory2, Accesory3, AccesoryExtra,
                     Face, Hair, Body,
                     Hair, Hair, Hair, Hair);
+                ConsoleCommand("Updated Builder model.", false, false);
             }
 
         }
@@ -531,6 +556,7 @@ namespace DQB2NPCViewer
             {
                 NameDescText.Value = clickedButton.Content.ToString();
                 DescText.Value = "No info.";
+                ConsoleCommand("ERROR: Information not found.", true, false);
             }
 
         }
@@ -551,6 +577,18 @@ namespace DQB2NPCViewer
                 PriorityCodeSetModelBuilder(true, true, true);
                 MyHelixViewport.ZoomExtents();
             }
+            else if(e.OriginalSource is TabControl && TabNPC.SelectedItem != null && ((TabItem)TabNPC.SelectedItem).Header.ToString() == "Visual")
+            {
+                PriorityCodeSetModel(true, true, true);
+            }
+        }
+
+        private void ChangeChar_OnClick(object sender, EventArgs e)
+        {
+            if(Loaded)
+                EditingNPC.Value.charType = (ushort)sender;
+            EditingNPC.NotifyValue();
+            ConsoleCommand("(PLACEHOLDER) Character changed. Update this text", false, true);
         }
         private void swapGender(byte gender, ObservableCollection<ComboBoxArmour> List)
         {
@@ -572,6 +610,7 @@ namespace DQB2NPCViewer
                     BoxCheck.SetImage();
                 }
             }
+            ConsoleCommand("(PLACEHOLDER) ComboBox gender changed. Delete this text.", false, true);
         }
         private void test(object sender, RoutedEventArgs e)
         {
@@ -658,6 +697,7 @@ namespace DQB2NPCViewer
                     break;
             }
             EditingNPC.NotifyValue();
+            ConsoleCommand("Colour changed on NPC.", false, false);
             //TextBoxConsole.Text = "Eye colour changed to " + ColorList + "!";
             //TextBoxConsole.Foreground = new SolidColorBrush(Colors.Green);
         }
@@ -718,6 +758,7 @@ namespace DQB2NPCViewer
                     break;
             }
             EditingBuilder.NotifyValue();
+            ConsoleCommand("Colour changed on Builder.", false, false);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
