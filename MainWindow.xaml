@@ -4,266 +4,1165 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DQB2NPCViewer"
+        xmlns:s="clr-namespace:DQB2NPCViewer.code"
         xmlns:hx="http://helix-toolkit.org/wpf"
         xmlns:HelixToolkit="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
         xmlns:control="clr-namespace:DQB2NPCViewer.control"
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Class="DQB2NPCViewer.MainWindow"
         mc:Ignorable="d"
-        Title="DQB2 NPC Viewer Alpha 1" Height="618" Width="1100" MinHeight="618" MinWidth="1100" Icon="images/resource/icon.ico">
-    <Grid>
+        Title="DQB2 NPC Viewer Alpha 1" WindowState ="Normal" MinWidth="1100" MinHeight="730" Icon="images/resource/icon.ico">
+    <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="450*"/>
         </Grid.RowDefinitions>
         <ToolBar VerticalAlignment="Center">
-            <Button Height="32" Width="32" Click="Open_Click">
+            <Button Height="32" Width="32" Click="CMNDAT_Open_Click">
                 <Image Source="/images/resource/open.png" />
             </Button>
-            <Button Height="32" Width="32" Click="Save_Click">
+            <Button Height="32" Width="32" Click="CMNDAT_Save_Click">
                 <Image Source="/images/resource/save.png" />
             </Button>
+            <Separator/>
+            <Button Height="32" Width="32" Click="Open_Click">
+                <Image Source="/images/resource/import.png" />
+            </Button>
+            <Button Height="32" Width="32" Click="Save_Click">
+                <Image Source="/images/resource/export.png" />
+            </Button>
+            <Separator/>
+            <Image x:Name="LoadingImage" Source="/images/resource/Loading.png" Height="24" MaxHeight="24" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Name="Saving" Source="/images/resource/Saving.png" Height="24" MaxHeight="24" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ToolBar>
-        <TabControl Grid.Row="1" Margin="0,0,0,0">
-            <TabItem Header="General">
-                <Grid Grid.Row="1">
+        <TabControl Name="Tabs" Grid.Row="1" Margin="0,0,0,0" SelectionChanged="EditingTabChange">
+            <TabItem Name="TabEditing" Header="NPC Editing" Height="22">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="335"/>
-                        <ColumnDefinition Width="350"/>
-                        <ColumnDefinition Width="363*"/>
+                        <ColumnDefinition Width ="360"/>
+                        <ColumnDefinition Width ="2*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="380"/>
-                        <RowDefinition Height="363*"/>
-                    </Grid.RowDefinitions>
-                    <Rectangle Grid.Column="0" Height="20" Margin="20,11,20,0" Fill="#E5E5E5"  VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <TextBlock x:Name="TextBoxConsole" Grid.Column="0" Margin="24,8,24,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Text="Thing Done!" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.ColumnSpan="2"/>
-                    <StackPanel Orientation="Vertical" Margin="10,40,0,0">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name ="BName" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" Name" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <TextBox x:Name="TextBoxName" Grid.Column="0" VerticalAlignment="Center" Height="30" MinWidth="265" VerticalContentAlignment="Center" TextChanged="TextBoxName_TextChanged"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BSex" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" Sex" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox x:Name="ComboBoxGender" MinWidth="265" Grid.Column="0" VerticalAlignment="Center" Height="30" SelectionChanged="ComboBoxGender_SelectionChanged">
-                                <ComboBoxItem Content="Male"/>
-                                <ComboBoxItem Content="Female"/>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BHP" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" Content=" HP" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <TextBox x:Name="TextBoxHP" MinWidth="265" Grid.Column="0" TextWrapping="Wrap" Text="{Binding HP, BindsDirectlyToSource=True, FallbackValue=0, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" TextChanged="TextBoxHP_TextChanged"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BJob" Content=" Job" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox  Name="ComboBoxJob" MinWidth="265" Grid.Column="0" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxJob_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} - {1}">
-                                                    <Binding Path="IJId" />
-                                                    <Binding Path="IJName" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BType" Content=" Type" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}" Foreground="#FFFF8A00"/>
-                            <ComboBox Name="ComboBoxTypeLock" Grid.Column="0" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxTypeLock_SelectionChanged">
-                        </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BHome" Content=" Home" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="ComboBoxHome"  MinWidth="228" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxHome_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} - {1}">
-                                                    <Binding Path="IJId" />
-                                                    <Binding Path="IJName" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Image Name="HomeImageBox" Stretch="Uniform" Height="30" VerticalAlignment="Top" Width="30" Source="{Binding Path=HomeImage, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Right" Margin="6,0,0,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BIsland" Content=" Island" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="ComboBoxIsland"  MinWidth="228" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxIsland_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} - {1}">
-                                                    <Binding Path="IJId" />
-                                                    <Binding Path="IJName" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Image Name="IslandImageBox" Stretch="Uniform" Height="30" Margin="6,0,0,0" VerticalAlignment="Top" Width="30" Source="{Binding Path=IslandImage, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Right"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BPlace" Content=" Place" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="ComboBoxPlace"   MinWidth="228" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxPlace_SelectionChanged">
-                                <ComboBoxItem Content="Null"/>
-                                <ComboBoxItem Content="Green Gardens"/>
-                                <ComboBoxItem Content="Scarlet Sands"/>
-                                <ComboBoxItem Content="Cerulean Steppe"/>
-                                <ComboBoxItem Content="Beach"/>
-                            </ComboBox>
-                            <Image Name="PlaceImageBox" Height="30.3" VerticalAlignment="Top"  Margin="6,0,0,0" Width="30" HorizontalAlignment="Right"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BVoice" Content=" Voice" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <TextBox x:Name="TextBoxVoice" TextWrapping="Wrap" MinWidth="265" Text="0" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" TextChanged="TextBoxVoice_TextChanged"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Right">
-                            <Button Name ="BFlags" Content=" Flags:" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="17" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,-2,0,0" BorderBrush="#FFCED0D6" Background="{x:Null}" Margin="0,0,0.2,0"/>
-                            <CheckBox Name="ClothCheck" Content="Has Clothes" Margin="0,0,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="91" Height="15" Grid.Column="1" Checked="ClothCheck_Checked" Unchecked="ClothCheck_Unchecked" HorizontalAlignment="Right"/>
-                            <CheckBox Name="RaggedCheck" Content="In Rags" Margin="0,0,3,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="61" Height="15" Grid.Column="1" Checked="RaggedCheck_Checked" Unchecked="RaggedCheck_Unchecked" HorizontalAlignment="Right"/>
-                            <CheckBox Name="LockCheck" Content="Lock Appearance" Margin="0,0,3,0" VerticalAlignment="Top" FlowDirection="RightToLeft" Width="112" Height="15" Grid.Column="1" Checked="LockCheck_Checked" Unchecked="LockCheck_Unchecked" HorizontalAlignment="Right"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <Border Grid.Row ="1" Grid.ColumnSpan ="2" BorderBrush="#FFABADB3" BorderThickness="1,1,1,1" Margin="5,0,277,5"  >
-                        <StackPanel Orientation="Vertical" >
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="Information: " Margin="5,2,0,0" FontWeight="Bold" />
-                                <TextBlock Name="InfoName" Margin="0,2,0,0" FontWeight="Bold" />
-                            </StackPanel>
-                            <TextBlock Name="InfoBox" Margin="5,4,5,0" TextWrapping="WrapWithOverflow" Height="100"/>
-                        </StackPanel>
-                    </Border>
-                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="3,40,0,0">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name ="BFaceModel" Content=" FaceModel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="ComboBoxFace" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxFace_SelectionChanged" SelectedItem="{Binding SelectedFace, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.FaceList, RelativeSource={RelativeSource AncestorType=Window}}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BHairModel" Content=" HairModel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="ComboBoxHair" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxHair_SelectionChanged" SelectedItem="{Binding SelectedHair, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.HairList, RelativeSource={RelativeSource AncestorType=Window}}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BBodyModel" Content=" BodyModel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="ComboBoxBody" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ComboBoxBody_SelectionChanged" SelectedItem="{Binding SelectedBody, RelativeSource={RelativeSource AncestorType=Window}}" ItemsSource="{Binding Lists.BodyList, RelativeSource={RelativeSource AncestorType=Window}}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BEyeColour" Content=" EyeColour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <Button Name="ButtonEye"   Content="Select Colour" VerticalAlignment="Center" Height="30" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonEye_Click" Width="161" HorizontalAlignment="Left"/>
-                            <Rectangle Name="RectangleEye" MinWidth="101" Stroke="#FFACACAC" VerticalAlignment="Top" Height="30" Margin="3,0,0,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BHairColour" Content=" HairColour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <Button Name="ButtonHair"   Content="Select Colour"  VerticalAlignment="Top" Height="30" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonHair_Click" Width="161" HorizontalAlignment="Left"/>
-                            <Rectangle Name="RectangleHair" MinWidth="101" Stroke="#FFACACAC" VerticalAlignment="Top" Margin="3,0,0,0" Height="30"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BSkinColour" Content=" SkinColour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <Button Name="ButtonSkin"   Content="Select Colour" VerticalAlignment="Top" Height="30" BorderBrush="#FFACACAC" Background="#FFE5E5E5" Click="ButtonSkin_Click" Width="161" HorizontalAlignment="Left" />
-                            <Rectangle Name="RectangleSkin" MinWidth="101" Stroke="#FFACACAC" VerticalAlignment="Top" Height="30" Margin="3,0,0,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BWeapon" Content=" Weapon" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="WeaponBox" MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="WeaponBox_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} - {1}">
-                                                    <Binding Path="ID" />
-                                                    <Binding Path="Name" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BArmour" Content=" Armour" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <ComboBox Name="ArmourBox"  MinWidth="265" VerticalAlignment="Top" Height="30" SelectionChanged="ArmourBox_SelectionChanged">
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Button Name ="BDialogue" Content=" Dialogue" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="70" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" BorderBrush="#FFCED0D6" Margin="0,0,1,0" Background="{x:Null}"/>
-                            <TextBox Name="TextBoxDialogue" MinWidth="265" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" TextChanged="TextBoxDialogue_TextChanged"/>
-                        </StackPanel>
-                    </StackPanel>
+                    <control:TabList x:Name="SelectionList"/>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height ="6*"/>
+                            <RowDefinition Height ="150"/>
+                        </Grid.RowDefinitions>
+                        <TabControl Margin="5,5,5,5">
+                            <TabItem Name="TabEditingGeneral" Header="General">
+                                <Grid Name="EditingGrid">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width ="1*"/>
+                                        <ColumnDefinition Width ="1*"/>
+                                        <ColumnDefinition Width ="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Vertical" Margin="5,5,5,5">
+                                        <Button Content="Name" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.name}" Height="25" Padding="2,2,0,0"/>
+                                        <Button Content="Sex" Click="InfoPanel_Click" Tag="1" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <UniformGrid Columns="2" Height="25">
+                                            <ToggleButton Content="Male" IsChecked="{Binding EditingNPC.Value.isMale, Mode=TwoWay}" Click="test"/>
+                                            <ToggleButton Content="Female" IsChecked="{Binding EditingNPC.Value.isFemale, Mode=TwoWay}" Click="test"/>
+                                        </UniformGrid>
+                                        <Button Content="HP" Click="InfoPanel_Click" Tag="2" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.HP}" Height="25" Padding="2,2,0,0"/>
+                                        <Button Content="Job" Click="InfoPanel_Click" Tag="3" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox ItemsSource="{x:Static s:ListText.JobList}" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.job}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                                <Binding Path="Id" />
+                                                                <Binding Path="Name" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Native Home" Click="InfoPanel_Click" Tag="5" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox ItemsSource="{x:Static s:ListText.IslandList}" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.nativeHome}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                                <Binding Path="Id" />
+                                                                <Binding Path="Name" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Current Island" Click="InfoPanel_Click" Tag="6" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox ItemsSource="{x:Static s:ListText.IslandList}" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.island}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                                <Binding Path="Id" />
+                                                                <Binding Path="Name" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Place" Click="InfoPanel_Click" Tag="7" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox ItemsSource="{x:Static s:ListText.PlaceList}" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.place}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                                <Binding Path="Id"/>
+                                                                <Binding Path="Name"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Voice" Click="InfoPanel_Click" Tag="8" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.voice}" Height="25" Padding="2,2,0,0"/>
+                                        <Button Content="Message type" Click="InfoPanel_Click" Tag="18" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.messages}" Height="25" Padding="2,2,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Name="TabListToGo" Grid.Column="1" Orientation="Vertical" Margin="5,5,5,5">
+                                        <Button Content="Character Type" Click="InfoPanel_Click" Tag="4" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,5,5,5">
+                                        <Button Content="Room Size" Tag="20" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox ItemsSource="{x:Static s:ListText.RoomSizeList}" Height="25" SelectedValuePath="ID" SelectedValue="{Binding EditingNPC.Value.roomSize}"/>
+                                        <Image Height="10" Source="{Binding EditingNPC.Value.imageSize}" Margin="0,5,0,5"/>
+                                        <Button Content="Room Fanciness" Click="InfoPanel_Click" Tag="21" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox ItemsSource="{x:Static s:ListText.RoomFancyList}" Height="25" SelectedValuePath="ID" SelectedValue="{Binding EditingNPC.Value.roomFancy}"/>
+                                        <Image Height="10" Source="{Binding EditingNPC.Value.imageFancy}" Margin="0,5,0,5"/>
+                                        <Button Content="Room Ambiance" Click="InfoPanel_Click" Tag="22" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox ItemsSource="{x:Static s:ListText.AmbianceList}" Height="25" SelectedValuePath="ID" SelectedValue="{Binding EditingNPC.Value.roomAmbiance}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Name="TabEditingModel" Header="Visual">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width ="3*"/>
+                                        <ColumnDefinition Width ="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width ="4*"/>
+                                            <ColumnDefinition Width ="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height ="30"/>
+                                            <RowDefinition Height ="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5,5,5,5">
+                                            <CheckBox IsChecked="{Binding EditingNPC.Value.typeLock}" VerticalAlignment="Center" PreviewMouseDown="VisualChangeCheck" Click="FullModelUpdate"/>
+                                            <Button Content="CharType Appearance Lock" Margin="2,0,20,0" Click="InfoPanel_Click" Tag="9" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <CheckBox IsChecked="{Binding EditingNPC.Value.hasClothes}" VerticalAlignment="Center" PreviewMouseDown="VisualChangeCheck" Click="BodyModelUpdate"/>
+                                            <Button Content="Has Clothes" Margin="2,0,20,0"  Click="InfoPanel_Click" Tag="9" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <CheckBox IsChecked="{Binding EditingNPC.Value.hasRags}" VerticalAlignment="Center" PreviewMouseDown="VisualChangeCheck" Click="BodyModelUpdate"/>
+                                            <Button Content="In Rags" Margin="2,0,20,0"  Click="InfoPanel_Click" Tag="9" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5,5,5,5">
+                                            <Button Content="Character type" Click="InfoPanel_Click" Tag="4" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Name="ComboBoxCharType" Height="25" ItemsSource="{x:Static s:ListText.TypeLockList}" SelectedValuePath="ID" SelectedValue="{Binding EditingNPC.Value.charType}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="FullModelUpdate"/>
+                                            <Button Content="Job" Click="InfoPanel_Click" Tag="19" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Name="ComboJob" ItemsSource="{x:Static s:ListText.JobList}" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.job}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="FullModelUpdate">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock>
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="Id"/>
+                                                                    <Binding Path="Name"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <Button Content="Face Model" Click="InfoPanel_Click" Tag="10" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.FaceList}" SelectedValuePath="ModelClassV.ID" SelectedValue="{Binding EditingNPC.Value.faceModel}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="FaceModelUpdate"/>
+                                            <Button Content="Hair Model" Click="InfoPanel_Click" Tag="11" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.HairList}" SelectedValuePath="ModelClassV.ID" SelectedValue="{Binding EditingNPC.Value.hairModel}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate"/>
+                                            <Button Content="Body Model" Click="InfoPanel_Click" Tag="12" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.BodyList}" SelectedValuePath="ModelClassV.ID" SelectedValue="{Binding EditingNPC.Value.bodyModel}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
+                                            <Button Content="Armour/Clothes" Click="InfoPanel_Click" Tag="17" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Name="ComboArmour" Height="35" ItemsSource="{x:Static s:ListText.ArmourList}" SelectedValuePath="Armour.ID" SelectedValue="{Binding EditingNPC.Value.armour}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
+                                            <Button Content="Weapon" Click="InfoPanel_Click" Tag="16" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingNPC.Value.weapon}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center" Foreground="{Binding PositionNotCoded}">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="5,5,5,5">
+                                            <Button Content="Sex" Click="InfoPanel_Click" Tag="1" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <UniformGrid Columns="2" Height="25">
+                                                <ToggleButton Content="Male" IsChecked="{Binding EditingNPC.Value.isMale, Mode=TwoWay}" Click="test"/>
+                                                <ToggleButton Content="Female" IsChecked="{Binding EditingNPC.Value.isFemale, Mode=TwoWay}" Click="test"/>
+                                            </UniformGrid>
+                                            <Button Content="Size of Character" Click="InfoPanel_Click" Tag="19" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <TextBox Text="{Binding SelectedItem.StringSize, ElementName=ComboJob, Mode=OneWay}" Height="25" Padding="5,2,5,2" IsReadOnly="True" IsHitTestVisible="False"/>
+                                            <Button Content="Eye Colour" Click="InfoPanel_Click" Tag="13" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <UniformGrid Columns="2" Height="35">
+                                                <Button Content="{Binding EditingNPC.Value.eyeColour}" Click="ChangeColour" Tag="0"/>
+                                                <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding EyeColour.Value}"/>
+                                            </UniformGrid>
+                                            <Button Content="Hair Colour" Click="InfoPanel_Click" Tag="14" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <UniformGrid Columns="2" Height="35">
+                                                <Button Content="{Binding EditingNPC.Value.hairColour}" Click="ChangeColour" Tag="1"/>
+                                                <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding HairColour.Value}"/>
+                                            </UniformGrid>
+                                            <Button Content="Skin Colour" Click="InfoPanel_Click" Tag="15" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <UniformGrid Columns="2" Height="35">
+                                                <Button Content="{Binding EditingNPC.Value.skinColour}" Click="ChangeColour" Tag="2"/>
+                                                <UniformGrid Columns="2" Height="35">
+                                                    <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding SkinColour.Value}"/>
+                                                    <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding SkinColourFilter.Value}"/>
+                                                </UniformGrid>
+                                            </UniformGrid>
+                                            <Button Content="Clothes Colour" Click="InfoPanel_Click" Tag="17" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Rectangle Height="35" Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding ClothColour.Value}"/>
+                                        </StackPanel>
+                                    </Grid>
 
-                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical" Margin="100,0,0,0">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock  TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Room Size"/></TextBlock>
-                                <ComboBox Name="SizeBox" Grid.Column="1" VerticalAlignment="Top" Width="147" Height="26" HorizontalAlignment="Right" SelectionChanged="SizeBox_SelectionChanged"/>
-                            </StackPanel>
-                            <Image Name="SizeImage" Margin="0,5,12,5" Height="10"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Fanciness"/></TextBlock>
-                                <ComboBox Name="FancinessBox"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="147" Height="26" SelectionChanged="FancinessBox_SelectionChanged"></ComboBox>
-                            </StackPanel>
-                            <Image Name="FancyImage" Grid.Column="1" Margin="0,5,12,5" Height="10"/>
-                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="92" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" Padding="0,5,0,0" Grid.Column="1"><Run Text="Ambience"/></TextBlock>
-                                <ComboBox Name="AmbianceBox" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="147" Height="26" SelectionChanged="ComboBoxAmbiance_SelectionChanged"/>
-                            </StackPanel>
-                        </StackPanel>
-
-                    <HelixToolkit:HelixViewport3D x:Name="MyHelixViewport" Grid.RowSpan ="2" Grid.Column="2" Background="DarkGray" Margin="0,3,7,5">
-                        <!-- Define a camera for viewing the model -->
-                        <HelixToolkit:HelixViewport3D.Camera>
-                            <PerspectiveCamera Position="2,0,0.8" LookDirection="-1,0,0" UpDirection="0,0,1" FieldOfView="45"/>
-                        </HelixToolkit:HelixViewport3D.Camera>
-                        <ModelVisual3D>
-                            <ModelVisual3D.Content>
-                                <Model3DGroup>
-                                    <!-- Brighter SpotLight -->
-                                    <SpotLight Color="White" Position="5,5,5" Direction="-1,-1,-1" 
+                                    <HelixToolkit:HelixViewport3D x:Name="MyHelixViewport" Grid.Column="1" Background="DarkGray" Margin="3,3,3,3">
+                                        <!-- Define a camera for viewing the model -->
+                                        <HelixToolkit:HelixViewport3D.Camera>
+                                            <PerspectiveCamera Position="1,0,0.8" LookDirection="-1,0,0" UpDirection="0,0,1" FieldOfView="45" />
+                                        </HelixToolkit:HelixViewport3D.Camera>
+                                        <ModelVisual3D>
+                                            <ModelVisual3D.Content>
+                                                <Model3DGroup>
+                                                    <!-- Brighter SpotLight -->
+                                                    <SpotLight Color="White" Position="5,5,5" Direction="-1,-1,-1" 
                                    InnerConeAngle="30" OuterConeAngle="60"/>
-                                    <!-- Add other lights or models here -->
-                                </Model3DGroup>
-                            </ModelVisual3D.Content>
-                        </ModelVisual3D>
+                                                    <!-- Add other lights or models here -->
+                                                </Model3DGroup>
+                                            </ModelVisual3D.Content>
+                                        </ModelVisual3D>
 
-                        <!-- Add lighting to the scene -->
-                        <HelixToolkit:SunLight/>
+                                        <!-- Add lighting to the scene -->
+                                        <HelixToolkit:SunLight/>
 
-                        <!-- Placeholder for your imported 3D model -->
-                        <ModelVisual3D x:Name="ModelGroupVisualName">
-                            <!-- Content will be set in the code-behind -->
-                        </ModelVisual3D>
-                    </HelixToolkit:HelixViewport3D>
+                                        <!-- Placeholder for your imported 3D model -->
+                                        <ModelVisual3D x:Name="ModelGroupVisualName">
+                                            <!-- Content will be set in the code-behind -->
+                                        </ModelVisual3D>
+                                    </HelixToolkit:HelixViewport3D>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Name="TabEditingInventory" Header="Inventory"/>
+                            <TabItem Name="TabEditingMap" Header="Map Coordinates"/>
+                        </TabControl>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width ="330"/>
+                                <ColumnDefinition Width ="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="5,5,5,5" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height ="32"/>
+                                    <RowDefinition Height ="4*"/>
+                                </Grid.RowDefinitions>
+                                <Rectangle Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.RowSpan="2"/>
+                                <UniformGrid Margin="5,5,5,5" Columns="2" Rows="1">
+                                    <Button Content="Edit this slot" Height="22" Click="LoadSelectedNPC_Click"/>
+                                    <Button Content="Save edited to this slot"  Height="22"  Click="SaveSelectedNPC_Click"/>
+                                </UniformGrid>
+                                <Grid Grid.Row="1" Margin="5,5,5,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width ="2*"/>
+                                        <ColumnDefinition Width ="4*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding Path=SelectedNPC.Value.NPC.Value.Image, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                                        <UniformGrid Grid.Row="0" Columns="2" Margin="0,4,0,4">
+                                            <TextBlock Grid.Row="0" Text="{Binding StringFormat={}Offset: {0}, Path=SelectedNPC.Value.NPC.Value.offset, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" VerticalAlignment="Center" FontSize="13"/>
+                                            <TextBlock Grid.Row="2" Text="{Binding StringFormat=Char Type: {0}, Path=SelectedNPC.Value.NPC.Value.charType, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" VerticalAlignment="Center" FontSize="13"/>
+                                        </UniformGrid>
+                                        <TextBlock Grid.Row="1" Text="{Binding StringFormat=Name: {0}, Path=SelectedNPC.Value.NPC.Value.name, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="13" Margin="0,4,0,4"/>
+                                        <TextBlock Grid.Row="3" Margin="0,4,0,4" Text="{Binding StringFormat=Char Name: {0}, Path=SelectedNPC.Value.NPC.Value.CharNameGet, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}"  VerticalAlignment="Center" TextWrapping="WrapWithOverflow"  FontSize="13"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                            <Grid Margin="5,5,5,5" Grid.Column="1" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height ="25"/>
+                                    <RowDefinition Height ="4*"/>
+                                </Grid.RowDefinitions>
+                                <Rectangle Fill="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="0,0,0,2"/>
+                                <TextBox Margin="0,0,0,2" Padding="3,2,4,2" IsReadOnly="True" Background="{x:Null}" Text="{Binding Path=ConsoleText.Value, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" Foreground="{Binding Path=ConsoleColour.Value, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                <Rectangle Grid.Row="1" Fill="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="0,2,0,0"/>
+                                <StackPanel Orientation="Vertical"  Grid.Row="1">
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="Information: " Margin="5,6,0,0" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding Path=NameDescText.Value, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" Margin="0,6,0,0" FontWeight="Bold" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Path=DescText.Value, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" Margin="5,2,5,0" TextWrapping="WrapWithOverflow"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Inventory" Foreground="Red">
-                <Grid Background="#FFFFFF" Margin="5,5,5,10" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100*"/>
-                        <ColumnDefinition Width="170*"/>
-                        <ColumnDefinition Width="100*"/>
-                        <ColumnDefinition Width="170*"/>
-                        <ColumnDefinition Width="100*"/>
-                        <ColumnDefinition Width="170*"/>
-                    </Grid.ColumnDefinitions>
-                    <UniformGrid  Grid.Column="0" Background="#FFEFEFEF" x:Name="Inventory" Columns ="1" Rows="5" Margin="5,5,5,5" Width="77" Height="385">
-                        <Border BorderBrush="Black" BorderThickness="1"/>
-                    </UniformGrid>
-                    <UniformGrid  Grid.Column="1" x:Name="InventoryText" Columns ="1" Rows="5" Margin="10,7,10,6" Height="385">
-                        <TextBlock Grid.Row="0" TextWrapping="Wrap" Margin="15,10,0,0" Text="Pardon me for neglecting this" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <TabItem Name="TabBuilder" Header="Builder Editing">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height ="1*"/>
+                        <RowDefinition Height ="150"/>
+                    </Grid.RowDefinitions>
+                    <TabControl>
+                        <TabItem Name="GeneralBuilder" Header="General">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width ="3*"/>
+                                    <ColumnDefinition Width ="4*"/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Height="22" Margin="5,5,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90"/>
+                                <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Margin="5,25,5,5" Fill="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"/>
+                                <TextBlock Text="General Values" Height="22" Margin="6,6,6,6" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"  VerticalAlignment="Top"/>
+                                <StackPanel Orientation="Vertical" Margin="15,35,15,15">
+                                    <Button  Content="Name" Click="InfoPanel_Click" Height="25" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="White" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <TextBox Text="{Binding EditingBuilder.Value.name}" Height="25" Padding="2,2,0,0"/>
+                                    <UniformGrid Columns="2">
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Current HP" Height="25" Click="InfoPanel_Click" Tag="23" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.HP}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Max HP" Height="25" Click="InfoPanel_Click" Tag="24" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.maxHP}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                    </UniformGrid>
+                                    <UniformGrid Columns="2">
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Current Hunger" Height="25" Click="InfoPanel_Click" Tag="26" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.hunger}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Max Hunger" Height="25" Click="InfoPanel_Click" Tag="25" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.hungerDecay}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                    </UniformGrid>
+                                    <UniformGrid Columns="2">
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Attack" Click="InfoPanel_Click" Height="25" Tag="27" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.attack}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Defense" Height="25" Click="InfoPanel_Click" Tag="27" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.defense}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                    </UniformGrid>
+                                    <UniformGrid Columns="2">
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Current stamina" Height="25" Click="InfoPanel_Click" Tag="28" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.currentStamina}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Max stamina" Height="25" Click="InfoPanel_Click" Tag="29" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.maxStamina}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                    </UniformGrid>
+                                    <UniformGrid Columns="2">
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Content="Experience Points" Click="InfoPanel_Click" Height="25" Tag="30" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                            <TextBox Text="{Binding EditingBuilder.Value.exp}" Height="25" Padding="2,2,0,0"/>
+                                        </StackPanel>
+                                        <UniformGrid Columns="2">
+                                            <StackPanel Orientation="Vertical">
+                                                <Button Content="Level" Click="InfoPanel_Click" Tag="30" Height="25" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                                <TextBox Text="{Binding EditingBuilder.Value.LV}" Height="25" Padding="2,2,0,0"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <Button Content="Max Level" Height="25" Click="InfoPanel_Click" Tag="30" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Background="White"/>
+                                                <TextBox Text="{Binding EditingBuilder.Value.maxLV}" Height="25" Padding="2,2,0,0"/>
+                                            </StackPanel>
+                                        </UniformGrid>
+                                    </UniformGrid>
+                                </StackPanel>
+                                <Rectangle Grid.Column="1" Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Height="22" Margin="5,5,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="63"/>
+                                <Rectangle Grid.Column="1" Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Margin="5,25,5,5" Fill="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"/>
+                                <TextBlock Grid.Column="1" Text="Tool Slots" Height="22" Margin="6,6,6,6" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"  VerticalAlignment="Top"/>
+                                <Viewbox Grid.Column="1" Margin="15,35,15,15">
+                                    <Grid Width="610">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width ="75"/>
+                                            <ColumnDefinition Width ="1*"/>
+                                            <ColumnDefinition Width ="55"/>
+                                            <ColumnDefinition Width ="35"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Vertical">
+                                            <Button Height="35" Width="75" Margin="0,20,0,0" Background="White" Content="Gloves" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Height="35" Width="75" Background="White" Content="Hammer" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left"  BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Separator/>
+                                            <Button Height="35" Width="75" Background="White" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+                                                <TextBlock Text="Bottomless Pot" TextWrapping="Wrap" TextAlignment="Center" />
+                                            </Button>
+                                            <Button Height="35" Width="75" Background="White" Content="Echo Flute" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Height="35" Width="75" Background="White" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+                                                <TextBlock Text="Transform-o-Trowel" TextWrapping="Wrap" TextAlignment="Center" />
+                                            </Button>
+                                            <Button Height="35" Width="75" Background="White" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+                                                <TextBlock Text="Magic Pencil" TextWrapping="Wrap" TextAlignment="Center" />
+                                            </Button>
+                                            <Button Height="35" Width="75" Background="White" Content="Chisel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Height="35" Width="75" Background="White" Content="Rod" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Height="35" Width="75" Background="White" Content="Unused 1" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Height="35" Width="75" Margin="0,0,0,20"  Background="White" Content="Unused 2" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                                            <ComboBox Margin="0,20,0,0" Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.gloves}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.hammer}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <Separator/>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.pot}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.flute}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.trowel}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.pencil}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.chisel}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.rod}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.unused1}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox Margin="0,0,0,20" Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.unused2}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                            <Image Margin="0,0,0,0" Grid.Column="1" Height="25" Source="{Binding ImageTool}" />
+                                                            <TextBlock Margin="5,0,0,0" Grid.Column="2" Width="Auto" VerticalAlignment="Center">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                                                        <Binding Path="ItemID" />
+                                                                        <Binding Path="Name" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <Rectangle Grid.Column="2" StrokeThickness="2"  Stroke="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Fill="#FF282828" RadiusX="20" RadiusY="20" Margin="7,5,7,5"/>
+                                        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,20,0,0">
+                                            <Image Source="/images/resource/icon/00.png" Height="35"/>
+                                            <Image Source="/images/resource/icon/01.png" Height="35"/>
+                                            <Separator Margin="12,2,12,2"/>
+                                            <Image Source="/images/resource/icon/02.png" Height="35"/>
+                                            <Image Source="/images/resource/icon/03.png" Height="35"/>
+                                            <Image Source="/images/resource/icon/04.png" Height="35"/>
+                                            <Image Source="/images/resource/icon/05.png" Height="35"/>
+                                            <Image Source="/images/resource/icon/06.png" Height="35"/>
+                                            <Image Source="/images/resource/icon/07.png" Height="35"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="3" Orientation="Vertical">
+                                            <Button  Background="White" Content="Pickable" FontSize="8" Width="35" Height="20"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasGloves}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold" >
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasHammer}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <Separator/>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasPot}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasFlute}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasTrowel}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasPencil}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasChisel}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasRod}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasUnused1}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasUnused2}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Content" Value="{x:Null}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/images/resource/icon/0V.png"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                        </StackPanel>
 
-                    </UniformGrid>
-                    <UniformGrid  Grid.Column="2" Background="#FFEFEFEF" x:Name="Inventory2" Columns ="1" Rows="5" Margin="5,5,5,5" Width="77" Height="385">
-                        <Border BorderBrush="Black" BorderThickness="1"/>
-                    </UniformGrid>
-                    <UniformGrid  Grid.Column="4" Background="#FFEFEFEF" x:Name="Inventory3" Columns ="1" Rows="5" Margin="5,5,5,5" Width="77" Height="385">
-                        <Border BorderBrush="Black" BorderThickness="1"/>
-                    </UniformGrid>
+                                    </Grid>
+                                </Viewbox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Name="VisualBuilder" Header="Visual">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width ="5*"/>
+                                    <ColumnDefinition Width ="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width ="4*"/>
+                                        <ColumnDefinition Width ="4*"/>
+                                        <ColumnDefinition Width ="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Vertical" Margin="5,5,5,5">
+                                        <Button Content="Armour/Clothes" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Name="ComboBuilderArmour" Height="35" ItemsSource="{x:Static s:ListText.ArmourBuilderList}" SelectedValuePath="Armour.ID" SelectedValue="{Binding EditingBuilder.Value.armour}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
+                                        <Button Content="Hammer" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.hammer}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Weapon"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.weapon}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Shield" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ShieldList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.shield}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,5,5,5">
+                                        <Button Content="Mirror Armour/Clothes" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Name="ComboBuilderMirrorArmour" Height="35" ItemsSource="{x:Static s:ListText.ArmourBuilderListMirror}" SelectedValuePath="Armour.ID" SelectedValue="{Binding EditingBuilder.Value.mirrorClothes}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
+                                        <Button Content="Mirror Hammer" Click="InfoPanel_Click"  ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorHammer}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Mirror Weapon"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorWeapon}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Mirror Shield" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ShieldList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorShield}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Mirror Hair" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.HairBuilderList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorHair}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Content="Mirror Accesory" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.AccesoryList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorAccesory1}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center" Foreground="{Binding PositionNotCoded}">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.AccesoryList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorAccesory2}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center" Foreground="{Binding PositionNotCoded}">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox Height="35" ItemsSource="{x:Static s:ListText.AccesoryList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorAccesory3}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
+                                                        <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center" Foreground="{Binding PositionNotCoded}">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="ItemID" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,5,5,5">
+                                        <Button Content="Sex" Click="InfoPanel_Click" Tag="2" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <UniformGrid Columns="2" Height="35">
+                                            <ToggleButton Content="Male" IsChecked="{Binding EditingBuilder.Value.isMale, Mode=TwoWay}" Click="testBuilder"/>
+                                            <ToggleButton Content="Female" IsChecked="{Binding EditingBuilder.Value.isFemale, Mode=TwoWay}" Click="testBuilder"/>
+                                        </UniformGrid>
+                                        <Button Content="Eye Colour" Click="InfoPanel_Click" Tag="26" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <UniformGrid Columns="2" Height="35">
+                                            <Button Content="{Binding EditingBuilder.Value.eyeColour}" Click="ChangeColourBuilder" Tag="0"/>
+                                            <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding EyeColourBuilder.Value}"/>
+                                        </UniformGrid>
+                                        <Button Content="Hair Colour" Click="InfoPanel_Click" Tag="28" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <UniformGrid Columns="2" Height="35">
+                                            <Button Content="{Binding EditingBuilder.Value.hairColour}" Click="ChangeColourBuilder" Tag="1"/>
+                                            <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding HairColourBuilder.Value}"/>
+                                        </UniformGrid>
+                                        <Button Content="Skin Colour" Click="InfoPanel_Click" Tag="30" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <UniformGrid Columns="2" Height="35">
+                                            <Button Content="{Binding EditingBuilder.Value.skinColour}" Click="ChangeColourBuilder" Tag="2"/>
+                                            <UniformGrid Columns="2" Height="35">
+                                                <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding SkinColourBuilder.Value}"/>
+                                                <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding SkinColourFilterBuilder.Value}"/>
+                                            </UniformGrid>
+                                        </UniformGrid>
+                                    </StackPanel>
+                                </Grid>
+
+                                <HelixToolkit:HelixViewport3D Grid.Column="1" x:Name="HelixViewport" Background="DarkGray" Margin="3,3,3,3">
+                                    <!-- Define a camera for viewing the model -->
+                                    <HelixToolkit:HelixViewport3D.Camera>
+                                        <PerspectiveCamera Position="1,0,0.8" LookDirection="-1,0,0" UpDirection="0,0,1" FieldOfView="45" />
+                                    </HelixToolkit:HelixViewport3D.Camera>
+                                    <ModelVisual3D>
+                                        <ModelVisual3D.Content>
+                                            <Model3DGroup>
+                                                <!-- Brighter SpotLight -->
+                                                <SpotLight Color="White" Position="5,5,5" Direction="-1,-1,-1" 
+InnerConeAngle="30" OuterConeAngle="60"/>
+                                                <!-- Add other lights or models here -->
+                                            </Model3DGroup>
+                                        </ModelVisual3D.Content>
+                                    </ModelVisual3D>
+
+                                    <!-- Add lighting to the scene -->
+                                    <HelixToolkit:SunLight/>
+
+                                    <!-- Placeholder for your imported 3D model -->
+                                    <ModelVisual3D x:Name="ModelGroupVisualBuilder">
+                                        <!-- Content will be set in the code-behind -->
+                                    </ModelVisual3D>
+                                </HelixToolkit:HelixViewport3D>
+
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <Grid Margin="5,5,5,5" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width ="690"/>
+                            <ColumnDefinition Width ="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height ="25"/>
+                                <RowDefinition Height ="4*"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Fill="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="0,0,0,2"/>
+                            <TextBox Margin="0,0,0,2" Padding="3,2,4,2" IsReadOnly="True" Background="{x:Null}" Text="{Binding Path=ConsoleText.Value, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" Foreground="{Binding Path=ConsoleColour.Value, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                            <Rectangle Grid.Row="1" Fill="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="0,2,0,0"/>
+                            <StackPanel Orientation="Vertical"  Grid.Row="1">
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="Information: " Margin="5,6,0,0" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Path=NameDescText.Value, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" Margin="0,6,0,0" FontWeight="Bold" />
+                                </StackPanel>
+                                <TextBlock Text="{Binding Path=DescText.Value, RelativeSource={RelativeSource AncestorType=Window},Mode=OneWay}" Margin="5,2,5,0" TextWrapping="WrapWithOverflow"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>
