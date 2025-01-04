@@ -1,0 +1,6 @@
+#ID	Name
+1	Green Gardens
+2	Scarlet Sands
+3	Cerulean Steppe
+4	Seaside Shore
+5	Mountaintop Temple

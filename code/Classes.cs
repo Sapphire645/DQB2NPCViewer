@@ -1,10 +1,27 @@
 ﻿
-public class IslandJob
+using System.Data.Common;
+using System.Windows.Media;
+
+public class Island
 {
-    public string IJName { get; set; }
-    public string IJDescription { get; set; } = "N/A";
-    public ushort IJId { get; set; }
-    public bool IJValid { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; } = "N/A";
+    public byte Id { get; set; }
+    public bool Valid { get; set; }
+}
+public class Job
+{
+    public string Name { get; set; }
+    public string Description { get; set; } = "N/A";
+    public byte Id { get; set; }
+    public bool Valid { get; set; }
+    public byte Size { get; set; }
+    public string StringSize { get { if (Size == 0) return "Normal"; if (Size == 1) return "Small"; else return "Big"; } }
+}
+public class Place
+{
+    public string Name { get; set; }
+    public byte Id { get; set; }
 }
 
 public class Colour
@@ -21,6 +38,34 @@ public class TypeSet
     public bool Monster { get; set; }
     public ushort Tier { get; set; }
     public string name { get; set; }
+}
+public class Accesory
+{
+    public ushort ItemID { get; set; }
+    public ushort ModelHairID { get; set; }
+    public ushort ModelAccesoryID { get; set; }
+    public ushort ImageID { get; set; }
+    public string Name { get; set; }
+
+    public string Image => $"/images/hair/{ImageID:000}.png";
+
+    public Brush PositionNotCoded => (ItemID == 992 || ItemID == 993) ? Brushes.Red : Brushes.Black;
+
+    public Accesory(ushort itemID, ushort modelHairID, ushort modelAccesoryID, ushort imageID, string name)
+    {
+        ItemID = itemID;
+        ModelHairID = modelHairID;
+        ModelAccesoryID = modelAccesoryID;
+        ImageID = imageID;
+        Name = name;
+    }
+    public Accesory(ushort itemID, ushort modelAccesoryID, ushort imageID, string name)
+    {
+        ItemID = itemID;
+        ModelAccesoryID = modelAccesoryID;
+        ImageID = imageID;
+        Name = name;
+    }
 }
 public class ModelClass
 {
@@ -51,3 +96,14 @@ public class Equipment
     public bool Change => ImageID == ArmourValues.ImageIDFem;
 }
 
+public class Weapon
+{
+    public ushort ItemID { get; set; }
+    public ushort ImageID { get; set; }
+    public string Image => $"/images/weapon/{ImageID:000}.png";
+    public string ImageTool => $"/images/resource/icon/{PowerValue:00}.png";
+    public string Name { get; set; }
+
+    public ushort PowerValue { get; set; }
+
+}

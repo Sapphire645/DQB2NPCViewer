@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows;
 
 
 namespace DQB2NPCViewer.control
@@ -15,9 +16,13 @@ namespace DQB2NPCViewer.control
         public Equipment Armour { get; set; }
         public string Image { get; set; }
         public Color Colour { get; set; }
-        public ComboBoxArmour()
+
+        public Visibility colorV { get; set; } = Visibility.Collapsed; 
+        public ComboBoxArmour(bool isArmour)
         {
+            if (isArmour) colorV = Visibility.Visible;
             InitializeComponent();
+            if (!isArmour) Column.Width = new GridLength(0);
             DataContext = this;
         }
 

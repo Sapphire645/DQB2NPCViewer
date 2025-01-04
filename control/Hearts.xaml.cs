@@ -10,13 +10,13 @@ namespace DQB2NPCViewer.control
     /// </summary>
     public partial class Hearts : UserControl
     {
-        private ushort ID { get; set; } = 0;
+        public byte ID { get; set; } = 0;
         public Hearts()
         {
             InitializeComponent();
         }
 
-        public void HeartsCommand(ushort i, string type)
+        public void HeartsCommand(byte i, string type)
         {
             ushort ie;
             ID = i;

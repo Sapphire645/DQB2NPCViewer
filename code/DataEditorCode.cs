@@ -1,154 +1,135 @@
 ﻿using DQB2NPCViewer;
+using DQB2NPCViewer.control;
 using System;
+using Ionic.Zlib;
 using System.IO;
+using System.Linq.Expressions;
+using System.Text;
+using System.Collections.Generic;
+using System.Windows.Documents;
+using System.Collections;
+using System.Windows.Media.TextFormatting;
+using SharpGLTF.Schema2;
+using System.Runtime.Remoting.Messaging;
+using System.Windows.Shapes;
 
-
-public static class DQB2DataEditor
+namespace DQB2NPCViewer.code
 {
-
-    private static byte[] fileBytes;
-    public static string LoadedFile;
-    public static bool LoadFile(string filename)
+    public static class DQB2DataEditor
     {
-        fileBytes = File.ReadAllBytes(filename);
-        if (fileBytes.Length != 608)
+        public static string LoadedFile;
+
+        private static byte[] Header = new byte[0x2A444];
+        public static byte[] CMNDATfileBytes;
+        public static readonly int StartOfData = 0x6ACC8;
+        public static readonly int StartOfBuilder = 0x6A866;
+        public static readonly int StartOfBuilderName = 0xCD;
+        public static readonly int StartOfBuilderInventory = 0x55B959;
+        public static readonly int StartOfBuilderFlag = 0x500;
+        public static readonly int SizeOfChar = 0x260;
+        public static readonly int CountStory = 1023;
+        public static readonly int CountMisc = 238;
+
+        public static NPCData LoadCMNDATOffset(ushort offset)
         {
-            return false;
+            var fileBytes = new byte[SizeOfChar];
+            Array.Copy(CMNDATfileBytes, ((offset - 1) * SizeOfChar) + StartOfData, fileBytes, 0, SizeOfChar);
+            return new NPCData(fileBytes);
         }
-        LoadedFile = filename;
-        var NameBytes = new byte[30];
-        var TwoBytes = new byte[2];
-        Array.Copy(fileBytes, 0, NameBytes, 0, 30);
-        MainWindow.NameNPC = System.Text.Encoding.Default.GetString(NameBytes);
+        public static NPCDataMinimum SaveCMNDATOffset(NPCData NPCData)
+        {
+            Array.Copy(NPCData.byteData, 0, CMNDATfileBytes, ((NPCData.offset - 1) * SizeOfChar) + StartOfData, SizeOfChar);
+            return new NPCDataMinimum(NPCData.offset, NPCData);
+        }
 
-        TwoBytes[0] = fileBytes[0x90];
-        TwoBytes[1] = fileBytes[0x91];
-        MainWindow.Type = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        TwoBytes[0] = fileBytes[0x92];
-        TwoBytes[1] = fileBytes[0x93];
-        MainWindow.HP = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
+        public static bool LoadFile(byte[] CmnDat) {
+            Byte[] comp = new Byte[CmnDat.Length - Header.Length];
+            Array.Copy(CmnDat, Header.Length, comp, 0, comp.Length);
+            Array.Copy(CmnDat, Header, Header.Length);
+            try
+            {
+                CMNDATfileBytes = ZlibStream.UncompressBuffer(comp);
+            }
+            catch
+            {
+                return false;
+            }
+            //Backup();
+            return true;
+        }
+        public static bool SaveFile(string path, BuilderData Builder) {
+            if (CMNDATfileBytes == null) return false;
 
-        if ((byte)(fileBytes[0x9C] & 0x40) == 0x40) MainWindow.ClothVisual = true;
-        else MainWindow.ClothVisual = false;
+            SaveCMNDATBuilder(Builder);
 
-        if ((byte)(fileBytes[0x9C] & 0x02) == 0x02) MainWindow.RagVisual = true;
-        else MainWindow.RagVisual = false;
+            var comp = ZlibStream.CompressBuffer(CMNDATfileBytes);
+            Byte[] tmp = new Byte[Header.Length + comp.Length];
+            Array.Copy(Header, tmp, Header.Length);
+            Byte[] size = BitConverter.GetBytes(tmp.Length);
+            Array.Copy(size, 0, tmp, 0x10, size.Length);
+            Array.Copy(comp, 0, tmp, Header.Length, comp.Length);
+            System.IO.File.WriteAllBytes(path, tmp);
+            return true;
+        }
 
-        TwoBytes[0] = fileBytes[0xC7];
-        TwoBytes[1] = fileBytes[0xC8];
-        MainWindow.Weapon = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
+        public static List<List<NPCDataMinimum>> LoadCMNDATStory()
+        {
+            return LoadCMNDAT(StartOfData, StartOfData + (CountStory * SizeOfChar),1);
 
-        TwoBytes[0] = fileBytes[0xCF];
-        TwoBytes[1] = fileBytes[0xD0];
-        MainWindow.Armour = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-
-        MainWindow.Island = fileBytes[0xDF];
-
-        TwoBytes[0] = fileBytes[0xE5];
-        TwoBytes[1] = fileBytes[0xE6];
-        MainWindow.FaceModel = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        TwoBytes[0] = fileBytes[0xE7];
-        TwoBytes[1] = fileBytes[0xE8];
-        MainWindow.HairModel = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        TwoBytes[0] = fileBytes[0xE9];
-        TwoBytes[1] = fileBytes[0xEA];
-        MainWindow.BodyModel = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        TwoBytes[0] = fileBytes[0xEB];
-        TwoBytes[1] = fileBytes[0xEC];
-        MainWindow.EyeColor = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        TwoBytes[0] = fileBytes[0xED];
-        TwoBytes[1] = fileBytes[0xEE];
-        MainWindow.HairColor = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        TwoBytes[0] = fileBytes[0xEF];
-        TwoBytes[1] = fileBytes[0xF0];
-        MainWindow.SkinColor = (ushort)(BitConverter.ToUInt16(TwoBytes, 0));
-        MainWindow.Sex = fileBytes[0x102];
-        MainWindow.RoomSize = fileBytes[0x107];
-        MainWindow.RoomFanciness = fileBytes[0x108];
-        MainWindow.RoomAmbience = fileBytes[0x109];
-        MainWindow.Dialogue = fileBytes[0x10A];
-        MainWindow.Voice = fileBytes[0x10B];
-        MainWindow.Job = fileBytes[0x10F];
-        MainWindow.Home = fileBytes[0x113];
-
-        if ((fileBytes[0x12E] & 0x10) == 0) MainWindow.TypeVisual = true;
-        else MainWindow.TypeVisual = false;
-
-        MainWindow.Place = fileBytes[0x144];
-        return true;
-    }
-    public static void SaveFile(string filename)
-    {
-        var TwoBytes = new byte[2];
-        var NameBytes = new byte[30];
-
-        NameBytes = System.Text.Encoding.Default.GetBytes(MainWindow.NameNPC);
-        Array.Copy(NameBytes, 0, fileBytes, 0, NameBytes.Length);
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.Type);
-        fileBytes[0x90] = TwoBytes[0];
-        fileBytes[0x91] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.HP);
-        fileBytes[0x92] = TwoBytes[0];
-        fileBytes[0x93] = TwoBytes[1];
-
-        if (MainWindow.ClothVisual) fileBytes[0x9C] = (byte)(fileBytes[0x9C] | 0x40);
-        else fileBytes[0x9C] = (byte)(fileBytes[0x9C] & 0xBF);
-
-        if (MainWindow.RagVisual) fileBytes[0x9C] = (byte)(fileBytes[0x9C] | 0x02);
-        else fileBytes[0x9C] = (byte)(fileBytes[0x9C] & 0xFD);
-
-        fileBytes[0xDF] = (byte)MainWindow.Island;
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.Weapon);
-        fileBytes[0xC7] = TwoBytes[0];
-        fileBytes[0xC8] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.Armour);
-        fileBytes[0xCF] = TwoBytes[0];
-        fileBytes[0xD0] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.FaceModel);
-        fileBytes[0xE5] = TwoBytes[0];
-        fileBytes[0xE6] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.HairModel);
-        fileBytes[0xE7] = TwoBytes[0];
-        fileBytes[0xE8] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.BodyModel);
-        fileBytes[0xE9] = TwoBytes[0];
-        fileBytes[0xEA] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.EyeColor);
-        fileBytes[0xEB] = TwoBytes[0];
-        fileBytes[0xEC] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.HairColor);
-        fileBytes[0xED] = TwoBytes[0];
-        fileBytes[0xEE] = TwoBytes[1];
-
-        TwoBytes = BitConverter.GetBytes(MainWindow.SkinColor);
-        fileBytes[0xEF] = TwoBytes[0];
-        fileBytes[0xF0] = TwoBytes[1];
-
-        fileBytes[0x102] = (byte)MainWindow.Sex;
-
-        fileBytes[0x107] = (byte)MainWindow.RoomSize;
-        fileBytes[0x108] = (byte)MainWindow.RoomFanciness;
-        fileBytes[0x109] = (byte)MainWindow.RoomAmbience;
-
-        fileBytes[0x10A] = (byte)MainWindow.Dialogue;
-        fileBytes[0x10B] = (byte)MainWindow.Voice;
-        fileBytes[0x10F] = (byte)MainWindow.Job;
-        fileBytes[0x113] = (byte)MainWindow.Home;
-
-        if (MainWindow.TypeVisual) fileBytes[0x12E] = (byte)(fileBytes[0x12E] & 0xEF);
-        else fileBytes[0x12E] = (byte)(fileBytes[0x12E] | 0x10);
-
-        fileBytes[0x144] = (byte)MainWindow.Place;
-
-        File.WriteAllBytes(filename, fileBytes);
+        }
+        public static List<List<NPCDataMinimum>> LoadCMNDAT(int start, int end, ushort offset)
+        {
+            var Human = new List<NPCDataMinimum>();
+            var Animal = new List<NPCDataMinimum>();
+            var Monster = new List<NPCDataMinimum>();
+            var Null = new List<NPCDataMinimum>();
+            for (int i = start; i < end; i += SizeOfChar)
+            {
+                var temp = new NPCDataMinimum(offset,LoadCMNDATOffset(offset));
+                if(temp.charType == 0)
+                {
+                    Null.Add(temp);
+                }
+                else
+                if (ListText.getTypeCharVal(temp.charType).Monster)
+                {
+                    Monster.Add(temp);
+                }
+                else
+                {
+                    Human.Add(temp);
+                }
+                offset++;
+            }
+            var list = new List<List<NPCDataMinimum>>();
+            list.Add(Human);
+            list.Add(Animal);
+            list.Add(Monster);
+            list.Add(Null);
+            return list;
+        }
+        public static List<List<NPCDataMinimum>> LoadCMNDATGeneric()
+        {
+            return LoadCMNDAT(StartOfData + (CountStory * SizeOfChar), StartOfData + ((CountStory + CountMisc) * SizeOfChar),1024);
+        }
+        public static BuilderData LoadCMNDATBuilder()
+        {
+            var fileBytes = new byte[SizeOfChar];
+            var fileBytesName = new byte[12];
+            var fileBytesInventory = new byte[0x40];
+            var fileBytesFlag = new byte[0x200];
+            Array.Copy(CMNDATfileBytes, StartOfBuilder, fileBytes, 0, SizeOfChar);
+            Array.Copy(Header, StartOfBuilderName, fileBytesName, 0, 12);
+            Array.Copy(CMNDATfileBytes, StartOfBuilderInventory, fileBytesInventory, 0, 0x40);
+            Array.Copy(CMNDATfileBytes, StartOfBuilderFlag, fileBytesFlag, 0, 0x200);
+            return new BuilderData(fileBytes, fileBytesName, fileBytesInventory, fileBytesFlag);
+        }
+        public static void SaveCMNDATBuilder(BuilderData Builder)
+        {
+            Array.Copy( Builder.byteData, 0, CMNDATfileBytes, StartOfBuilder, SizeOfChar);
+            Array.Copy(Builder.byteDataName, 0, Header, StartOfBuilderName, 12);
+            Array.Copy(Builder.byteDataInventory, 0, CMNDATfileBytes, StartOfBuilderInventory, 0x40);
+            Array.Copy(Builder.byteDataFlagBools, 0,CMNDATfileBytes, StartOfBuilderFlag, 0x200);
+        }
     }
 }

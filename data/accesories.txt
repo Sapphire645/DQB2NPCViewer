@@ -1,0 +1,10 @@
+#ID	acId	imID	Name
+0	0	0	---
+992	1	101	bow
+993	3	103	red rose
+994	7	107	moustache
+995	8	108	blusher
+1798	10	110	mystery mask
+1803	2	102	rabbit ears
+1804	9	109	bandito bandana
+1806	6	106	geeky specs

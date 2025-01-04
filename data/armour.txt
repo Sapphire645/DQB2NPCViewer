@@ -109,7 +109,7 @@
 2182	33	34	294	287	bath towel [green]	60
 2183	33	34	295	288	bath towel [yellow]	70
 2193	33	34	296	289	bath towel [blue]	80
-2546	107	108	107	107	farming gear	113
+2546	107	109	107	107	farming gear	113
 2547	136	136	136	136	nun's habit	109
 2548	131	138	131	138	troubadour's togs	105	70
 3226	175	177	300	176	chic swimsuit	80	10

@@ -1,0 +1,146 @@
+﻿using DQB2NPCViewer.code;
+using HelixToolkit.Wpf;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace DQB2NPCViewer.control
+{
+    /// <summary>
+    /// Interaction logic for TileList.xaml
+    /// </summary>
+    public partial class MenuListType : UserControl
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler ButtonClicked;
+
+        private List<Button> BlockListFilter1;
+        private List<Button> BlockListFilter2;
+        private List<Button> BlockListFilter3;
+        private List<Button> BlockListFull;
+        public MenuListType(List<TypeSet> ListFilter1, string Filter1,
+List<TypeSet> ListFilter2, string Filter2,
+List<TypeSet> ListFilter3, string Filter3)
+        {
+            BlockListFilter1 = new List<Button>();
+            BlockListFilter2 = new List<Button>();
+            BlockListFilter3 = new List<Button>();
+            BlockListFull = new List<Button>();
+            InitializeComponent();
+            FilterOne.Content = Filter1;
+            FilterTwo.Content = Filter2;
+            FilterThree.Content = Filter3;
+            CreateButtons(BlockListFilter1, ListFilter1);
+            CreateButtons(BlockListFilter2, ListFilter2);
+            CreateButtons(BlockListFilter3, ListFilter3);
+            AddBlocks(BlockListFilter1);
+            AddBlocks(BlockListFilter2);
+            AddBlocks(BlockListFilter3);
+        }
+        private void CreateButtons(List<Button> ButtonList, List<TypeSet> BlockList)
+        {
+            Brush Colour = new SolidColorBrush(Colors.White);
+            for (int i = 0; i < BlockList.Count; i++)
+            {
+                if(BlockList[i].faceID == BlockList[i].bodyID && BlockList[i].bodyID == BlockList[i].hairID && BlockList[i].hairID == 0)
+                {
+                    Colour = new SolidColorBrush(Colors.Orange);
+                }
+                else
+                {
+                    Colour = new SolidColorBrush(Colors.White);
+                }
+                var ComboBoxColour = new Button()
+                {
+                    Content = new ComboBoxColour(BlockList[i])
+                    {
+                        ID = BlockList[i].typeID
+                    },
+                    Background = Colour
+                };
+                 
+                ButtonList.Add(ComboBoxColour);
+                ComboBoxColour.Click += Button_Click;
+            }
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonClicked?.Invoke(sender, EventArgs.Empty);
+        }
+        private void FilterOne_Checked(object sender, RoutedEventArgs e){AddBlocks(BlockListFilter1);}
+        private void FilterOne_Unchecked(object sender, RoutedEventArgs e){ RemoveBlocks(BlockListFilter1); }
+        private void FilterTwo_Checked(object sender, RoutedEventArgs e) { AddBlocks(BlockListFilter2); }
+        private void FilterTwo_Unchecked(object sender, RoutedEventArgs e) { RemoveBlocks(BlockListFilter2); }
+        private void FilterThree_Checked(object sender, RoutedEventArgs e) { AddBlocks(BlockListFilter3); }
+        private void FilterThree_Unchecked(object sender, RoutedEventArgs e) { RemoveBlocks(BlockListFilter3); }
+
+        private void AddBlocks(List<Button> List)
+        {
+            foreach (var block in List)
+            { 
+                BlockListFull.Add(block);
+            }
+            if (Grid != null)
+            {
+                SortItems();
+                var a = TextBoxFilter.Text.ToLower();
+                FilterItems(a); 
+            }
+        }
+        private void RemoveBlocks(List<Button> List)
+        {
+            foreach (var block in List)
+            {
+                Grid.Children.Remove(block);
+                BlockListFull.Remove(block);
+            }
+        }
+        private void SortItems()
+        {
+            BlockListFull = BlockListFull.OrderBy(child => ((ComboBoxColour)((Button)child).Content).ID).ToList();
+
+            Grid.Children.Clear();
+
+            foreach (var child in BlockListFull)
+            {
+                Grid.Children.Add(child);
+            }
+        }
+        private void FilterItems(string Filter)
+        {
+            Grid.Children.Clear();
+            foreach (var child in BlockListFull)
+            {
+                var a = ((ComboBoxColour)child.Content).TypeListing.name.ToLower();
+                if (a.Contains(Filter))
+                    Grid.Children.Add(child);
+                else
+                {
+                    var b = ((ComboBoxColour)child.Content).ID;
+                    if (b.ToString().Contains(Filter))
+                        Grid.Children.Add(child);
+                }
+
+            }
+        }
+        private void TextBoxFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var a = TextBoxFilter.Text.ToLower();
+            FilterItems(a);
+        }
+    }
+}

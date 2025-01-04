@@ -1,0 +1,25 @@
+#ID	hairID	extra	image ID	Name
+0	0	0	0	---
+551	1	0	1	Historic Hat ♂
+568	2	0	2	Historic Hairband ♀
+991	0	5	105	Witch's Hat
+1802	44	0	44	Block Head
+1805	0	4	104	Dracky Cap
+2017	40	0	40	Pumpkin Mask
+3224	81	0	81	Straw Hat ♂
+3225	82	0	81	Straw Hat ♀
+3366	90	0	85	Pretty Ponytail
+3367	92	0	84	Hipster Ponytail
+1925	80	0	80	Thug's Mug
+3978	93	0	93	Dandy Do
+3979	94	0	94	Wavy Locks ♂
+3980	95	0	94	Wavy Locks ♀
+3981	96	0	93	Dandy Do
+2322	103	0	17	Backcombed Cut
+2323	108	0	20	Bonny Bob Cut
+2436	102	0	16	Mussed Mop
+2437	106	0	19	Fashionable Flick
+2441	99	0	14	Curly Quiff
+2442	104	0	18	Lopsided Pony
+2465	100	0	15	Classic Curtains
+2466	109	0	21	Impressive Tresses

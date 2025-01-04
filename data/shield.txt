@@ -1,0 +1,14 @@
+#ID	ImageID	Value	Name
+0	0	0	---
+337	337	0	leather shield
+338	338	0	iron shield
+339	339	0	steel shield
+340	340	0	magic shield
+341	341	0	silver shield *
+342	342	0	her's shield ***
+343	343	0	thantos shield *
+2070	2070	0	pot lid
+2071	2071	0	power shield
+2072	2072	0	ogre shield
+2073	2073	0	tempest shield *
+2074	2074	0	liquid metal shield *
