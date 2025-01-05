@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Security.RightsManagement;
+using System.Windows.Shapes;
 
 namespace DQB2NPCViewer
 {
@@ -40,13 +42,18 @@ namespace DQB2NPCViewer
         public ObservableProperty<Brush> SkinColourFilterBuilder { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
         public ObservableProperty<Brush> HairColourBuilder { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
         public ObservableProperty<Brush> ClothColour { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        private bool Loaded => EditingNPC.Value != null;
+        private new bool Loaded => EditingNPC.Value != null;
         private bool LoadedBuilder => EditingBuilder.Value != null;
 
         private bool _isUserInitiated;
 
         private bool builder = false;
-
+        public ObservableProperty<Visibility> CircleVisible { get; set; } = new ObservableProperty<Visibility>() { Value = Visibility.Visible };
+        
+        public bool CircleBool { 
+            get { return CircleVisible.Value == Visibility.Collapsed; }
+            set { if (CircleVisible.Value == Visibility.Collapsed) CircleVisible.Value = Visibility.Visible; else CircleVisible.Value = Visibility.Collapsed; } 
+        }
         private void ConsoleCommand(string text, bool error, bool warning)
         {
             ConsoleText.Value = text;
@@ -137,7 +144,7 @@ namespace DQB2NPCViewer
                         else
                             DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderMirrorArmour.SelectedItem)).Colour;
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         ConsoleCommand("NOTE: Cannot find color on 'Clothes Colour'. Please ignore.", false, true);
                     }
@@ -151,7 +158,7 @@ namespace DQB2NPCViewer
                         DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboArmour.SelectedItem)).Colour;
                         ClothColour.Value = new SolidColorBrush(DQB2ModelRendering.ClothImage);
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         ConsoleCommand("NOTE: Cannot find color on 'Clothes Colour'. Please ignore.", false, true);
                     }
@@ -163,7 +170,7 @@ namespace DQB2NPCViewer
         public MainWindow()
         {
             DataContext = this;
-            ListText.setList("body", "color", "face", "hair", "islands", "jobs", "ambiance", "typelock", "weapon", "armour", "place", "builderHair", "accesories", "tools", "shield");
+            ListText.setList("body", "color", "face", "hair", "islands", "jobs", "ambiance", "typelock", "weapon", "armour", "place", "builderHair", "accesories", "tools", "shield", "coordinatemap");
 
             InitializeComponent();
             CharacterTabList();
@@ -213,6 +220,8 @@ namespace DQB2NPCViewer
             if (System.IO.File.Exists(openFileDialog.FileName) == false) return;
             LoadingImage.Visibility = Visibility.Visible;
             MainGrid.IsEnabled = false;
+            MainGrid.UpdateLayout();
+            LoadingImage.UpdateLayout();
             await Task.Run(() => FullLoad(openFileDialog.FileName));
             await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
             {
@@ -221,6 +230,7 @@ namespace DQB2NPCViewer
                 SelectionList.StoryMenu.TextBoxFilter.Width = 350;
                 SelectionList.GenericMenu.TextBoxFilter.Width = 350;
             });
+            ZoomSliderBuilder.Value = 1;
 
             if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
             {
@@ -247,8 +257,7 @@ namespace DQB2NPCViewer
             SelectionList.StoryChar = DQB2DataEditor.LoadCMNDATStory();
             SelectionList.GenericChar = DQB2DataEditor.LoadCMNDATGeneric();
             EditingBuilder.Value = DQB2DataEditor.LoadCMNDATBuilder();
-            
-
+            EditingBuilder.Value.UpdatedCoords += UpdateCoord;
         }
         private async void CMNDAT_Save_Click(object sender, RoutedEventArgs e)
         {
@@ -305,8 +314,10 @@ namespace DQB2NPCViewer
                         ((MenuListType)a).TextBoxFilter.Width = TabListToGo.ActualWidth;
                     }
                 }
+                if (ImageMap != null && Loaded)
+                    Map.RenderTransformOrigin = EditingNPC.Value.coordFocus(ImageMap);
             }
-            catch (Exception ex)
+            catch
             {
                 ConsoleCommand("NOTE : Error on window size change. Please ignore.", false, true);
             }
@@ -336,7 +347,7 @@ namespace DQB2NPCViewer
                     DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboArmour.SelectedItem)).Colour;
                     ConsoleCommand("NPC model loaded.", false, false);
                 }
-                catch (Exception ex)
+                catch
                 {
                     var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingNPC.Value.armour);
                     ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
@@ -374,7 +385,7 @@ namespace DQB2NPCViewer
                         DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderMirrorArmour.SelectedItem)).Colour;
                     ConsoleCommand("Builder model loaded.", false, false);
                 }
-                catch (Exception ex)
+                catch
                 {
                     ComboBoxArmour ArmourClass;
                     if (EditingBuilder.Value.mirrorClothes == 0)
@@ -395,7 +406,21 @@ namespace DQB2NPCViewer
         }
         private void LoadSelectedNPC_Click(object sender, RoutedEventArgs e)
         {
+            byte Bk = 255;
+            if(EditingNPC.Value != null)
+                Bk = EditingNPC.Value.island;
             EditingNPC.Value = DQB2DataEditor.LoadCMNDATOffset(SelectedNPC.Value.NPC.Value.offset);
+            EditingNPC.Value.UpdatedCoords += UpdateCoord;
+
+            var Point = EditingNPC.Value.coordFocus(ImageMap);
+            if(Point.X != double.NaN && Point.X != double.PositiveInfinity)
+            {
+                Map.RenderTransformOrigin = Point;
+            }
+            if(Bk != EditingNPC.Value.island)
+            {
+                ZoomSlider.Value = 1;
+            }
 
             SwapToNPC();
             swapGender(EditingNPC.Value.sex, ListText.ArmourList);
@@ -425,7 +450,7 @@ namespace DQB2NPCViewer
                     {
                         TypeLockCurrent = (ComboBoxCharType.SelectedItem as ComboBoxColour).TypeListing;
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         var a = ListText.TypeLockList.FirstOrDefault(x => x.ID == EditingNPC.Value.charType);
                         if (a != null)
@@ -780,6 +805,62 @@ namespace DQB2NPCViewer
             PriorityCodeSetModel(true, true, true);
             MyHelixViewport.ZoomExtents();
             ConsoleCommand("Empty NPC created!", false, false);
+        }
+
+        private void UpdateCoord(object sender, EventArgs e)
+        {
+            if (((TabItem)Tabs.SelectedItem).Name == "TabBuilder")
+            {
+                EditingBuilder.NotifyValue();
+                if (ImageMapBuilder != null && LoadedBuilder)
+                    MapBuilder.RenderTransformOrigin = EditingBuilder.Value.coordFocus(ImageMapBuilder);
+            }
+            else
+            {
+                EditingNPC.NotifyValue();
+                if (ImageMap != null && Loaded)
+                    Map.RenderTransformOrigin = EditingNPC.Value.coordFocus(ImageMap);
+            }
+
+                
+        }
+        private void ZoomSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if(Tabs.SelectedItem != null && ((TabItem)Tabs.SelectedItem).Name == "TabBuilder")
+            {
+                // Update the ScaleTransform with the Slider value
+                ZoomTransformBuilder.ScaleX = e.NewValue;
+                ZoomTransformBuilder.ScaleY = e.NewValue;
+
+                if (ImageMap != null && LoadedBuilder)
+                    MapBuilder.RenderTransformOrigin = EditingBuilder.Value.coordFocus(ImageMapBuilder);
+            }
+            else
+            {
+                // Update the ScaleTransform with the Slider value
+                ZoomTransform.ScaleX = e.NewValue;
+                ZoomTransform.ScaleY = e.NewValue;
+
+                if (ImageMap != null && Loaded)
+                    Map.RenderTransformOrigin = EditingNPC.Value.coordFocus(ImageMap);
+            }
+
+        }
+
+        private void MoveToCoordinates(object sender, MouseButtonEventArgs e)
+        {
+            if (Tabs.SelectedItem != null && ((TabItem)Tabs.SelectedItem).Name == "TabBuilder")
+            {
+                Point clickPosition = e.GetPosition(ImageMapBuilder);
+                EditingBuilder.Value.RelativeCoordinates((float)clickPosition.X, (float)clickPosition.Y);
+                UpdateCoord(null, null);
+            }
+            else
+            {
+                Point clickPosition = e.GetPosition(ImageMap);
+                EditingNPC.Value.RelativeCoordinates((float)clickPosition.X, (float)clickPosition.Y);
+                UpdateCoord(null, null);
+            }
         }
     }
 }

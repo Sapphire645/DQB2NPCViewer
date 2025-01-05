@@ -13,10 +13,8 @@ namespace DQB2NPCViewer.control
     {
         public event Action<NPCDataMinimum> ReturnSelectedTile;
 
-        public List<List<NPCDataMinimum>> StoryChar;
-        public List<List<NPCDataMinimum>> GenericChar;
-
-        private List<NPCDataMinimum> FullList;
+        public List<NPCDataMinimum> StoryChar;
+        public List<NPCDataMinimum> GenericChar;
 
         public MenuList StoryMenu;
         public MenuList GenericMenu;
@@ -26,10 +24,10 @@ namespace DQB2NPCViewer.control
         }
         public void createTabList()
         {
-            StoryMenu = new MenuList(StoryChar.ElementAt(0), "Human", StoryChar.ElementAt(1), "Animal", StoryChar.ElementAt(2), "Monster", StoryChar.ElementAt(3), "NULL");
+            StoryMenu = new MenuList(StoryChar);
             this.Story.Children.Add(StoryMenu);
             StoryMenu.ButtonClicked += ButtonClick;
-            GenericMenu = new MenuList(GenericChar.ElementAt(0), "Human", GenericChar.ElementAt(1), "Animal", GenericChar.ElementAt(2), "Monster", GenericChar.ElementAt(3), "NULL");
+            GenericMenu = new MenuList(GenericChar);
             this.Generic.Children.Add(GenericMenu);
             GenericMenu.ButtonClicked += ButtonClick;
         }

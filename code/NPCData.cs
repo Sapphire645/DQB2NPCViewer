@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace DQB2NPCViewer.code
@@ -8,6 +9,7 @@ namespace DQB2NPCViewer.code
     {
         public byte[] byteData { get; }
         public ushort offset {  get; set; }
+        public event EventHandler UpdatedCoords;
 
         public NPCData(byte[] byteData)
         {
@@ -34,6 +36,7 @@ namespace DQB2NPCViewer.code
             {  
                 var floatBytes = System.BitConverter.GetBytes(value);
                 Array.Copy(floatBytes, 0, byteData, 0x5C, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
             }
         }
         public float coordY
@@ -43,6 +46,7 @@ namespace DQB2NPCViewer.code
             {
                 var floatBytes = System.BitConverter.GetBytes(value);
                 Array.Copy(floatBytes, 0, byteData, 0x60, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
             }
         }
         public float coordZ
@@ -52,6 +56,7 @@ namespace DQB2NPCViewer.code
             {
                 var floatBytes = System.BitConverter.GetBytes(value);
                 Array.Copy(floatBytes, 0, byteData, 0x64, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
             }
         }
         public float coordAngle
@@ -61,6 +66,7 @@ namespace DQB2NPCViewer.code
             {
                 var floatBytes = System.BitConverter.GetBytes(value);
                 Array.Copy(floatBytes, 0, byteData, 0x8C, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
             }
         }
         public ushort charType
@@ -101,7 +107,9 @@ namespace DQB2NPCViewer.code
         public byte island
         {
             get { return byteData[0xDF]; }
-            set { byteData[0xDF] = value; }
+            set { byteData[0xDF] = value;
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
+            }
         }
         public ushort faceModel
         {
@@ -193,10 +201,26 @@ namespace DQB2NPCViewer.code
             get { return byteData[0x144]; }
             set { byteData[0x144] = value; }
         }
-        public Thickness coordMargin => new Thickness(((coordX+ 1024 )/ 4)-3,((coordZ + 1024) / 4)-3,0,0);
+        public Thickness coordMargin => new Thickness(((coordX+1024)*2) - (tempCoordOffsetX*16)-13, ((coordZ+1024)*2) - (tempCoordOffsetZ*16)-13, 0,0);
+        public Point coordFocus(Image image)
+        {
+            var x = (((coordX + 1024) * 2) - (tempCoordOffsetX * 16)) / image.ActualWidth;
+            var y = (((coordZ + 1024) * 2) - (tempCoordOffsetZ * 16)) / image.ActualHeight;
 
+            x = x * 1.1 -0.05;
+            y = y * 1.1 - 0.05;
+            return new Point(x,y);
+        }
+        public void RelativeCoordinates(float x, float z)
+        {
+            coordX = (x + 16 * tempCoordOffsetX) / 2 - 1024;
+            coordZ = (z + 16 * tempCoordOffsetZ) / 2 - 1024;
+        }
+        public ushort tempCoordOffsetX => ListText.CoordinateMap[island].Item1; //On N of tiles
+        public ushort tempCoordOffsetZ => ListText.CoordinateMap[island].Item2; //On N of tiles
         public string imageFancy => $"/images/resource/fancy{roomFancy:0}.png";
         public string imageSize => $"/images/resource/size{roomSize:0}.png";
+        public string imageCoordinates => $"/images/maps/STGDAT{island:00}.png";
     }
     public class NPCDataMinimum
     {
@@ -256,7 +280,7 @@ namespace DQB2NPCViewer.code
                     var croppedIcon = new CroppedBitmap(gridImage, iconRect);
                     return croppedIcon;
                 }
-                catch (Exception ex)
+                catch
                 {
                     Int32Rect iconRect2 = new Int32Rect(0, 0, 124, 124);
                     return new CroppedBitmap(ListText.AnonImage, iconRect2);

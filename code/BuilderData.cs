@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Windows;
+using System.Windows.Controls;
 
 namespace DQB2NPCViewer.code
 {
@@ -10,13 +11,78 @@ namespace DQB2NPCViewer.code
         public byte[] byteDataName { get; }
         public byte[] byteDataFlagBools { get; }
 
-        public BuilderData(byte[] byteData, byte[] byteDataName, byte[] byteDataInventory, byte[] byteDataFlagBools)
+        public event EventHandler UpdatedCoords;
+
+        public BuilderData(byte[] byteData, byte[] byteDataName, byte[] byteDataInventory, byte[] byteDataFlagBools, byte island)
         {
             this.byteData = byteData;
             this.byteDataName = byteDataName;
             this.byteDataInventory = byteDataInventory;
             this.byteDataFlagBools = byteDataFlagBools;
+            this.island = island;
         }
+
+        public byte island { get; private set; }
+
+        public ushort tempCoordOffsetX => ListText.CoordinateMap[island].Item1; //On N of tiles
+        public ushort tempCoordOffsetZ => ListText.CoordinateMap[island].Item2; //On N of tiles
+        public string imageCoordinates => $"/images/maps/STGDAT{island:00}.png";
+        public Thickness coordMargin => new Thickness(((coordX + 1024) * 2) - (tempCoordOffsetX * 16) - 13, ((coordZ + 1024) * 2) - (tempCoordOffsetZ * 16) - 13, 0, 0);
+        public void RelativeCoordinates(float x, float z)
+        {
+            coordX = (x + 16 * tempCoordOffsetX) / 2 - 1024;
+            coordZ = (z + 16 * tempCoordOffsetZ) / 2 - 1024;
+        }
+        public Point coordFocus(Image image)
+        {
+            var x = (((coordX + 1024) * 2) - (tempCoordOffsetX * 16)) / image.ActualWidth;
+            var y = (((coordZ + 1024) * 2) - (tempCoordOffsetZ * 16)) / image.ActualHeight;
+
+            x = x * 1.1 - 0.05;
+            y = y * 1.1 - 0.05;
+            return new Point(x, y);
+        }
+        public float coordX
+        {
+            get { return System.BitConverter.ToSingle(byteData, 0x16); }
+            set
+            {
+                var floatBytes = System.BitConverter.GetBytes(value);
+                Array.Copy(floatBytes, 0, byteData, 0x16, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
+            }
+        }
+        public float coordY
+        {
+            get { return System.BitConverter.ToSingle(byteData, 0x1A); }
+            set
+            {
+                var floatBytes = System.BitConverter.GetBytes(value);
+                Array.Copy(floatBytes, 0, byteData, 0x1A, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
+            }
+        }
+        public float coordZ
+        {
+            get { return System.BitConverter.ToSingle(byteData, 0x1E); }
+            set
+            {
+                var floatBytes = System.BitConverter.GetBytes(value);
+                Array.Copy(floatBytes, 0, byteData, 0x1E, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
+            }
+        }
+        public float coordAngle
+        {
+            get { return System.BitConverter.ToSingle(byteData, 0x24); }
+            set
+            {
+                var floatBytes = System.BitConverter.GetBytes(value);
+                Array.Copy(floatBytes, 0, byteData, 0x24, 4);
+                UpdatedCoords?.Invoke(null, EventArgs.Empty);
+            }
+        }
+
         public String name
         {
             get

@@ -61,7 +61,7 @@ namespace DQB2NPCViewer.control
                     var croppedIcon = new CroppedBitmap(gridImage, iconRect);
                     return croppedIcon;
                 }
-                catch (Exception ex)
+                catch
                 {
                     Int32Rect iconRect2 = new Int32Rect(0, 0, 124, 124);
                     return new CroppedBitmap(ListText.AnonImage, iconRect2);

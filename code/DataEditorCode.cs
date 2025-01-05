@@ -61,43 +61,25 @@ namespace DQB2NPCViewer.code
             return true;
         }
 
-        public static List<List<NPCDataMinimum>> LoadCMNDATStory()
+        public static List<NPCDataMinimum> LoadCMNDATStory()
         {
             return LoadCMNDAT(StartOfData, StartOfData + (CountStory * SizeOfChar),1);
 
         }
-        public static List<List<NPCDataMinimum>> LoadCMNDAT(int start, int end, ushort offset)
+        public static List<NPCDataMinimum> LoadCMNDAT(int start, int end, ushort offset)
         {
-            var Human = new List<NPCDataMinimum>();
-            var Animal = new List<NPCDataMinimum>();
-            var Monster = new List<NPCDataMinimum>();
-            var Null = new List<NPCDataMinimum>();
+            var All = new List<NPCDataMinimum>();
+
             for (int i = start; i < end; i += SizeOfChar)
             {
                 var temp = new NPCDataMinimum(offset,LoadCMNDATOffset(offset));
-                if(temp.charType == 0)
-                {
-                    Null.Add(temp);
-                }
-                else
-                if (ListText.getTypeCharVal(temp.charType).Monster)
-                {
-                    Monster.Add(temp);
-                }
-                else
-                {
-                    Human.Add(temp);
-                }
+                All.Add(temp);
                 offset++;
             }
             var list = new List<List<NPCDataMinimum>>();
-            list.Add(Human);
-            list.Add(Animal);
-            list.Add(Monster);
-            list.Add(Null);
-            return list;
+            return All;
         }
-        public static List<List<NPCDataMinimum>> LoadCMNDATGeneric()
+        public static List<NPCDataMinimum> LoadCMNDATGeneric()
         {
             return LoadCMNDAT(StartOfData + (CountStory * SizeOfChar), StartOfData + ((CountStory + CountMisc) * SizeOfChar),1024);
         }
@@ -111,7 +93,7 @@ namespace DQB2NPCViewer.code
             Array.Copy(Header, StartOfBuilderName, fileBytesName, 0, 12);
             Array.Copy(CMNDATfileBytes, StartOfBuilderInventory, fileBytesInventory, 0, 0x40);
             Array.Copy(CMNDATfileBytes, StartOfBuilderFlag, fileBytesFlag, 0, 0x200);
-            return new BuilderData(fileBytes, fileBytesName, fileBytesInventory, fileBytesFlag);
+            return new BuilderData(fileBytes, fileBytesName, fileBytesInventory, fileBytesFlag, Header[0xC9]);
         }
         public static void SaveCMNDATBuilder(BuilderData Builder)
         {

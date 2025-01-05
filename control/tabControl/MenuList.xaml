@@ -5,34 +5,44 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DQB2NPCViewer.control"
              xmlns:control="clr-namespace:DQB2NPCViewer.control"
+             xmlns:s="clr-namespace:DQB2NPCViewer.code"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="600">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition/>
-      <RowDefinition Height="20"/>
-    </Grid.RowDefinitions>
-    <StackPanel Orientation="Vertical">
-      <Grid Name="ButtonGrid"  Height="30">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="1*"/>
-          <ColumnDefinition Width="1*"/>
-          <ColumnDefinition Width="1*"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <Grid Name="ButtonGrid"  Height="30">
+                <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-        <ToggleButton Name="FilterOne"  FontWeight="Bold" Checked="FilterOne_Checked" Unchecked="FilterOne_Unchecked" IsChecked="True"/>
-        <ToggleButton Grid.Column="1" Name="FilterTwo" FontWeight="Bold" Checked="FilterTwo_Checked" Unchecked="FilterTwo_Unchecked" IsChecked="True"/>
-        <ToggleButton  Grid.Column="2" Name="FilterThree" FontWeight="Bold" Checked="FilterThree_Checked" Unchecked="FilterThree_Unchecked" IsChecked="True"/>
-                <ToggleButton  Grid.Column="3" Name="FilterFour" FontWeight="Bold" Checked="FilterFour_Checked" Unchecked="FilterFour_Unchecked"/>
+                <ToggleButton Name="FilterOne" FontWeight="Bold" Checked="Empty_Checked" Unchecked="Empty_Unchecked" IsChecked="False" Content="Empty" />
+                <ComboBox Grid.Column="1" ItemsSource="{x:Static s:ListText.IslandList}" SelectedValuePath="Id" SelectedValue="{Binding CurrentIsland, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                        <Binding Path="Id" />
+                                        <Binding Path="Name" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
-      <ScrollViewer Name="ScrollView" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Background="#FFDFDFDF">
-          <UniformGrid Name="Grid" Columns="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"></UniformGrid>
+            <ScrollViewer Name="ScrollView" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Background="#FFDFDFDF">
+                    <UniformGrid Name="Grid" Columns="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"></UniformGrid>
+                </StackPanel>
+            </ScrollViewer>
         </StackPanel>
-      </ScrollViewer>
-    </StackPanel>
-    <StackPanel Grid.Row="1" Orientation="Horizontal">
-      <TextBox x:Name="TextBoxFilter" TextChanged="TextBoxFilter_TextChanged"/>
-    </StackPanel>
-  </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBox x:Name="TextBoxFilter" TextChanged="TextBoxFilter_TextChanged"/>
+        </StackPanel>
+    </Grid>
 </UserControl>

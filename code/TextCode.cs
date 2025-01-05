@@ -40,6 +40,8 @@ namespace DQB2NPCViewer.code
         public static List<Weapon> ToolList = new List<Weapon>();
         public static List<Weapon> ShieldList = new List<Weapon>();
 
+        public static List<(ushort,ushort)> CoordinateMap = new List<(ushort, ushort)>();
+
         public static Colour getColorVal(ushort ID) { return ColorList[ID]; }
 
         public static Color getColorDyeVal(ushort ID) { return (Color)ColorConverter.ConvertFromString(DyesList.FirstOrDefault(x => x.ID == ID).color); }
@@ -50,7 +52,7 @@ namespace DQB2NPCViewer.code
         //Code from "Info.cs" in Turtle-Insect's save editor.
         public static void setList(string filename0, string filename1, string filename2, string filename3,
             string filename4, string filename5, string filename6, string filename7, string filename8, string filename9, string filename10,
-            string filename11, string filename12, string filename13, string filename14)
+            string filename11, string filename12, string filename13, string filename14, string filename15)
         {
 
             ConstructColorNames("data/" + filename1 + ".txt", ColorList);
@@ -76,6 +78,8 @@ namespace DQB2NPCViewer.code
 
             ConstructEquipmentNames("data/" + filename13 + ".txt", ToolList);
             ConstructEquipmentNames("data/" + filename14 + ".txt", ShieldList);
+
+            ConstructCoords("data/" + filename15 + ".txt");
 
             CreateComboBoxHearts();
         }
@@ -103,6 +107,18 @@ namespace DQB2NPCViewer.code
                 if (values.Length < 3) continue;
                 InfoText.Add(values[1]);
                 InfoText.Add(values[2]);
+            }
+        }
+        private static void ConstructCoords(string filename)
+        {
+            if (!System.IO.File.Exists(filename)) return;
+            String[] lines = System.IO.File.ReadAllLines(filename);
+            foreach (String line in lines)
+            {
+                if (line[0] == '#') continue;
+                String[] values = line.Split('\t');
+                if (values.Length < 3) continue;
+                CoordinateMap.Add((ushort.Parse(values[1]), ushort.Parse(values[2])));
             }
         }
         private static void ConstructHairItems(string filename, List<Accesory> list)

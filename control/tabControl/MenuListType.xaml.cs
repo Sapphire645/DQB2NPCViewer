@@ -13,8 +13,6 @@ namespace DQB2NPCViewer.control
     /// </summary>
     public partial class MenuListType : UserControl
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public event EventHandler ButtonClicked;
 
         private List<Button> BlockListFilter1;

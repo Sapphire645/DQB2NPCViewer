@@ -284,23 +284,43 @@
                             <TabItem Name="TabEditingMap" Header="Map Coordinates">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" MinWidth="160"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto" MinWidth="200"/>
+                                        <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="1" ClipToBounds="True">
+                                        <Viewbox x:Name="Map"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <Viewbox.RenderTransform>
+                                                <ScaleTransform x:Name="ZoomTransform"
+                                        ScaleX="1.0" ScaleY="1.0" />
+                                            </Viewbox.RenderTransform>
+                                            <Grid Name="GridMap" MinHeight="250" MinWidth="250">
+                                                <Image Name="ImageMap" Source="{Binding EditingNPC.Value.imageCoordinates}" HorizontalAlignment="Left" MouseLeftButtonDown="MoveToCoordinates"/>
+                                                <Line Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingNPC.Value.coordMargin}" X2="30" StrokeThickness="4" X1="-4" Y1="13" Y2="13"/>
+                                                <Line Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingNPC.Value.coordMargin}" StrokeThickness="4" Y1="-4" Y2="30" X1="13" X2="13"/>
+                                                <Line Stroke="Orange" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingNPC.Value.coordMargin}" X2="30" StrokeThickness="3" X1="-4" Y1="13" Y2="13"/>
+                                                <Line Stroke="Orange" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingNPC.Value.coordMargin}" StrokeThickness="3" Y1="-4" Y2="30" X1="13" X2="13"/>
+                                                <Ellipse Name="CoordinateCircle" Fill="Orange" Stroke="Black" StrokeThickness="3" Width="26" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingNPC.Value.coordMargin}" Visibility="{Binding CircleVisible.Value}"/>
+                                            </Grid>
+                                        </Viewbox>
+                                    </Grid>
+
                                     <StackPanel Orientation="Vertical" Margin="5,5,5,5">
                                         <Button Content="X Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.coordX}" Height="25" Padding="2,2,0,0"/>
+                                        <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingNPC.Value.coordX}" TickFrequency="1" IsSnapToTickEnabled="True"/>
                                         <Button Content="Y Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.coordY}" Height="25" Padding="2,2,0,0"/>
+                                        <Slider Minimum="0" Maximum="96" Value="{Binding EditingNPC.Value.coordY}" TickFrequency="1" IsSnapToTickEnabled="True"/>
                                         <Button Content="Z Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.coordZ}" Height="25" Padding="2,2,0,0"/>
+                                        <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingNPC.Value.coordZ}" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                        <Button Content="Angle" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.coordAngle}" Height="25" Padding="2,2,0,0"/>
+                                        <TextBlock Text="Zoom in map" Padding="5,2,5,2"/>
+                                        <Slider Name="ZoomSlider" Minimum="1" Maximum="11.0" Value="1.0" TickFrequency="0.1" IsSnapToTickEnabled="True" Margin="5" ValueChanged="ZoomSlider_ValueChanged" Height="25"/>
+                                        <RadioButton Content="Hide circle" Style="{StaticResource {x:Type ToggleButton}}" IsChecked="{Binding CircleBool}" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
                                     </StackPanel>
-                                    <Viewbox Name="Map" Grid.Column="1">
-                                        <Grid Width="512" Height="512">
-                                            <Image Source="/images/maps/STGDAT01.png" />
-                                            <Ellipse Fill="Orange" Stroke="Black" Width="7" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingNPC.Value.coordMargin}"/>
-                                        </Grid>
-                                    </Viewbox>
                                 </Grid>
 
                             </TabItem>
@@ -1166,6 +1186,48 @@ InnerConeAngle="30" OuterConeAngle="60"/>
                                     </ModelVisual3D>
                                 </HelixToolkit:HelixViewport3D>
 
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Map Coordinates">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" MinWidth="200"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1" ClipToBounds="True">
+                                    <Viewbox x:Name="MapBuilder"
+HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <Viewbox.RenderTransform>
+                                            <ScaleTransform x:Name="ZoomTransformBuilder"
+               ScaleX="1.0" ScaleY="1.0" />
+                                        </Viewbox.RenderTransform>
+                                        <Grid Name="GridMapBuilder" MinHeight="250" MinWidth="250">
+                                            <Image Name="ImageMapBuilder" Source="{Binding EditingBuilder.Value.imageCoordinates}" HorizontalAlignment="Left" MouseLeftButtonDown="MoveToCoordinates"/>
+                                            <Line Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingBuilder.Value.coordMargin}" X2="30" StrokeThickness="4" X1="-4" Y1="13" Y2="13"/>
+                                            <Line Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingBuilder.Value.coordMargin}" StrokeThickness="4" Y1="-4" Y2="30" X1="13" X2="13"/>
+                                            <Line Stroke="Orange" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingBuilder.Value.coordMargin}" X2="30" StrokeThickness="3" X1="-4" Y1="13" Y2="13"/>
+                                            <Line Stroke="Orange" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingBuilder.Value.coordMargin}" StrokeThickness="3" Y1="-4" Y2="30" X1="13" X2="13"/>
+                                            <Ellipse Name="CoordinateCircleBuilder" Fill="Orange" Stroke="Black" StrokeThickness="3" Width="26" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingBuilder.Value.coordMargin}" Visibility="{Binding CircleVisible.Value}"/>
+                                        </Grid>
+                                    </Viewbox>
+                                </Grid>
+
+                                <StackPanel Orientation="Vertical" Margin="5,5,5,5">
+                                    <Button Content="X Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <TextBox Text="{Binding EditingBuilder.Value.coordX}" Height="25" Padding="2,2,0,0"/>
+                                    <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingBuilder.Value.coordX}" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                    <Button Content="Y Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <TextBox Text="{Binding EditingBuilder.Value.coordY}" Height="25" Padding="2,2,0,0"/>
+                                    <Slider Minimum="0" Maximum="96" Value="{Binding EditingBuilder.Value.coordY}" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                    <Button Content="Z Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <TextBox Text="{Binding EditingBuilder.Value.coordZ}" Height="25" Padding="2,2,0,0"/>
+                                    <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingBuilder.Value.coordZ}" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                    <Button Content="Angle" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <TextBox Text="{Binding EditingBuilder.Value.coordAngle}" Height="25" Padding="2,2,0,0"/>
+                                    <TextBlock Text="Zoom in map" Padding="5,2,5,2"/>
+                                    <Slider Name="ZoomSliderBuilder" Minimum="1" Maximum="11.0" Value="1.0" TickFrequency="0.1" IsSnapToTickEnabled="True" Margin="5" ValueChanged="ZoomSlider_ValueChanged" Height="25"/>
+                                    <RadioButton Content="Hide circle" Style="{StaticResource {x:Type ToggleButton}}" IsChecked="{Binding CircleBool}" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                                </StackPanel>
                             </Grid>
                         </TabItem>
                     </TabControl>
