@@ -1,9 +1,7 @@
 ﻿using DQB2NPCViewer.code;
 using System;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace DQB2NPCViewer.control
 {

@@ -1,6 +1,4 @@
-﻿
-using System.Data.Common;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 public class Island
 {

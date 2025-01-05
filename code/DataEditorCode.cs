@@ -1,17 +1,6 @@
-﻿using DQB2NPCViewer;
-using DQB2NPCViewer.control;
-using System;
+﻿using System;
 using Ionic.Zlib;
-using System.IO;
-using System.Linq.Expressions;
-using System.Text;
 using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Collections;
-using System.Windows.Media.TextFormatting;
-using SharpGLTF.Schema2;
-using System.Runtime.Remoting.Messaging;
-using System.Windows.Shapes;
 
 namespace DQB2NPCViewer.code
 {

@@ -9,32 +9,44 @@
     <Grid VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="400*"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="110"/>
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel Margin="5,5,5,5" Background="#FFDFDFDF">
                 <UniformGrid x:Name="ButtonGrid" Columns="25" Rows="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Name="GuideText" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,7,0,0" Width="151">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="Select {0} colour: (certain colours aren't mapped yet!)">
-                        <Binding Path="TextAdd" RelativeSource="{RelativeSource AncestorType=Window}" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-            <StackPanel Orientation="Vertical">
-                <TextBlock Name="ColorText" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,7,0,0">
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="GuideText" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,7,0,0" Width="151">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="Selected colour: {0}">
-                            <Binding Path="ColourPicked" RelativeSource="{RelativeSource AncestorType=Window}" />
+                        <MultiBinding StringFormat="Select {0} colour: (certain colours aren't mapped yet!)">
+                            <Binding Path="TextAdd" RelativeSource="{RelativeSource AncestorType=Window}" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <Button Name="Confirm" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="20" Visibility="Hidden" Click="Confirm_Click"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Name="ColorText" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,7,0,0">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Selected colour: {0}">
+                                <Binding Path="ColourPicked" RelativeSource="{RelativeSource AncestorType=Window}" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Button Name="Confirm" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="20" Visibility="Hidden" Click="Confirm_Click"/>
                 </StackPanel>
-             <Rectangle Name="ColorSelection" Height="35" Margin="0,9,37,0" Stroke="#FFACACAC" VerticalAlignment="Top" HorizontalAlignment="Right" Width="159"/>
+                <Rectangle Name="ColorSelection" Height="35" Margin="0,9,37,0" Stroke="#FFACACAC" VerticalAlignment="Top" HorizontalAlignment="Right" Width="159"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <RadioButton GroupName="Filter" Padding="7,2" Tag="0" Content="Sort by ID" Style="{StaticResource {x:Type ToggleButton}}" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" IsChecked="True" Checked="Filter" />
+                <RadioButton GroupName="Filter" Padding="7,2" Tag="1" Content="Sort by Hue" Style="{StaticResource {x:Type ToggleButton}}" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Checked="Filter" />
+                <RadioButton GroupName="Filter" Padding="7,2" Tag="2" Content="Sort by Saturation" Style="{StaticResource {x:Type ToggleButton}}" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Checked="Filter" />
+                <RadioButton GroupName="Filter" Padding="7,2" Tag="3" Content="Sort by Luminance" Style="{StaticResource {x:Type ToggleButton}}" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Checked="Filter" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <RadioButton GroupName="Filter" Padding="7,2" Tag="4" Content="Sort by Saturation-Luminance-Hue tier" Style="{StaticResource {x:Type ToggleButton}}" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Checked="Filter" />
+                <RadioButton GroupName="Filter" Padding="7,2" Tag="5" Content="Sort by Approx. Hue tier" Style="{StaticResource {x:Type ToggleButton}}" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Checked="Filter" />
+            </StackPanel>
         </StackPanel>
 
 

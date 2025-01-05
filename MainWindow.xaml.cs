@@ -3,26 +3,14 @@ using DQB2NPCViewer.control;
 using Microsoft.Win32;
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
-using Ionic.Zlib;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Numerics;
-using System.Xml.Linq;
-using HelixToolkit.Wpf;
 using System.Windows.Input;
-using System.Windows.Controls.Primitives;
-using System.Reflection;
-using System.Windows.Media.Media3D;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DQB2NPCViewer
 {
@@ -61,7 +49,7 @@ namespace DQB2NPCViewer
 
         private void ConsoleCommand(string text, bool error, bool warning)
         {
-            ConsoleText.Value = "text";
+            ConsoleText.Value = text;
             if (error)
                 ConsoleColour.Value = Brushes.Red;
             else if (warning)
@@ -226,7 +214,7 @@ namespace DQB2NPCViewer
             LoadingImage.Visibility = Visibility.Visible;
             MainGrid.IsEnabled = false;
             await Task.Run(() => FullLoad(openFileDialog.FileName));
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 SelectionList.createTabList();
                 SelectionList.ScrollViewUpdate(this.ActualHeight - 110);
@@ -646,6 +634,7 @@ namespace DQB2NPCViewer
             ushort Colour = 0;
             string Text = null;
             bool skin = false;
+            if (!Loaded) return;
             switch (((Button)sender).Tag)
             {
                 case "0": //eye
@@ -707,6 +696,7 @@ namespace DQB2NPCViewer
             ushort Colour = 0;
             string Text = null;
             bool skin = false;
+            if (!LoadedBuilder) return;
             switch (((Button)sender).Tag)
             {
                 case "0": //eye
@@ -764,6 +754,32 @@ namespace DQB2NPCViewer
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoadedBuilder)
+            {
+                ConsoleCommand("Create only works without a loaded CMNDAT", true, false);
+                return;
+            }
+
+            EditingNPC.Value = new NPCData(new byte[DQB2DataEditor.SizeOfChar]);
+            EditingNPC.Value.bodyModel = 1;
+            EditingNPC.Value.faceModel = 1;
+            EditingNPC.Value.hairModel = 1;
+
+            EditingNPC.Value.skinColour = 7;
+            EditingNPC.Value.eyeColour = 7;
+            EditingNPC.Value.hairColour = 7;
+
+            EditingNPC.NotifyValue();
+            SwapToNPC();
+            swapGender(EditingNPC.Value.sex, ListText.ArmourList);
+
+            PriorityCodeSetModel(true, true, true);
+            MyHelixViewport.ZoomExtents();
+            ConsoleCommand("Empty NPC created!", false, false);
         }
     }
 }

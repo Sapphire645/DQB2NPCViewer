@@ -2,13 +2,10 @@
 using SharpGLTF.Schema2;
 using System;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.TextFormatting;
 
 
 public static class DQB2ModelRendering
@@ -338,7 +335,7 @@ public static class DQB2ModelRendering
         {
             var objReader = new HelixToolkit.Wpf.ObjReader();
             LoadGlbFromResources(Model_Path, Type);
-            var model = objReader.Read(Type);
+            var model = objReader.Read("models/" + Type);
 
             if (model is Model3DGroup modelGroup)
             {

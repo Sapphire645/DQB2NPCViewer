@@ -31,6 +31,9 @@
                 <Image Source="/images/resource/export.png" />
             </Button>
             <Separator/>
+            <Button Height="32" Click="Create_Click">
+                <Image Source="/images/resource/create.png" />
+            </Button>
             <Image x:Name="LoadingImage" Source="/images/resource/Loading.png" Height="24" MaxHeight="24" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Image x:Name="Saving" Source="/images/resource/Saving.png" Height="24" MaxHeight="24" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ToolBar>
@@ -207,7 +210,7 @@
                                                                 <ColumnDefinition/>
                                                             </Grid.ColumnDefinitions>
                                                             <Image Margin="0,0,0,0" Grid.Column="0" Height="25" Source="{Binding Image}" />
-                                                            <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center" Foreground="{Binding PositionNotCoded}">
+                                                            <TextBlock Margin="0,0,0,0" Grid.Column="1" Width="Auto" VerticalAlignment="Center">
                                                                 <TextBlock.Text>
                                                                     <MultiBinding StringFormat="{}{0} - {1}">
                                                                         <Binding Path="ItemID" />
