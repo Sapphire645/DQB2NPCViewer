@@ -193,7 +193,7 @@ namespace DQB2NPCViewer.code
             get { return byteData[0x144]; }
             set { byteData[0x144] = value; }
         }
-
+        public Thickness coordMargin => new Thickness(((coordX+ 1024 )/ 4)-3,((coordZ + 1024) / 4)-3,0,0);
 
         public string imageFancy => $"/images/resource/fancy{roomFancy:0}.png";
         public string imageSize => $"/images/resource/size{roomSize:0}.png";

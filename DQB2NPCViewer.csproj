@@ -1386,6 +1386,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\resource\create.png" />
+    <Resource Include="images\maps\STGDAT01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="models\monster\200.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

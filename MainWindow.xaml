@@ -281,7 +281,29 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Name="TabEditingInventory" Header="Inventory"/>
-                            <TabItem Name="TabEditingMap" Header="Map Coordinates"/>
+                            <TabItem Name="TabEditingMap" Header="Map Coordinates">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" MinWidth="160"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Vertical" Margin="5,5,5,5">
+                                        <Button Content="X Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.coordX}" Height="25" Padding="2,2,0,0"/>
+                                        <Button Content="Y Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.coordY}" Height="25" Padding="2,2,0,0"/>
+                                        <Button Content="Z Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <TextBox Text="{Binding EditingNPC.Value.coordZ}" Height="25" Padding="2,2,0,0"/>
+                                    </StackPanel>
+                                    <Viewbox Name="Map" Grid.Column="1">
+                                        <Grid Width="512" Height="512">
+                                            <Image Source="/images/maps/STGDAT01.png" />
+                                            <Ellipse Fill="Orange" Stroke="Black" Width="7" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding EditingNPC.Value.coordMargin}"/>
+                                        </Grid>
+                                    </Viewbox>
+                                </Grid>
+
+                            </TabItem>
                         </TabControl>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
