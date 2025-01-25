@@ -66,7 +66,7 @@ namespace DQB2NPCViewer.code
             ConstructIJNames("data/" + filename5 + ".txt", JobList);
             
             ConstructAmbiance("data/" + filename6 + ".txt");
-            ConstructTypeLock("data/" + filename7 + ".txt");
+            ConstructTypeLock("data/" + filename7 + ".txt", "data/" + filename7+"Text.txt");
             ConstructEquipmentNames("data/" + filename8 + ".txt", WeaponList);
             ConstructArmourNames("data/" + filename9 + ".txt", ArmourList, ArmourBuilderList, ArmourBuilderListMirror);
 
@@ -330,15 +330,19 @@ namespace DQB2NPCViewer.code
                 AmbianceList.Add(Ambiance);
             }
         }
-        private static void ConstructTypeLock(string filename)
+        private static void ConstructTypeLock(string filename, string filenameText)
         {
             if (!System.IO.File.Exists(filename)) return;
             String[] lines = System.IO.File.ReadAllLines(filename);
-            foreach (String line in lines)
+            String[] linesText = System.IO.File.ReadAllLines(filenameText);
+            for(int Index = 0; Index < lines.Length; Index++)
             {
+                String line = lines[Index];
+                String lineText = linesText[Index];
                 if (line.Length < 1) continue;
                 if (line[0] == '#') continue;
                 String[] values = line.Split('\t');
+                String[] valuesText = lineText.Split('\t');
                 try
                 {
                     var typeLockVal = new ComboBoxColour()
@@ -347,12 +351,13 @@ namespace DQB2NPCViewer.code
                         TypeListing = new TypeSet()
                         {
                             typeID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
-                            name = (1 < values.Length) ? values[1] : "???",
-                            hairID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
-                            faceID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
-                            bodyID = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
-                            Tier = (5 < values.Length) ? (ushort)Convert.ToInt16(values[5]) : (ushort)0,
-                            Monster = (6 < values.Length) ? Convert.ToBoolean(values[6].ToLower()) : false
+                            name = (1 < valuesText.Length) ? valuesText[1] : "???",
+                            description = (2 < valuesText.Length) ? valuesText[2] : "???",
+                            hairID = (1 < values.Length) ? (ushort)Convert.ToInt16(values[1]) : (ushort)0,
+                            faceID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
+                            bodyID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
+                            Tier = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
+                            Monster = (5 < values.Length) ? Convert.ToBoolean(values[5].ToLower()) : false
                         }
                     };
                     if (typeLockVal.TypeListing.faceID == 0 && typeLockVal.TypeListing.hairID == 0 && typeLockVal.TypeListing.bodyID == 0)

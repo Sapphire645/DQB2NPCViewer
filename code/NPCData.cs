@@ -232,6 +232,7 @@ namespace DQB2NPCViewer.code
 
         public string IslandImage => $"/images/island/{island:0}.png";
         public string PlaceImage => $"/images/island/p{place:0}.png";
+        public Visibility PlaceVisibility => island == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string name { get; private set; }
 
         public NPCDataMinimum(ushort offset, NPCData byteData)

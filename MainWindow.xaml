@@ -10,7 +10,7 @@
         xmlns:control="clr-namespace:DQB2NPCViewer.control"
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Class="DQB2NPCViewer.MainWindow"
         mc:Ignorable="d"
-        Title="DQB2 NPC Viewer Alpha 1" WindowState ="Normal" MinWidth="1100" MinHeight="730" Icon="images/resource/icon.ico">
+        Title="DQB2 NPC Viewer Beta 0.1" WindowState ="Normal" MinWidth="1100" MinHeight="730" Icon="images/resource/icon.ico">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -69,7 +69,7 @@
                                         <Button Content="HP" Click="InfoPanel_Click" Tag="2" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.HP}" Height="25" Padding="2,2,0,0"/>
                                         <Button Content="Job" Click="InfoPanel_Click" Tag="3" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-                                        <ComboBox ItemsSource="{x:Static s:ListText.JobList}" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.job}">
+                                        <ComboBox ItemsSource="{x:Static s:ListText.JobList}" SelectionChanged="UpdateJobConsole" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.job}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <TextBlock>
@@ -170,9 +170,9 @@
                                             <CheckBox IsChecked="{Binding EditingNPC.Value.typeLock}" VerticalAlignment="Center" PreviewMouseDown="VisualChangeCheck" Click="FullModelUpdate"/>
                                             <Button Content="CharType Appearance Lock" Margin="2,0,20,0" Click="InfoPanel_Click" Tag="9" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                             <CheckBox IsChecked="{Binding EditingNPC.Value.hasClothes}" VerticalAlignment="Center" PreviewMouseDown="VisualChangeCheck" Click="BodyModelUpdate"/>
-                                            <Button Content="Has Clothes" Margin="2,0,20,0"  Click="InfoPanel_Click" Tag="9" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Content="Has Clothes" Margin="2,0,20,0"  Click="InfoPanel_Click" Tag="31" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                             <CheckBox IsChecked="{Binding EditingNPC.Value.hasRags}" VerticalAlignment="Center" PreviewMouseDown="VisualChangeCheck" Click="BodyModelUpdate"/>
-                                            <Button Content="In Rags" Margin="2,0,20,0"  Click="InfoPanel_Click" Tag="9" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Content="In Rags" Margin="2,0,20,0"  Click="InfoPanel_Click" Tag="32" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,1,5,1" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5,5,5,5">
                                             <Button Content="Character type" Click="InfoPanel_Click" Tag="4" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
@@ -280,7 +280,6 @@
                                     </HelixToolkit:HelixViewport3D>
                                 </Grid>
                             </TabItem>
-                            <TabItem Name="TabEditingInventory" Header="Inventory"/>
                             <TabItem Name="TabEditingMap" Header="Map Coordinates">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -306,16 +305,16 @@
                                     </Grid>
 
                                     <StackPanel Orientation="Vertical" Margin="5,5,5,5">
-                                        <Button Content="X Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="X Coordinate" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.coordX}" Height="25" Padding="2,2,0,0"/>
                                         <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingNPC.Value.coordX}" TickFrequency="1" IsSnapToTickEnabled="True"/>
-                                        <Button Content="Y Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Y Coordinate" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.coordY}" Height="25" Padding="2,2,0,0"/>
                                         <Slider Minimum="0" Maximum="96" Value="{Binding EditingNPC.Value.coordY}" TickFrequency="1" IsSnapToTickEnabled="True"/>
-                                        <Button Content="Z Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Z Coordinate" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.coordZ}" Height="25" Padding="2,2,0,0"/>
                                         <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingNPC.Value.coordZ}" TickFrequency="1" IsSnapToTickEnabled="True"/>
-                                        <Button Content="Angle" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Angle" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <TextBox Text="{Binding EditingNPC.Value.coordAngle}" Height="25" Padding="2,2,0,0"/>
                                         <TextBlock Text="Zoom in map" Padding="5,2,5,2"/>
                                         <Slider Name="ZoomSlider" Minimum="1" Maximum="11.0" Value="1.0" TickFrequency="0.1" IsSnapToTickEnabled="True" Margin="5" ValueChanged="ZoomSlider_ValueChanged" Height="25"/>
@@ -457,32 +456,37 @@
                                 <TextBlock Grid.Column="1" Text="Tool Slots" Height="22" Margin="6,6,6,6" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"  VerticalAlignment="Top"/>
                                 <Viewbox Grid.Column="1" Margin="15,35,15,15">
                                     <Grid Width="610">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height ="5"/>
+                                            <RowDefinition Height ="1*"/>
+                                        </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width ="75"/>
                                             <ColumnDefinition Width ="1*"/>
                                             <ColumnDefinition Width ="55"/>
                                             <ColumnDefinition Width ="35"/>
                                         </Grid.ColumnDefinitions>
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Height="35" Width="75" Margin="0,20,0,0" Background="White" Content="Gloves" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-                                            <Button Height="35" Width="75" Background="White" Content="Hammer" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left"  BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Tag="44"  Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="25" Width="520" VerticalAlignment="Top" Background="White" Content="Click Me For Important Information" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <StackPanel Grid.Row="1" Orientation="Vertical">
+                                            <Label  BorderThickness="1" Height="35" Width="75" Margin="0,20,0,0" Content="Gloves" Padding="5,2,5,2"  HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <Button Tag="45" Height="35" Width="75" Background="White" Content="Hammer" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left"  BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                             <Separator/>
-                                            <Button Height="35" Width="75" Background="White" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+                                            <Button Tag="46" Height="35" Width="75" Background="White" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
                                                 <TextBlock Text="Bottomless Pot" TextWrapping="Wrap" TextAlignment="Center" />
                                             </Button>
-                                            <Button Height="35" Width="75" Background="White" Content="Echo Flute" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-                                            <Button Height="35" Width="75" Background="White" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+                                            <Label BorderThickness="1" Height="35" Width="75" Content="Echo Flute" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                                            <Label  BorderThickness="1" Height="35" Width="75" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                                                 <TextBlock Text="Transform-o-Trowel" TextWrapping="Wrap" TextAlignment="Center" />
-                                            </Button>
-                                            <Button Height="35" Width="75" Background="White" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+                                            </Label>
+                                            <Label  BorderThickness="1" Height="35" Width="75" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                                                 <TextBlock Text="Magic Pencil" TextWrapping="Wrap" TextAlignment="Center" />
-                                            </Button>
-                                            <Button Height="35" Width="75" Background="White" Content="Chisel" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-                                            <Button Height="35" Width="75" Background="White" Content="Rod" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-                                            <Button Height="35" Width="75" Background="White" Content="Unused 1" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-                                            <Button Height="35" Width="75" Margin="0,0,0,20"  Background="White" Content="Unused 2" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            </Label>
+                                            <Label  BorderThickness="1" Height="35" Width="75"  Content="Chisel" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <Button Tag="47" Height="35" Width="75" Background="White" Content="Rod" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Tag="48" Height="35" Width="75" Background="White" Content="Unused 1" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Button Tag="48" Height="35" Width="75" Margin="0,0,0,20"  Background="White" Content="Unused 2" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         </StackPanel>
-                                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
                                             <ComboBox Margin="0,20,0,0" Height="35" ItemsSource="{x:Static s:ListText.ToolList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.gloves}">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
@@ -715,8 +719,8 @@
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
                                         </StackPanel>
-                                        <Rectangle Grid.Column="2" StrokeThickness="2"  Stroke="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Fill="#FF282828" RadiusX="20" RadiusY="20" Margin="7,5,7,5"/>
-                                        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,20,0,0">
+                                        <Rectangle Grid.Row="1" Grid.Column="2" StrokeThickness="2"  Stroke="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Fill="#FF282828" RadiusX="20" RadiusY="20" Margin="7,5,7,5"/>
+                                        <StackPanel Grid.Row="1"  Grid.Column="2" Orientation="Vertical" Margin="0,20,0,0">
                                             <Image Source="/images/resource/icon/00.png" Height="35"/>
                                             <Image Source="/images/resource/icon/01.png" Height="35"/>
                                             <Separator Margin="12,2,12,2"/>
@@ -727,8 +731,8 @@
                                             <Image Source="/images/resource/icon/06.png" Height="35"/>
                                             <Image Source="/images/resource/icon/07.png" Height="35"/>
                                         </StackPanel>
-                                        <StackPanel Grid.Column="3" Orientation="Vertical">
-                                            <Button  Background="White" Content="Pickable" FontSize="8" Width="35" Height="20"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
+                                            <Button Tag="49" Background="White" Content="Pickable" FontSize="8" Width="35" Height="20"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" HorizontalAlignment="Left" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                             <ToggleButton IsChecked="{Binding EditingBuilder.Value.hasGloves}" FontSize="15" Height="27" Width="27" Margin="4,4,4,4" Background="White" FontWeight="Bold" >
                                                 <ToggleButton.Style>
                                                     <Style TargetType="ToggleButton">
@@ -909,9 +913,9 @@
                                         <ColumnDefinition Width ="3*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Orientation="Vertical" Margin="5,5,5,5">
-                                        <Button Content="Armour/Clothes" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Armour/Clothes" Click="InfoPanel_Click" Tag="34"  ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Name="ComboBuilderArmour" Height="35" ItemsSource="{x:Static s:ListText.ArmourBuilderList}" SelectedValuePath="Armour.ID" SelectedValue="{Binding EditingBuilder.Value.armour}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
-                                        <Button Content="Hammer" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Hammer" Click="InfoPanel_Click" Tag="36"  ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.hammer}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -933,7 +937,7 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <Button Content="Weapon"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Weapon" Tag="36"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.weapon}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -955,7 +959,7 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <Button Content="Shield" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Shield" Tag="37"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ShieldList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.shield}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -979,9 +983,9 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,5,5,5">
-                                        <Button Content="Mirror Armour/Clothes" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Mirror Armour/Clothes" Click="InfoPanel_Click" Tag="38" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Name="ComboBuilderMirrorArmour" Height="35" ItemsSource="{x:Static s:ListText.ArmourBuilderListMirror}" SelectedValuePath="Armour.ID" SelectedValue="{Binding EditingBuilder.Value.mirrorClothes}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
-                                        <Button Content="Mirror Hammer" Click="InfoPanel_Click"  ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Mirror Hammer" Click="InfoPanel_Click" Tag="39" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorHammer}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -1003,7 +1007,7 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <Button Content="Mirror Weapon"  Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Mirror Weapon" Tag="40" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.WeaponList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorWeapon}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -1025,7 +1029,7 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <Button Content="Mirror Shield" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Mirror Shield" Tag="41" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.ShieldList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorShield}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -1047,7 +1051,7 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <Button Content="Mirror Hair" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Mirror Hair" Tag="42" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.HairBuilderList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorHair}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -1069,7 +1073,7 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <Button Content="Mirror Accesory" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Mirror Accesory" Tag="43" Click="InfoPanel_Click" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <ComboBox Height="35" ItemsSource="{x:Static s:ListText.AccesoryList}" SelectedValuePath="ItemID" SelectedValue="{Binding EditingBuilder.Value.mirrorAccesory1}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -1135,22 +1139,22 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,5,5,5">
-                                        <Button Content="Sex" Click="InfoPanel_Click" Tag="2" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Sex" Click="InfoPanel_Click" Tag="1" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <UniformGrid Columns="2" Height="35">
                                             <ToggleButton Content="Male" IsChecked="{Binding EditingBuilder.Value.isMale, Mode=TwoWay}" Click="testBuilder"/>
                                             <ToggleButton Content="Female" IsChecked="{Binding EditingBuilder.Value.isFemale, Mode=TwoWay}" Click="testBuilder"/>
                                         </UniformGrid>
-                                        <Button Content="Eye Colour" Click="InfoPanel_Click" Tag="26" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Eye Colour" Click="InfoPanel_Click" Tag="13" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <UniformGrid Columns="2" Height="35">
                                             <Button Content="{Binding EditingBuilder.Value.eyeColour}" Click="ChangeColourBuilder" Tag="0"/>
                                             <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding EyeColourBuilder.Value}"/>
                                         </UniformGrid>
-                                        <Button Content="Hair Colour" Click="InfoPanel_Click" Tag="28" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Hair Colour" Click="InfoPanel_Click" Tag="14" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <UniformGrid Columns="2" Height="35">
                                             <Button Content="{Binding EditingBuilder.Value.hairColour}" Click="ChangeColourBuilder" Tag="1"/>
                                             <Rectangle Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding HairColourBuilder.Value}"/>
                                         </UniformGrid>
-                                        <Button Content="Skin Colour" Click="InfoPanel_Click" Tag="30" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                        <Button Content="Skin Colour" Click="InfoPanel_Click" Tag="15" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                         <UniformGrid Columns="2" Height="35">
                                             <Button Content="{Binding EditingBuilder.Value.skinColour}" Click="ChangeColourBuilder" Tag="2"/>
                                             <UniformGrid Columns="2" Height="35">
@@ -1213,16 +1217,16 @@ HorizontalAlignment="Center" VerticalAlignment="Center" >
                                 </Grid>
 
                                 <StackPanel Orientation="Vertical" Margin="5,5,5,5">
-                                    <Button Content="X Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <Button Content="X Coordinate" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                     <TextBox Text="{Binding EditingBuilder.Value.coordX}" Height="25" Padding="2,2,0,0"/>
                                     <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingBuilder.Value.coordX}" TickFrequency="1" IsSnapToTickEnabled="True"/>
-                                    <Button Content="Y Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <Button Content="Y Coordinate" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                     <TextBox Text="{Binding EditingBuilder.Value.coordY}" Height="25" Padding="2,2,0,0"/>
                                     <Slider Minimum="0" Maximum="96" Value="{Binding EditingBuilder.Value.coordY}" TickFrequency="1" IsSnapToTickEnabled="True"/>
-                                    <Button Content="Z Coordinate" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <Button Content="Z Coordinate" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                     <TextBox Text="{Binding EditingBuilder.Value.coordZ}" Height="25" Padding="2,2,0,0"/>
                                     <Slider Minimum="-1024" Maximum="1024" Value="{Binding EditingBuilder.Value.coordZ}" TickFrequency="1" IsSnapToTickEnabled="True"/>
-                                    <Button Content="Angle" Click="InfoPanel_Click" Tag="0" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                    <Button Content="Angle" Click="InfoPanel_Click" Tag="33" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                     <TextBox Text="{Binding EditingBuilder.Value.coordAngle}" Height="25" Padding="2,2,0,0"/>
                                     <TextBlock Text="Zoom in map" Padding="5,2,5,2"/>
                                     <Slider Name="ZoomSliderBuilder" Minimum="1" Maximum="11.0" Value="1.0" TickFrequency="0.1" IsSnapToTickEnabled="True" Margin="5" ValueChanged="ZoomSlider_ValueChanged" Height="25"/>

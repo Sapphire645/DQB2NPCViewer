@@ -1389,6 +1389,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\resource\create.png" />
+    <Content Include="data\typelockText.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="images\island\p5.png" />
     <Content Include="images\maps\STGDAT01.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -3082,9 +3086,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\typelock.txt">
+    <Content Include="data\typelock.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\armour.txt">

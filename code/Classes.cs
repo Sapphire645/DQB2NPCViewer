@@ -36,6 +36,7 @@ public class TypeSet
     public bool Monster { get; set; }
     public ushort Tier { get; set; }
     public string name { get; set; }
+    public string description { get; set; }
 }
 public class Accesory
 {

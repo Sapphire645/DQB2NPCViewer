@@ -97,7 +97,7 @@ namespace DQB2NPCViewer.code
         }
         public static void SaveCMNDATBuilder(BuilderData Builder)
         {
-            Array.Copy( Builder.byteData, 0, CMNDATfileBytes, StartOfBuilder, SizeOfChar);
+            Array.Copy(Builder.byteData, 0, CMNDATfileBytes, StartOfBuilder, SizeOfChar);
             Array.Copy(Builder.byteDataName, 0, Header, StartOfBuilderName, 12);
             Array.Copy(Builder.byteDataInventory, 0, CMNDATfileBytes, StartOfBuilderInventory, 0x40);
             Array.Copy(Builder.byteDataFlagBools, 0,CMNDATfileBytes, StartOfBuilderFlag, 0x200);

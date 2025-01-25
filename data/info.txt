@@ -8,13 +8,13 @@
 6	Current Island	Where the NPC is living currently.
 7	Place	The area where the NPC is. Any map excluding IoA only has 1 place, so set it as "green gardens". IoA has 4 areas, including the beach prologue area.
 8	Voice	Changes their voice. Not documented yet.
-9	Flags	"Lock appearance" sets the appearance of the NPC to their hard-coded values (For NPCs whose Type has set appearances). If unset they will use the appearance of the model values. "Has Clothes" sets the armour as their body appearance. IMPORTANT! If you set an armour without setting this flag the colour of the body model will be the armour colour. Use this to your advantage!
+9	CharType Appearance Lock	"Lock appearance" sets the appearance of the NPC to their hard-coded values (For NPCs whose Type has set appearances). If unset they will use the appearance of the model values. 
 10	Face Model	Sets their face model. Most faces aren't compatible with most hairs. Do be careful. Children models will look enlarged (Child job reduces the NPCs size to compensate) and Miner models will look small (Miner job increases NPC size to compensate)
 11	Hair Model	Sets their hair model. Some hairs have dyed clothes (that default to white). It's still unkown which hairs can have colour and which ones do not. Most hairs aren't compatible with most hairs. Do be careful. Children models will look enlarged (Child job reduces the NPCs size to compensate) and Miner models will look small (Miner job increases NPC size to compensate)
 12	Body Model	Sets their hair model. Most models default to white. If you want to change the colour you can set an "armour" without activating the "has clothes" flag. Children models will look enlarged (Child job reduces the NPCs size to compensate) and Miner models will look small (Miner job increases NPC size to compensate)
-13	Eye Colour	Sets the eye colour. In-game it will look brighter. (Red areas in the selector are colours not documented yet. The 800+ area might be off-hue)
-14	Hair Colour	Sets the haircolour and eyebrow colour. (Red areas in the selector are colours not documented yet. The 800+ area might be off-hue)
-15	Skin Colour	Sets the skin colour. (WARNING-> Some models might not change colour in the game, not fully documented). The program blends the colour to make it look closer to the final skin colour, but sometimes that process is skipped. (Opening the character, Default colour opening the selector). (Red areas in the selector are colours not documented yet. The 800+ area might be off-hue)
+13	Eye Colour	Sets the eye colour. In-game it will look brighter. 
+14	Hair Colour	Sets the haircolour and eyebrow colour.
+15	Skin Colour	Sets the skin colour. (WARNING-> Some models might not change colour in the game, not fully documented). The program blends the colour to make it look closer to the final skin colour, but sometimes that process is skipped. (Opening the character, Default colour opening the selector). 
 16	Weapon	Sets their weapon. Still in research.
 17	Armour	Sets their clothing. As it is currently understood gender affects the model of the cloth. If you do not set the "has clothes" variable the colour of the armour will be applied to the body model. Use this to your advantage!
 18	Message Type	This affects the little beige popups. Not documented yet.
@@ -25,8 +25,27 @@
 23	Current HP	Current HP you have.
 24	Max HP	The maximum HP you can have.
 25	Max Hunger	This value is still in research. It appears that is is the "Hunger Bar Max". Reminder that DQB1 had a hunger bar and not a hunger percentage. This will make the hunger decay slower, though it is unclear if food gives percentage or gives a set number (making you have to eat more).
-26	Current Hunger This is your current food value. The percentage is calculated based on the Max Hunger value. It says "Hunger", but it's more like the "fullness value".
+26	Current Hunger	This is your current food value. The percentage is calculated based on the Max Hunger value. It says "Hunger", but it's more like the "fullness value".
 27	Attack-Defense	I don't think this does anything. May be DQB1 remnants
 28	Current Stamina	Current Stamina. Don't bother changing it
 29	Max Stamina	There's no visual for it like the normal upgrades.
 30	LV/experience	This handles adding extra HP to the HP bar. (Something something Malroth, still needs testing)
+31	Has Clothes	"Has Clothes" sets the armour as their body appearance. IMPORTANT! If you set an armour without setting this flag the colour of the body model will be the armour colour. Use this to your advantage!
+32	In Rags	Sets their clothes to rags. Used for Skelkatraz NPCs (probably)
+33	Coordinates	Sets coordinates in map. Y is height, not pictured on this preview map.
+34	Armour/Clothes	Changes the builder's armour. This affects your base deffense. Gender affects which cloth model is used. The colour is used for the cloth in the hair.
+35	Hammer	Changes the hammer. This affects the strenght of blocks you can break.
+36	Weapon	Changes the weapon. This affects your base attack.
+37	Shield	Changes the shield. This affects your base deffense.
+38	Mirror Armour/Clothes	Changes the builder's body model. Gender affects which cloth model is used. The colour is used for the cloth in the hair. If set to "0" the equipped armour will be used.
+39	Mirror Hammer	Changes the hammer appearance. If set to "0" the equipped hammer will be used.
+40	Mirror Weapon	Changes the weapon appearance. If set to "0" the equipped weapon will be used.
+41	Mirror Shield	Changes the shield appearance. If set to "0" the equipped shield will be used.
+42	Mirror Hair	Changes the hair. If set to "0" the base builder hair is used. Both male and female hairs are available for both genders.
+43	Mirror Accesory	Acessory. The ones in red change their position in-game depending on the hair.
+44	IMPORTANT INFO:	All tools have a designated "slot". You can see it in the dropdown. If you set a tool in a different slot, whenever you use it the game will swap to the actual slot, and use that item instead. This can be prevented if you set that slot to 0. Click on hammer to see how you can have 2 hammers at once.
+45	Hammer Slot	To have 2 hammers at once, set this slot to "0", and set the 2 hammers of your liking in the unused slot 1 and 2. (Or the echo flute slot if you have no further use for it)
+46	Bottomless Pot Slot	The buckets were the original bottomless pot. They have models and animations, but do not water.
+47	Rod Slot	You can have a rod without the DLC, however it won't detect any water as valid for fishing. It can be used as a free slot for adding anything else.
+48	Unused Slot	You can set the Hoe here. It has no designated slot, and it works as intended. You can tilt earth.
+49	Pickable	Says if it is eligible in the toolbar or not.

@@ -13,6 +13,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Security.RightsManagement;
 using System.Windows.Shapes;
+using System.Reflection;
+using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.IO;
+using System.Windows.Interop;
 
 namespace DQB2NPCViewer
 {
@@ -73,6 +78,12 @@ namespace DQB2NPCViewer
         {
             if (_isUserInitiated)
             {
+                if (sender == ComboBoxCharType) {
+                    var type = ((sender as ComboBox).SelectedItem as ComboBoxColour).TypeListing;
+                    NameDescText.Value = type.name;
+                    DescText.Value = type.description;
+                }
+                else if (sender == ComboJob) UpdateJobConsole(sender, e);
                 _isUserInitiated = false;
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
                     PriorityCodeSetModelBuilder(true, true, true);
@@ -294,12 +305,61 @@ namespace DQB2NPCViewer
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
-            ConsoleCommand("Not implemented", true, false);
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "*.bin|*.BIN"
+            };
+
+            if (openFileDialog.ShowDialog() == false)
+            {
+                return;
+            }
+
+            if (System.IO.File.Exists(openFileDialog.FileName) == false) return;
+            FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
+            if (DQB2DataEditor.SizeOfChar != (uint)(fileInfo.Length)) {
+                ConsoleCommand("NPC not valid", true, false);
+                return;
+            }
+            byte Bk = 255;
+            if (EditingNPC.Value != null)
+                Bk = EditingNPC.Value.island;
+
+            byte[] NPC = System.IO.File.ReadAllBytes(openFileDialog.FileName);
+            EditingNPC.Value = new NPCData(NPC);
+
+            EditingNPC.Value.UpdatedCoords += UpdateCoord;
+
+            var Point = EditingNPC.Value.coordFocus(ImageMap);
+            if (Point.X != double.NaN && Point.X != double.PositiveInfinity)
+            {
+                Map.RenderTransformOrigin = Point;
+            }
+            if (Bk != EditingNPC.Value.island)
+            {
+                ZoomSlider.Value = 1;
+            }
+            SwapToNPC();
+            swapGender(EditingNPC.Value.sex, ListText.ArmourList);
+
+            PriorityCodeSetModel(true, true, true);
+            MyHelixViewport.ZoomExtents();
+
+            ConsoleCommand("Imported NPC", false, false);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            ConsoleCommand("Not implemented", true, false);
+            if(EditingNPC.Value == null) return;
+            if (DQB2DataEditor.CMNDATfileBytes == null) return;
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "*.BIN|*.bin",
+                FileName = EditingNPC.Value.charType.ToString("D4") + EditingNPC.Value.name
+            };
+            if (saveFileDialog.ShowDialog() == false) return;
+            System.IO.File.WriteAllBytes(saveFileDialog.FileName, EditingNPC.Value.byteData);
+            ConsoleCommand("Exported NPC", false, false);
         }
         protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -421,7 +481,6 @@ namespace DQB2NPCViewer
             {
                 ZoomSlider.Value = 1;
             }
-
             SwapToNPC();
             swapGender(EditingNPC.Value.sex, ListText.ArmourList);
 
@@ -454,7 +513,7 @@ namespace DQB2NPCViewer
                     {
                         var a = ListText.TypeLockList.FirstOrDefault(x => x.ID == EditingNPC.Value.charType);
                         if (a != null)
-                            TypeLockCurrent =a.TypeListing;
+                            TypeLockCurrent = a.TypeListing;
                     }
                     if (TypeLockCurrent != null)
                     {
@@ -599,9 +658,14 @@ namespace DQB2NPCViewer
         private void ChangeChar_OnClick(object sender, EventArgs e)
         {
             if(Loaded)
-                EditingNPC.Value.charType = (ushort)sender;
+                EditingNPC.Value.charType = (sender as ComboBoxColour).ID;
             EditingNPC.NotifyValue();
-            ConsoleCommand("(PLACEHOLDER) Character changed. Update this text", false, true);
+
+            var type = (sender as ComboBoxColour).TypeListing;
+            NameDescText.Value = type.name;
+            DescText.Value = type.description;
+
+            ConsoleCommand("Character type changed", false, false);
         }
         private void swapGender(byte gender, ObservableCollection<ComboBoxArmour> List)
         {
@@ -861,6 +925,14 @@ namespace DQB2NPCViewer
                 EditingNPC.Value.RelativeCoordinates((float)clickPosition.X, (float)clickPosition.Y);
                 UpdateCoord(null, null);
             }
+        }
+
+        private void UpdateJobConsole(object sender, SelectionChangedEventArgs e)
+        {
+            ConsoleCommand("Changed Job", true, false);
+            var job = ((sender as ComboBox).SelectedItem as Job);
+            NameDescText.Value = job.Name;
+            DescText.Value = job.Description;
         }
     }
 }

@@ -1,0 +1,522 @@
+#ID	Name	Desc
+0	--
+1	Malroth
+2	Bonanzo
+3	pastor's pal
+4	Rosie
+5	Captain Brownbeard
+6	Perry
+7	Wrigley
+8	Furrowfield retriever
+14	Lulu
+15	*
+16	*
+17	cat
+18	cow
+19	chicken
+20	sheep
+21	kitten
+22	soldier
+23	bodkin archer
+24	Saffron
+25	fat rat
+26	Lillian
+27	fat rat
+28	fat rat
+29	brainy badboon
+30	Test: Pet
+31	Test: Livestock
+32	Text: Monster
+34	Pastor Al
+35	fat rat
+36	bodkin archer
+37	fat rat
+38	fat rat
+39	orc
+40	bodkin archer
+41	rough rancher
+42	avid agriculturalist
+43	fervent farmer
+44	slime
+45	orc
+46	fat rat
+47	blonde bloke
+48	Temp Base Male 1
+49	Temp Base Male 2
+50	Temp Base Male 3
+51	Temp Base Female 1
+52	Temp Base Female 2
+53	Temp Base Female 3
+54	Malroth
+55	Malroth
+56	Milosch
+57	Britney
+58	inquisitive visitor
+59	Clayton
+60	Test Townie 1
+61	Test Townie 2
+62	Test Townie 3
+63	Test Townie 4
+64	Drazo
+65	Drazy
+66	Slaris
+67	virtuous villager
+68	reliable resident
+69	civil citizen
+70	innkeeper
+71	fat rat
+72	Temp Male Merchant
+73	ghostly guest
+74	chief inspector
+75	cat
+76	ex-con
+77	ex-con
+78	ex-con
+79	*
+80	*
+81	*
+82	Temp Toughie
+83	prisoner
+84	prisoner
+85	prisoner
+86	prisoner
+87	prisoner
+88	prisoner
+89	Molly
+90	Splodger
+91	Smashley
+92	Gottfried
+93	guard
+94	guard
+95	guard
+96	guard
+97	guard
+98	warden
+99	guard
+100	guard
+101	guard
+102	guard
+103	*
+105	Den
+106	Magrog
+107	Serge
+108	Clobbert
+109	Kubacho
+110	Dougie
+111	Babs
+112	Bruppo
+113	Relube
+114	Anessa
+115	Samson
+116	Digby
+117	Goldirox
+118	Bobby
+119	beefy bloke
+120	Captain Whitebones
+121	Ship: Sailor 1
+122	Ship: Sailor 2
+123	Ship: Sailor 3
+124	Ship: Soldier 1
+125	Ship: Soldier 2
+126	Ship: Soldier 3
+127	Ship: Bard
+128	Ship: Passenger 1
+129	Ship: Passenger 2
+130	Ship: Passenger 3
+131	Ship: Passenger 4
+132	Ship: Passenger 5
+133	Ship: Passenger 6
+134	Ship: Passenger 7
+135	Ship: Passenger 8
+136	guard
+137	guard
+138	guard
+139	guard
+140	guard
+141	guard
+142	guard
+143	guard
+144	guard
+145	guard
+146	dirty rat
+147	*
+148	fat rat
+149	ratscal
+150	fat rat
+151	fat rat
+152	receptionist
+153	fat rat
+154	fat rat
+155	mighty meathead
+156	hulking hunk
+157	tanned toughie
+158	big beefcake
+159	macho chap
+160	swole soul
+161	strapping specimen
+162	jacked jock
+163	fit fellow
+164	Khrumbul-Dun: Memo 10
+165	fat rat
+166	fat rat
+167	ratscal
+168	racing ace
+169	slime
+170	fat rat
+171	healslime
+172	chimaera
+173	killing machine
+174	walking corpse
+175	golem
+176	liquid metal slime
+177	great sabrecat
+178	muddy hand
+179	powie yowie
+180	living statue
+182	*
+183	*
+184	*
+186	Lulu Tutorial Ship
+188	Medal King
+190	*
+191	hunky he-man
+197	Shane
+198	ripped roughneck
+199	powie yowie
+200	*
+201	*
+202	*
+211	toughie
+212	toughie
+213	toughie
+214	showy showgirl
+215	perky performer
+216	dazzling dancer
+217	Ordelia
+218	Jules
+220	orc
+221	bodkin archer
+222	fat rat
+223	fat rat
+225	madusa
+229	crystal of creation
+230	hammerhood
+231	kitten
+232	puppy
+233	calf
+234	chick
+235	lamb
+236	Temp: Large Male
+237	Temp: Thin Male
+238	Temp: Large Female
+239	Temp: Thin Female
+240	Charlene
+241	deadnaut
+243	deadnaut
+244	deadnaut
+245	skeleton
+246	Pucho
+247	mimic
+248	pocus poppet
+250	*
+251	*
+252	*
+253	invisible man
+254	*
+255	*
+256	King
+257	Jeremiah
+258	Esther
+259	Alvin
+260	Tal
+261	Warwick
+262	Zara
+263	muscly man
+264	crafty crofter
+265	Haydin
+266	carefree commoner
+267	tireless trader
+268	Joseph
+269	Anessa
+270	Anne
+271	Doray
+272	Fiyere
+273	Clarissa
+274	Hans
+276	cunning cadet
+277	fierce fighter
+278	fearless footman
+279	timid trooper
+280	eager ensign
+281	stern soldier
+282	skilled swordsman
+283	raw recruit
+285	wily warrior
+286	fervid fencer
+290	fat rat
+291	fat rat
+292	bodkin archer
+293	bodkin archer
+294	bodkin archer
+295	townsperson
+296	pet
+297	farm animal
+299	bold barman
+300	passionate publican
+301	brawny brawler
+302	*
+303	*
+304	*
+305	stout sort
+306	flexing fellow
+307	burly blighter
+308	potent pitman
+309	buff bro
+311	gentle giant
+335	ambitious agrarian
+336	gregarious granger
+337	friendly farmhand
+338	capable cultivator
+345	manic miner
+346	great sabrecub
+347	Test Songstress
+348	Hairy Hermit
+353	*
+355	Rendarak Cyclops
+356	Rendarak Gigantes
+363	*
+364	motivated man-at-arms
+365	competent conscript
+369	brave battler
+370	helpful healer
+371	merry medic
+372	noble knight
+373	proud paladin
+377	Hargon
+378	God of Destruction
+380	Cat 2
+381	Cat 3
+382	Cat 4
+383	Cat 5
+384	Kitten 2
+385	Kitten 3
+386	Kitten 4
+387	Kitten 5
+388	Dog 2
+389	Dog 3
+390	Dog 4
+391	Dog 5
+392	Puppy 2
+393	Puppy 3
+394	Puppy 4
+395	Puppy 5
+396	Slime
+397	Gremlin
+398	cow
+399	cow
+400	cow
+401	cow
+402	cow
+403	cow
+404	cow
+406	*
+408	Dogchin
+409	Ibuki
+410	Maygetz
+411	Dalbon
+412	Whitey
+415	cow
+416	cow
+417	cow
+441	cow
+442	cow
+443	cow
+444	cow
+445	cow
+446	cow
+447	cow
+448	cow
+451	spectator
+452	spectator
+453	spectator
+454	spectator
+455	spectator
+456	spectator
+457	*
+458	*
+459	*
+460	*
+461	part-time plougher
+462	intrepid townsperson
+463	fanciful farmer
+464	magnanimous merchant
+465	respectful resident
+466	slick shopkeeper
+467	delightful dweller
+468	dreamy dancer
+471	trusting townsperson
+477	Marlon
+478	Nero
+483	Memo
+484	Bebiba
+488	*
+494	*
+499	gremlin
+500	deadnaut
+501	gremlin
+503	caretaker
+504	badboon
+505	badboon
+506	deadnaut
+507	*
+508	*
+509	*
+510	*
+512	Arisplotle
+513	N04H
+514	Griswold
+515	chasmonaut
+516	chasmonaut
+517	Hellen
+518	Zebadee
+519	Gremville
+520	Grimlin D
+521	Grimlin A
+522	Grimlin B
+523	Grimlin C
+524	Captain Whitebones
+525	Slime A
+526	Slime B
+527	Drackson
+528	Silvapithecus A
+529	badboon
+530	hood
+531	rockbomb
+532	Silvapithecus B
+533	Adamn
+534	Gargoyle A
+541	Hargon
+542	Malroth
+578	Slime C
+579	Slime D
+580	Grimlin E
+581	Gargoyle D
+582	badboon
+583	chasmonaut
+584	mean spirit
+638	Fake Machine 1
+639	Fake Machine 2
+640	doughty defender
+641	gallant guardian
+648	batmandrill
+649	cosmic chimaera
+650	archdemon
+651	Air Force Soldier 1
+652	Air Force Soldier 2
+653	Transformed Hargonaut
+654	Transformed Skeleton Soldier 1
+655	Transformed Skeleton Soldier 2
+656	Ice Tower Gremlin
+657	Warwick
+658	ghost
+659	Fake Rendarak King
+660	wrecktor
+661	Wrecktor's Retainer 1
+662	Wrecktor's Retainer 2
+663	Wrecktor's Retainer 3
+664	Wrecktor's Retainer 4
+665	Wrecktor's Retainer 5
+666	Wrecktor's Retainer 6
+667	Wrecktor's Retainer 7
+668	wounded Moonahan soldier
+669	Gerome
+670	Rendarak Dog
+671	Rendarak Item Shop
+672	Rendarak Inn
+673	Rendarak Guard
+674	Rendarak Red-Clothed Male
+675	Rendarak Female
+676	Rendarak 1st Floor Soldier
+677	Mariella
+678	Rendarak 2nd Floor Soldier
+679	Rendarak Throne Room Right
+680	Rendarak Throne Room Left
+681	Rendarak Merchant
+682	Rendarak Teleportal Gramps
+683	Rendarak Nun
+684	Rendarak Bell Seller
+685	Rendarak Church Nun
+686	Rendarak Treasure Soldier
+687	Rendarak Treasure Female
+688	Rendarak Underground Soldier
+689	Atlas
+690	Hargonaut 1
+691	Hargonaut 2
+692	Hargonaut 3
+693	Hargonaut 4
+694	Hargonaut 5
+695	Hargonaut 6
+696	Hargonaut 7
+697	Hargonaut 8
+698	Hargonaut 9
+699	Hargonaut 10
+700	Hargon
+701	Moonahan Enemy 1
+702	Moonahan Enemy 2
+703	Moonahan Enemy 3
+704	Invisible Esther
+731	gigantes
+732	Healix
+733	fat rat
+737	Dragon Force Leader
+738	Dragon Force Dragon 1
+739	Dragon Force Dragon 2
+740	Dragon Force Axesaurus
+741	Dragon Force Tyrantosaurus
+742	Dragon Force Dragon 3
+743	Dragon Force Dragon 4
+744	Dragon Force Axesaurus 2
+745	Dragon Force Tyrantosaurus 2
+747	Poison Swap Casualty 1
+748	Poison Swap Casualty 2
+749	Poison Swap Casualty 3
+750	Poison Swap Casualty 4
+751	Poison Swap Casualty 5
+752	Atlas
+753	Malroth
+754	cosmic chimaera
+755	Abandoned Machine
+756	Hairy Hermit
+757	Black Hood
+758	Attacking Arm (Ship)
+759	Dummy PC
+760	Shadow Fiend 1
+761	Shadow Fiend 2
+762	Shadow Fiend 3
+763	Shadow Fiend 4
+764	Gargoyle B
+765	Grimlin F
+766	Gargoyle C
+767	Arm of Destruction
+768	crafting station
+769	Hairy Hermit
+808	she-slime
+809	brownie
+810	hocus chimaera
+811	cosmic chimaera
+812	hunter mech
+813	corpse corporal
+814	ghoul
+815	stone golem
+816	gold golem
+817	bloody hand
+818	stone guardian
+845	guard
+846	guard
+847	guard
+848	guard
+849	guard
+886	Malroth
+889	Gillian
+890	Finn
+895	Malroth

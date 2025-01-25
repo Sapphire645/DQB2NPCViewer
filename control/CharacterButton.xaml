@@ -29,8 +29,8 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Width="20" Height="20" Source="{Binding Path=NPC.Value.IslandImage, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                        <Image Grid.Column="1" Width="20" Height="20" Source="{Binding Path=NPC.Value.PlaceImage, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <Image Grid.Column="0" Width="20" Height="20" Visibility="{Binding Path=NPC.Value.PlaceVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Source="{Binding Path=NPC.Value.PlaceImage, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <Image Grid.Column="1" Width="20" Height="20" Source="{Binding Path=NPC.Value.IslandImage, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                     </Grid>
                     <TextBlock Grid.Column="0" Grid.Row="1"  FontWeight="Bold" Text="{Binding StringFormat={}{0}, Path=NPC.Value.offset, RelativeSource={RelativeSource AncestorType=UserControl},Mode=OneWay}" VerticalAlignment="Center">
                 </TextBlock>
