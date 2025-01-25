@@ -5,16 +5,12 @@ NPC editor with a visual component for feedback. Info taken from [the save edito
 
 ### 2025 - Refactor of all code.
 Important things that are missing currently:
-- Map coordinates
 - Animals
-- Type lock list
-- Place stuff
-- Info on all fields
-- Info on jobs and such
-- Coding that info, coding the console.
+- Full type lock list
+- Info on char list
+- Full info on jobs + size
 
 Things for the possible future
-- Inventory
 - Models for weapons
 
 ### 2024 - Alpha build now available!
