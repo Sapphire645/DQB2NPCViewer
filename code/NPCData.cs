@@ -19,12 +19,12 @@ namespace DQB2NPCViewer.code
             get{
                 var NameBytes = new byte[30];
                 Array.Copy(byteData, 0, NameBytes, 0, 30);
-                return System.Text.UTF8Encoding.Default.GetString(NameBytes);
+                return System.Text.UTF8Encoding.GetString(NameBytes);
             }
             set
             {
                 var NameBytes = new byte[30];
-                NameBytes = System.Text.UTF8Encoding.Default.GetBytes(value);
+                NameBytes = System.Text.UTF8Encoding.GetBytes(value);
                 Array.Copy(NameBytes, 0, byteData, 0, 30);
             }
         }
