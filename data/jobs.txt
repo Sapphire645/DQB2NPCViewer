@@ -75,6 +75,7 @@
 78	Mean Spirit	No abilities.	TRUE
 79	Villager (Wise Man)	Jeremiah's job.	TRUE
 80	Child (Red dress)	Lillian's job.	TRUE
+81	Villager(cooks)	Cooks?	TRUE
 82	Miner	Digby/Dougie's job. Makes NPC bigger.	TRUE
 83	Soldier (Emeritus)	Gerome's job.	TRUE
 84	Angler	Gillian and Finn's job. Will fish.	TRUE
