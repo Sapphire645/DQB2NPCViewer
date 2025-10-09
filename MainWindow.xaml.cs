@@ -255,8 +255,8 @@ namespace DQB2NPCViewer
             ConsoleCommand("Loaded CMNDAT!", false, false);
             MainGrid.IsEnabled = true;
             LoadingImage.Visibility = Visibility.Collapsed;
-
         }
+
         private void FullLoad(string FileName)
         {
             byte[] CMNDAT = System.IO.File.ReadAllBytes(FileName);
@@ -402,12 +402,13 @@ namespace DQB2NPCViewer
                 DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.skinColour).color);
                 SkinColour.Value = new SolidColorBrush(DQB2ModelRendering.SkinImage);
                 SkinColourFilter.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingNPC.Value.skinColour).color)));
-                try
+                
+                if((ComboBoxArmour)(ComboArmour.SelectedItem) != null)
                 {
                     DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboArmour.SelectedItem)).Colour;
                     ConsoleCommand("NPC model loaded.", false, false);
                 }
-                catch
+                else
                 {
                     var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingNPC.Value.armour);
                     ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
@@ -505,11 +506,11 @@ namespace DQB2NPCViewer
                 if (EditingNPC.Value.typeLock == true)
                 {
                     TypeSet TypeLockCurrent = null;
-                    try
+                    if(ComboBoxCharType.SelectedItem != null)
                     {
                         TypeLockCurrent = (ComboBoxCharType.SelectedItem as ComboBoxColour).TypeListing;
                     }
-                    catch
+                    else
                     {
                         var a = ListText.TypeLockList.FirstOrDefault(x => x.ID == EditingNPC.Value.charType);
                         if (a != null)

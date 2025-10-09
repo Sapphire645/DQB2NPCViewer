@@ -13,7 +13,7 @@ namespace DQB2NPCViewer.control
     /// </summary>
     public partial class ComboBoxColour : UserControl
     {
-        public ushort ID { get; set; } = 0;
+        public ushort ID { get; private set; } = 0;
         public TypeSet TypeListing { get; set; }
         public ComboBoxColour()
         {
@@ -22,8 +22,9 @@ namespace DQB2NPCViewer.control
             ImageToChange.Visibility = Visibility.Collapsed;
             DataContext = this;
         }
-        public ComboBoxColour(TypeSet TypeListing)
+        public ComboBoxColour(TypeSet TypeListing, ushort ID)
         {
+            this.ID = ID;
             this.TypeListing = TypeListing;
             InitializeComponent();
             ImageToChange.Source = Image;

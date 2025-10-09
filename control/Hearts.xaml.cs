@@ -11,16 +11,18 @@ namespace DQB2NPCViewer.control
     public partial class Hearts : UserControl
     {
         public byte ID { get; set; } = 0;
-        public Hearts()
+        public Hearts(byte i, string type)
         {
+            ID = i;
             InitializeComponent();
+            if (ID != 0)
+                HeartsCommand(type);
         }
 
-        public void HeartsCommand(byte i, string type)
+        private void HeartsCommand(string type)
         {
             ushort ie;
-            ID = i;
-            TextBlockHeart.Text = ID.ToString() + " - ";
+            //TextBlockHeart.Text = ID.ToString() + " - ";
             for (ie = 0; ie < ID; ie++) //ID
             {
                 StackPanelHearts.Children.Add(new Image

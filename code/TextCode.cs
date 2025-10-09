@@ -86,13 +86,11 @@ namespace DQB2NPCViewer.code
 
         private static void CreateComboBoxHearts()
         {
-            for (byte i = 1; i < 6; i++)
+            for (byte i = 0; i < 6; i++)
             {
-                var HeartsVar = new Hearts();
-                HeartsVar.HeartsCommand(i, "size");
+                var HeartsVar = new Hearts(i, "size");
                 RoomSizeList.Add(HeartsVar);
-                HeartsVar = new Hearts();
-                HeartsVar.HeartsCommand(i, "fancy");
+                HeartsVar = new Hearts(i, "fancy");
                 RoomFancyList.Add(HeartsVar);
             }
         }
@@ -322,9 +320,8 @@ namespace DQB2NPCViewer.code
                 if (line.Length < 3) continue;
                 if (line[0] == '#') continue;
                 String[] values = line.Split('\t');
-                var Ambiance = new AmbianceBox()
+                var Ambiance = new AmbianceBox((byte)Convert.ToInt16(values[0]))
                 {
-                    ID = (ushort)Convert.ToInt16(values[0]),
                     AName = values[1]
                 };
                 AmbianceList.Add(Ambiance);
@@ -345,21 +342,18 @@ namespace DQB2NPCViewer.code
                 String[] valuesText = lineText.Split('\t');
                 try
                 {
-                    var typeLockVal = new ComboBoxColour()
+                    var types = new TypeSet()
                     {
-                        ID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
-                        TypeListing = new TypeSet()
-                        {
-                            typeID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
-                            name = (1 < valuesText.Length) ? valuesText[1] : "???",
-                            description = (2 < valuesText.Length) ? valuesText[2] : "???",
-                            hairID = (1 < values.Length) ? (ushort)Convert.ToInt16(values[1]) : (ushort)0,
-                            faceID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
-                            bodyID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
-                            Tier = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
-                            Monster = (5 < values.Length) ? Convert.ToBoolean(values[5].ToLower()) : false
-                        }
+                        typeID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
+                        name = (1 < valuesText.Length) ? valuesText[1] : "???",
+                        description = (2 < valuesText.Length) ? valuesText[2] : "???",
+                        hairID = (1 < values.Length) ? (ushort)Convert.ToInt16(values[1]) : (ushort)0,
+                        faceID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
+                        bodyID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
+                        Tier = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
+                        Monster = (5 < values.Length) ? Convert.ToBoolean(values[5].ToLower()) : false
                     };
+                    var typeLockVal = new ComboBoxColour(types, (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0);
                     if (typeLockVal.TypeListing.faceID == 0 && typeLockVal.TypeListing.hairID == 0 && typeLockVal.TypeListing.bodyID == 0)
                     {
                         typeLockVal.Background = new SolidColorBrush(Colors.LightCoral);

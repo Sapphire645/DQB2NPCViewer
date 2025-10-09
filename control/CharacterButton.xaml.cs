@@ -26,7 +26,6 @@ namespace DQB2NPCViewer.control
         }
         public void UpdateImage()
         {
-
             ImageToChange.Source = NPC.Value.Image;
         }
     }

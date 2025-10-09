@@ -8,8 +8,7 @@
              d:DesignHeight="20" d:DesignWidth="200">
     <Grid>
         <StackPanel Name="StackPanelHearts" Orientation="Horizontal" Margin="0,2,0,0">
-            <TextBlock Name="TextBlockHeart" TextWrapping="Wrap"/>
+            <TextBlock Name="TextBlockHeart" TextWrapping="Wrap" Text="{Binding ID, StringFormat={}{0} - , RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         </StackPanel>
-
     </Grid>
 </UserControl>

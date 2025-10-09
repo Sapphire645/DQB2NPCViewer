@@ -53,10 +53,7 @@ List<TypeSet> ListFilter3, string Filter3)
                 }
                 var ComboBoxColour = new Button()
                 {
-                    Content = new ComboBoxColour(BlockList[i])
-                    {
-                        ID = BlockList[i].typeID
-                    },
+                    Content = new ComboBoxColour(BlockList[i], BlockList[i].typeID),
                     Background = Colour
                 };
                 ComboBoxColour.Click += Button_Click;

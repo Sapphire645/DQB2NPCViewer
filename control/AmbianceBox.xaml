@@ -19,7 +19,7 @@
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
-        <Image  Source ="{Binding Path=Image, RelativeSource={RelativeSource AncestorType=UserControl}}" VerticalAlignment="Top" HorizontalAlignment="Center" Height="18" Margin="30,2,0,0"/>
+        <Image Name="disable" Source ="{Binding Path=Image, RelativeSource={RelativeSource AncestorType=UserControl}}" VerticalAlignment="Top" HorizontalAlignment="Center" Height="18" Margin="30,2,0,0"/>
         <TextBlock Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="31,2,0,0" Foreground="Black" FontSize="10">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0}">

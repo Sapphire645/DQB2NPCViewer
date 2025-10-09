@@ -2,8 +2,8 @@
 0	--	--	FALSE
 1	No job	Renders properly.	TRUE
 2	Villager	N/A	TRUE
-3	Farmer	Perry's job. Furrowfield NPC's job.	TRUE
-4	Miner	Digby/Dougie's job. Makes NPC bigger.	TRUE
+3	Farmer (Furrowfield)	Perry and Clayton’s job. Furrowfield farmer's job.	TRUE
+4	Miner (Big)	Dougie's job. Makes NPC bigger.	TRUE
 5	Merchant		TRUE
 6	Soldier (Blue)	Britney's job.	TRUE
 7	Sailor	Brownbeard's job.	TRUE
@@ -17,7 +17,7 @@
 15	Dog	Furrowfield retriever's job.	TRUE
 16	Enigma	Malroth's job. Makes NPC unable to eat or go to the bathroom. They will complain about it.	TRUE
 17	Farmer		TRUE
-18	Farmer	Bonanzo's job.	TRUE
+18	Farmer (Bonanzo)	Bonanzo's job.	TRUE
 19	Wiggly	Wrigley's job.	TRUE
 20	N/A		TRUE
 21	Chicken		TRUE
@@ -27,7 +27,7 @@
 25	Cow		TRUE
 26	Calf		TRUE
 27	Slime	No abilities.	TRUE
-28	Farmer	Rosie's job.	TRUE
+28	Farmer (Rosie)	Rosie's job.	TRUE
 30	Villager (Red dress)	Saffron's job.	TRUE
 31	Gold Golem	GoldGolem	TRUE
 32	Cat	Cat	TRUE
@@ -49,12 +49,12 @@
 48	Hammerhood	No abilities.	TRUE
 49	Smithy	Margog's job. Will build on an armoury crafting room if given materials in the chest.	TRUE
 50	Farmer		TRUE
-51	Villager		TRUE
-54	Villager	Babs' job.	TRUE
+51	Villager (Lulu)	Lulu’s job. 	TRUE
+54	Villager (Babs)	Babs' job.	TRUE
 56	Elder		TRUE
 58	Magus	No abilities.	TRUE
-59	Farmer or N/A?	Furrowfield NPC's job.	TRUE
-60	Soldier		TRUE
+59	Static/Quest NPC	A lot of static NPCs across the world (monster and human) seem to have this job. Not sure if the job makes them static or if the static NPCs just so happen to have this job. I think they’re all quest-related, actually	TRUE
+60	Soldier (Green)	Healers	TRUE
 61	Soldier (Red)	Zara's job.	TRUE
 62	Goodybag	No abilities.	TRUE
 63	Great Sabrecub	Has abilities.	TRUE
@@ -63,7 +63,7 @@
 66	Whackolyte	No abilities.	TRUE
 67	Magus	No abilities.	TRUE
 68	Deadnaut	No abilities.	TRUE
-69	Deadnaut	No abilities.	TRUE
+69	Hargonaut/Chasmonaut	Griswold and his crew.	TRUE
 70	Gremlin	No abilities.	TRUE
 71	Dracky	No abilities.	TRUE
 72	Badboon	No abilities.	TRUE
@@ -76,6 +76,6 @@
 79	Villager (Wise Man)	Jeremiah's job.	TRUE
 80	Child (Red dress)	Lillian's job.	TRUE
 81	Villager(cooks)	Cooks?	TRUE
-82	Miner	Digby/Dougie's job. Makes NPC bigger.	TRUE
+82	Miner (Medium)	Digby's job. Makes NPC a bit bigger.	TRUE
 83	Soldier (Emeritus)	Gerome's job.	TRUE
 84	Angler	Gillian and Finn's job. Will fish.	TRUE
