@@ -257,6 +257,32 @@ namespace DQB2NPCViewer
             LoadingImage.Visibility = Visibility.Collapsed;
         }
 
+        private void test()
+        {
+            Dictionary<ushort, List<String>> asignment = new Dictionary<ushort, List<string>>();
+            foreach (var minimum in SelectionList.StoryChar)
+            {
+                var npc = DQB2DataEditor.LoadCMNDATOffset(minimum.offset);
+                if (npc.job != 0)
+                {
+                    String ee = npc.charType + " | " + ListText.getTypeCharVal(npc.charType).name;
+                    if (!asignment.ContainsKey(npc.job))
+                        asignment[npc.job] = new List<String>();
+
+                    asignment[npc.job].Add(ee);
+                }
+            }
+            foreach (var key in asignment.Keys)
+            {
+                var n = ListText.JobList.FirstOrDefault(x => x.Id == key).Name;
+                foreach (var str in asignment[key])
+                {
+                    Console.WriteLine(key + " " + n + " " + str);
+                }
+
+            }
+        }
+
         private void FullLoad(string FileName)
         {
             byte[] CMNDAT = System.IO.File.ReadAllBytes(FileName);

@@ -48,7 +48,7 @@
 52	Temp Base Female 2
 53	Temp Base Female 3
 54	Malroth
-55	Malroth
+55	Malroth (Cutscene)	Hargon possesion before Malhalla
 56	Milosch
 57	Britney
 58	inquisitive visitor
