@@ -53,14 +53,14 @@ namespace DQB2NPCViewer
 
         private bool _isUserInitiated;
 
-
         private HelixViewportModel NPCModel;
         private HelixViewportModel BuilderModel;
         public ObservableProperty<Visibility> CircleVisible { get; set; } = new ObservableProperty<Visibility>() { Value = Visibility.Visible };
-        
-        public bool CircleBool { 
+
+        public bool CircleBool
+        {
             get { return CircleVisible.Value == Visibility.Collapsed; }
-            set { if (CircleVisible.Value == Visibility.Collapsed) CircleVisible.Value = Visibility.Visible; else CircleVisible.Value = Visibility.Collapsed; } 
+            set { if (CircleVisible.Value == Visibility.Collapsed) CircleVisible.Value = Visibility.Visible; else CircleVisible.Value = Visibility.Collapsed; }
         }
 
         public MainWindow()
@@ -74,8 +74,6 @@ namespace DQB2NPCViewer
             CharacterTabList();
             this.SizeChanged += OnWindowSizeChanged;
             SelectionList.ReturnSelectedTile += SelectedNPC_OnClick;
-
-            
 
             ConsoleText.Value = "Hello World!";
             DescText.Value = "Open a CMNDAT.BIN file to continue.";
@@ -100,7 +98,8 @@ namespace DQB2NPCViewer
         {
             if (_isUserInitiated)
             {
-                if (sender == ComboBoxCharType) {
+                if (sender == ComboBoxCharType)
+                {
                     var type = ((sender as ComboBox).SelectedItem as ComboBoxColour).TypeListing;
                     NameDescText.Value = type.name;
                     DescText.Value = type.description;
@@ -165,20 +164,12 @@ namespace DQB2NPCViewer
             if (_isUserInitiated)
             {
                 _isUserInitiated = false;
-
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
-                {
                     UpdateModelToNewValuesBuilder();
-                }
                 else
-                {
                     UpdateModelToNewValues();
-                }
-
             }
         }
-
-
         private void CharacterTabList()
         {
             var Mon = new List<TypeSet>();
@@ -230,7 +221,7 @@ namespace DQB2NPCViewer
             {
                 SwapToBuilder();
             }
-            
+
             swapGender(EditingBuilder.Value.sex, ListText.ArmourBuilderList);
             swapGender(EditingBuilder.Value.sex, ListText.ArmourBuilderListMirror);
             EditingBuilder.NotifyValue();
@@ -239,8 +230,6 @@ namespace DQB2NPCViewer
             MainGrid.IsEnabled = true;
             LoadingImage.Visibility = Visibility.Collapsed;
         }
-
-
 
         private void FullLoad(string FileName)
         {
@@ -302,7 +291,8 @@ namespace DQB2NPCViewer
 
             if (System.IO.File.Exists(openFileDialog.FileName) == false) return;
             FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
-            if (CMNDAT.SizeOfChar != (uint)(fileInfo.Length)) {
+            if (CMNDAT.SizeOfChar != (uint)(fileInfo.Length))
+            {
                 ConsoleCommand("NPC not valid", true, false);
                 return;
             }
@@ -334,7 +324,7 @@ namespace DQB2NPCViewer
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if(EditingNPC.Value == null) return;
+            if (EditingNPC.Value == null) return;
             if (CMNDAT.CMNDATfileBytes == null) return;
             var saveFileDialog = new SaveFileDialog
             {
@@ -369,7 +359,7 @@ namespace DQB2NPCViewer
         private void SelectedNPC_OnClick(NPCDataMinimum NewSelectedNPC)
         {
             SelectedNPC.Value = new CharacterButton(NewSelectedNPC);
-            ConsoleCommand("Selected NPC slot "+ NewSelectedNPC.offset, false, false);
+            ConsoleCommand("Selected NPC slot " + NewSelectedNPC.offset, false, false);
 
         }
         private void SwapToNPC()
@@ -390,17 +380,17 @@ namespace DQB2NPCViewer
         private void LoadSelectedNPC_Click(object sender, RoutedEventArgs e)
         {
             byte Bk = 255;
-            if(EditingNPC.Value != null)
+            if (EditingNPC.Value != null)
                 Bk = EditingNPC.Value.island;
             EditingNPC.Value = CMNDAT.LoadCMNDATOffset(SelectedNPC.Value.NPC.Value.offset);
             EditingNPC.Value.UpdatedCoords += UpdateCoord;
 
             var Point = EditingNPC.Value.coordFocus(ImageMap);
-            if(Point.X != double.NaN && Point.X != double.PositiveInfinity)
+            if (Point.X != double.NaN && Point.X != double.PositiveInfinity)
             {
                 Map.RenderTransformOrigin = Point;
             }
-            if(Bk != EditingNPC.Value.island)
+            if (Bk != EditingNPC.Value.island)
             {
                 ZoomSlider.Value = 1;
             }
@@ -449,66 +439,6 @@ namespace DQB2NPCViewer
                 ModelGroupVisualBuilder.Content = BuilderModel.GetFullModel();
                 ConsoleCommand("Updated builder model.", false, false);
             }
-            //    if (LoadedBuilder == true)
-            //    {
-
-            //        HelixViewportModel.RotateAccesory();
-            //        var HairVisual = EditingBuilder.Value.hairModelBase;
-            //        var FaceVisual = EditingBuilder.Value.faceModelBase;
-            //        var BodyVisual = EditingBuilder.Value.bodyModelBase;
-
-            //        var Accesory1 = EditingBuilder.Value.mirrorAccesory1;
-            //        var Accesory2 = EditingBuilder.Value.mirrorAccesory2;
-            //        var Accesory3 = EditingBuilder.Value.mirrorAccesory3;
-
-            //        ushort AccesoryExtra = 0;
-            //        if (EditingBuilder.Value.mirrorClothes != 0 || EditingBuilder.Value.armour != 0)
-            //        {
-            //            ComboBoxArmour ArmourClass;
-            //            if (EditingBuilder.Value.mirrorClothes == 0)
-            //                ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.armour);
-            //            else
-            //                ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.mirrorClothes);
-            //            if (EditingBuilder.Value.sex == 1)
-            //                BodyVisual = ArmourClass.Armour.ModelIDMale;
-            //            else
-            //                BodyVisual = ArmourClass.Armour.ArmourValues.ModelIDFemale;
-            //        }
-            //        if (Hair)
-            //        {
-            //            if (Accesory1 != 0)
-            //            {
-            //                var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory1);
-            //                Accesory1 = AccClass.ModelAccesoryID;
-            //            }
-            //            if (Accesory2 != 0)
-            //            {
-            //                var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory2);
-            //                Accesory2 = AccClass.ModelAccesoryID;
-            //            }
-            //            if (Accesory3 != 0)
-            //            {
-            //                var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory3);
-            //                Accesory3 = AccClass.ModelAccesoryID;
-            //            }
-            //            if (EditingBuilder.Value.mirrorHair != 0)
-            //            {
-            //                var AccClass = ListText.HairBuilderList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorHair);
-            //                HairVisual = AccClass.ModelHairID;
-            //                if (HairVisual == 0)
-            //                {
-            //                    AccesoryExtra = AccClass.ModelAccesoryID;
-            //                    HairVisual = EditingBuilder.Value.isMale ? (ushort)53 : (ushort)52;
-            //                }
-            //            }
-            //        }
-            //        ModelGroupVisualBuilder.Content = HelixViewportModel.GroupModelsBuilder(FaceVisual, HairVisual, BodyVisual,
-            //            Accesory1, Accesory2, Accesory3, AccesoryExtra,
-            //            Face, Hair, Body,
-            //            Hair, Hair, Hair, Hair);
-            //        ConsoleCommand("Updated Builder model.", false, false);
-            //  }
-
         }
         private void InfoPanel_Click(object sender, RoutedEventArgs e)
         {
@@ -533,7 +463,7 @@ namespace DQB2NPCViewer
 
         private void ChangeChar_OnClick(object sender, EventArgs e)
         {
-            if(Loaded)
+            if (Loaded)
                 EditingNPC.Value.charType = (sender as ComboBoxColour).ID;
             EditingNPC.NotifyValue();
 
@@ -680,11 +610,6 @@ namespace DQB2NPCViewer
             ConsoleCommand("Colour changed on Builder.", false, false);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Create_Click(object sender, RoutedEventArgs e)
         {
             if (LoadedBuilder)
@@ -725,11 +650,11 @@ namespace DQB2NPCViewer
                     Map.RenderTransformOrigin = EditingNPC.Value.coordFocus(ImageMap);
             }
 
-                
+
         }
         private void ZoomSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(Tabs.SelectedItem != null && ((TabItem)Tabs.SelectedItem).Name == "TabBuilder")
+            if (Tabs.SelectedItem != null && ((TabItem)Tabs.SelectedItem).Name == "TabBuilder")
             {
                 // Update the ScaleTransform with the Slider value
                 ZoomTransformBuilder.ScaleX = e.NewValue;

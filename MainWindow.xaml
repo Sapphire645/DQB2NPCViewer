@@ -10,7 +10,7 @@
         xmlns:control="clr-namespace:DQB2NPCViewer.control"
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Class="DQB2NPCViewer.MainWindow"
         mc:Ignorable="d"
-        Title="DQB2 NPC Viewer Beta 0.1" WindowState ="Normal" MinWidth="1100" MinHeight="730" Icon="images/resource/icon.ico">
+        Title="DQB2 NPC Viewer Beta 0.1a" WindowState ="Normal" MinWidth="1100" MinHeight="730" Icon="images/resource/icon.ico">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
