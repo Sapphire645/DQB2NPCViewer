@@ -216,8 +216,8 @@ namespace DQB2NPCViewer.code
             coordX = (x + 16 * tempCoordOffsetX) / 2 - 1024;
             coordZ = (z + 16 * tempCoordOffsetZ) / 2 - 1024;
         }
-        public ushort tempCoordOffsetX => ListText.CoordinateMap[island].Item1; //On N of tiles
-        public ushort tempCoordOffsetZ => ListText.CoordinateMap[island].Item2; //On N of tiles
+        public ushort tempCoordOffsetX => island < ListText.CoordinateMap.Count ? ListText.CoordinateMap[island].Item1 : (ushort)0; //On N of tiles
+        public ushort tempCoordOffsetZ => island < ListText.CoordinateMap.Count ? ListText.CoordinateMap[island].Item2 : (ushort)0; //On N of tiles
         public string imageFancy => $"/images/resource/fancy{roomFancy:0}.png";
         public string imageSize => $"/images/resource/size{roomSize:0}.png";
         public string imageCoordinates => $"/images/maps/STGDAT{island:00}.png";

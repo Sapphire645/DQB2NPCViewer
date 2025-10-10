@@ -59,6 +59,24 @@ namespace DQB2NPCViewer
             get { return CircleVisible.Value == Visibility.Collapsed; }
             set { if (CircleVisible.Value == Visibility.Collapsed) CircleVisible.Value = Visibility.Visible; else CircleVisible.Value = Visibility.Collapsed; } 
         }
+
+        public MainWindow()
+        {
+            DataContext = this;
+            ListText.setList("body", "color", "face", "hair", "islands", "jobs", "ambiance", "typelock", "weapon", "armour", "place", "builderHair", "accesories", "tools", "shield", "coordinatemap");
+
+            InitializeComponent();
+            CharacterTabList();
+            this.SizeChanged += OnWindowSizeChanged;
+            SelectionList.ReturnSelectedTile += SelectedNPC_OnClick;
+
+            DQB2ModelRendering.ModelCodeC();
+            DQB2ModelRendering.Rotate();
+            DQB2ModelRendering.RotateAccesory();
+            ConsoleText.Value = "Hello World!";
+            DescText.Value = "Open a CMNDAT.BIN file to continue.";
+        }
+
         private void ConsoleCommand(string text, bool error, bool warning)
         {
             ConsoleText.Value = text;
@@ -178,22 +196,7 @@ namespace DQB2NPCViewer
 
             }
         }
-        public MainWindow()
-        {
-            DataContext = this;
-            ListText.setList("body", "color", "face", "hair", "islands", "jobs", "ambiance", "typelock", "weapon", "armour", "place", "builderHair", "accesories", "tools", "shield", "coordinatemap");
 
-            InitializeComponent();
-            CharacterTabList();
-            this.SizeChanged += OnWindowSizeChanged;
-            SelectionList.ReturnSelectedTile += SelectedNPC_OnClick;
-            
-            DQB2ModelRendering.ModelCodeC();
-            DQB2ModelRendering.Rotate();
-            DQB2ModelRendering.RotateAccesory();
-            ConsoleText.Value = "Hello World!";
-            DescText.Value = "Open a CMNDAT.BIN file to continue.";
-        }
 
         private void CharacterTabList()
         {
@@ -257,31 +260,7 @@ namespace DQB2NPCViewer
             LoadingImage.Visibility = Visibility.Collapsed;
         }
 
-        private void test()
-        {
-            Dictionary<ushort, List<String>> asignment = new Dictionary<ushort, List<string>>();
-            foreach (var minimum in SelectionList.StoryChar)
-            {
-                var npc = DQB2DataEditor.LoadCMNDATOffset(minimum.offset);
-                if (npc.job != 0)
-                {
-                    String ee = npc.charType + " | " + ListText.getTypeCharVal(npc.charType).name;
-                    if (!asignment.ContainsKey(npc.job))
-                        asignment[npc.job] = new List<String>();
 
-                    asignment[npc.job].Add(ee);
-                }
-            }
-            foreach (var key in asignment.Keys)
-            {
-                var n = ListText.JobList.FirstOrDefault(x => x.Id == key).Name;
-                foreach (var str in asignment[key])
-                {
-                    Console.WriteLine(key + " " + n + " " + str);
-                }
-
-            }
-        }
 
         private void FullLoad(string FileName)
         {
@@ -963,3 +942,31 @@ namespace DQB2NPCViewer
         }
     }
 }
+
+/*
+ *         private void test()
+        {
+            Dictionary<ushort, List<String>> asignment = new Dictionary<ushort, List<string>>();
+            foreach (var minimum in SelectionList.StoryChar)
+            {
+                var npc = DQB2DataEditor.LoadCMNDATOffset(minimum.offset);
+                if (npc.job != 0)
+                {
+                    String ee = npc.charType + " | " + ListText.getTypeCharVal(npc.charType).name;
+                    if (!asignment.ContainsKey(npc.job))
+                        asignment[npc.job] = new List<String>();
+
+                    asignment[npc.job].Add(ee);
+                }
+            }
+            foreach (var key in asignment.Keys)
+            {
+                var n = ListText.JobList.FirstOrDefault(x => x.Id == key).Name;
+                foreach (var str in asignment[key])
+                {
+                    Console.WriteLine(key + " " + n + " " + str);
+                }
+
+            }
+        }
+ */
