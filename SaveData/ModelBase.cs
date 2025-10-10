@@ -145,7 +145,7 @@ public abstract class HelixViewportModel
         string location = Case == 0 ? "hair" : Case == 1 ? "face" : Case == 4 ? "monster" : Case == 2 ? "body" : "builder";
         System.Windows.Media.Media3D.DiffuseMaterial material = LoadTexture(Base, 
             "pack://application:,,,/textures/"+location+"/" + ID.ToString("D3") + ".dds", 
-            "pack://application:,,,/textures/"+location+"/m" + ID.ToString("D3") + ".png",
+            "pack://application:,,,/textures/"+location+"/m" + ID.ToString("D3") + (Case == 1 ? ".dds" : ".png"),
             "pack://application:,,,/textures/"+location+"/" + (Case == 1 ? "e" : "c") + ID.ToString("D3") + ".png",
             Case, Case == 1);
         string location2 = Case == 0 ? "hair" : Case == 1 ? "face" : "body";
