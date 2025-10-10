@@ -85,7 +85,7 @@ namespace DQB2NPCViewer
                 var color = SortedList[i].color;
                 if (Skin)
                 {
-                    color = DQB2ModelRendering.Multiply(color);
+                    color = HelixViewportModel.Multiply(color);
                 }
                 if (color.Equals("#000000") && SortedList[i].ID !=0) continue;
                 // Create a new Button

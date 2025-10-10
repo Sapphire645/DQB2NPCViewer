@@ -9,10 +9,12 @@ namespace DQB2NPCViewer.control
     /// </summary>
     public partial class ComboBoxModel : UserControl
     {
-        public ushort ID { get; set; } = 0;
-        public ModelClass ModelClassV { get; set; }
-        public ComboBoxModel()
+        public ushort ID { get; private set; } = 0;
+        public ModelClass ModelClassV { get; private set; }
+        public ComboBoxModel(ushort ID, ModelClass ModelClassV)
         {
+            this.ID = ID;
+            this.ModelClassV = ModelClassV;
             InitializeComponent();
             DataContext = this;
         }

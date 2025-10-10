@@ -10,8 +10,16 @@ namespace DQB2NPCViewer.control
     /// </summary>
     public partial class CharacterButton : UserControl
     {
-        public ObservableProperty<NPCDataMinimum> NPC { get; set; } = new ObservableProperty<NPCDataMinimum>();
-        public event Action<NPCDataMinimum> ClickSend;
+        public ObservableProperty<NPCDataMinimum> NPC { get; private set; } = new ObservableProperty<NPCDataMinimum>();
+        private event Action<NPCDataMinimum> ClickSend;
+
+        public CharacterButton(NPCDataMinimum NPC, Action<NPCDataMinimum> ClickSend)
+        {
+            this.ClickSend = ClickSend;
+            this.NPC.Value = NPC;
+            InitializeComponent();
+            ImageToChange.Source = NPC.Image;
+        }
 
         public CharacterButton(NPCDataMinimum NPC)
         {

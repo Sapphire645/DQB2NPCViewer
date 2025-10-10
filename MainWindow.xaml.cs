@@ -1,23 +1,24 @@
 ﻿using DQB2NPCViewer.code;
 using DQB2NPCViewer.control;
+using DQB2NPCViewer.SaveData;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Security.RightsManagement;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Security.RightsManagement;
-using System.Windows.Shapes;
-using System.Reflection;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.IO;
 using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace DQB2NPCViewer
 {
@@ -37,22 +38,24 @@ namespace DQB2NPCViewer
         public ObservableProperty<String> NameDescText { get; set; } = new ObservableProperty<String>();
         public ObservableProperty<String> DescText { get; set; } = new ObservableProperty<String>();
 
-        public ObservableProperty<Brush> EyeColour { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        public ObservableProperty<Brush> SkinColour { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        public ObservableProperty<Brush> SkinColourFilter { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        public ObservableProperty<Brush> HairColour { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
+        public ObservableProperty<Brush> EyeColour => NPCModel.EyeColour;
+        public ObservableProperty<Brush> SkinColour => NPCModel.SkinColour;
+        public ObservableProperty<Brush> SkinColourFilter => NPCModel.SkinColourFilter;
+        public ObservableProperty<Brush> HairColour => NPCModel.HairColour;
 
-        public ObservableProperty<Brush> EyeColourBuilder { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        public ObservableProperty<Brush> SkinColourBuilder { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        public ObservableProperty<Brush> SkinColourFilterBuilder { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        public ObservableProperty<Brush> HairColourBuilder { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
-        public ObservableProperty<Brush> ClothColour { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
+        public ObservableProperty<Brush> EyeColourBuilder => BuilderModel.EyeColour;
+        public ObservableProperty<Brush> SkinColourBuilder => BuilderModel.SkinColour;
+        public ObservableProperty<Brush> SkinColourFilterBuilder => BuilderModel.SkinColourFilter;
+        public ObservableProperty<Brush> HairColourBuilder => BuilderModel.HairColour;
+        public ObservableProperty<Brush> ClothColour => NPCModel.ClothColour;
         private new bool Loaded => EditingNPC.Value != null;
         private bool LoadedBuilder => EditingBuilder.Value != null;
 
         private bool _isUserInitiated;
 
-        private bool builder = false;
+
+        private HelixViewportModel NPCModel;
+        private HelixViewportModel BuilderModel;
         public ObservableProperty<Visibility> CircleVisible { get; set; } = new ObservableProperty<Visibility>() { Value = Visibility.Visible };
         
         public bool CircleBool { 
@@ -62,6 +65,8 @@ namespace DQB2NPCViewer
 
         public MainWindow()
         {
+            NPCModel = new ModelDisplayNPC();
+            BuilderModel = new ModelDisplayBuilder();
             DataContext = this;
             ListText.setList("body", "color", "face", "hair", "islands", "jobs", "ambiance", "typelock", "weapon", "armour", "place", "builderHair", "accesories", "tools", "shield", "coordinatemap");
 
@@ -70,9 +75,8 @@ namespace DQB2NPCViewer
             this.SizeChanged += OnWindowSizeChanged;
             SelectionList.ReturnSelectedTile += SelectedNPC_OnClick;
 
-            DQB2ModelRendering.ModelCodeC();
-            DQB2ModelRendering.Rotate();
-            DQB2ModelRendering.RotateAccesory();
+            
+
             ConsoleText.Value = "Hello World!";
             DescText.Value = "Open a CMNDAT.BIN file to continue.";
         }
@@ -104,9 +108,9 @@ namespace DQB2NPCViewer
                 else if (sender == ComboJob) UpdateJobConsole(sender, e);
                 _isUserInitiated = false;
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
-                    PriorityCodeSetModelBuilder(true, true, true);
+                    UpdateModelToNewValuesBuilder();
                 else
-                    PriorityCodeSetModel(true, true, true);
+                    UpdateModelToNewValues();
             }
         }
         private void FullModelUpdate(object sender, RoutedEventArgs e)
@@ -115,9 +119,9 @@ namespace DQB2NPCViewer
             {
                 _isUserInitiated = false;
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
-                    PriorityCodeSetModelBuilder(true, true, true);
+                    UpdateModelToNewValuesBuilder();
                 else
-                    PriorityCodeSetModel(true, true, true);
+                    UpdateModelToNewValues();
             }
         }
         private void BodyModelUpdate(object sender, RoutedEventArgs e)
@@ -126,9 +130,9 @@ namespace DQB2NPCViewer
             {
                 _isUserInitiated = false;
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
-                    PriorityCodeSetModelBuilder(false, false, true);
+                    UpdateModelToNewValuesBuilder();
                 else
-                    PriorityCodeSetModel(false, false, true);
+                    UpdateModelToNewValues();
             }
         }
         private void FaceModelUpdate(object sender, SelectionChangedEventArgs e)
@@ -137,9 +141,9 @@ namespace DQB2NPCViewer
             {
                 _isUserInitiated = false;
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
-                    PriorityCodeSetModelBuilder(true, false, false);
+                    UpdateModelToNewValuesBuilder();
                 else
-                    PriorityCodeSetModel(true, false, false);
+                    UpdateModelToNewValues();
             }
         }
 
@@ -149,49 +153,26 @@ namespace DQB2NPCViewer
             {
                 _isUserInitiated = false;
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
-                    PriorityCodeSetModelBuilder(false, true, false);
+                    UpdateModelToNewValuesBuilder();
                 else
-                    PriorityCodeSetModel(false, true, false);
+                    UpdateModelToNewValues();
             }
         }
 
         private void BodyModelUpdate(object sender, SelectionChangedEventArgs e) //Armour change
         {
+            //Armour change
             if (_isUserInitiated)
             {
                 _isUserInitiated = false;
 
                 if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
                 {
-                    try
-                    {
-                        if (EditingBuilder.Value.mirrorClothes == 0)
-                            if (EditingBuilder.Value.armour == 0)
-                                DQB2ModelRendering.ClothImage = ListText.ArmourBuilderList.FirstOrDefault(x => x.Armour.ModelIDMale == 1).Colour;
-                            else
-                                DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderArmour.SelectedItem)).Colour;
-                        else
-                            DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderMirrorArmour.SelectedItem)).Colour;
-                    }
-                    catch
-                    {
-                        ConsoleCommand("NOTE: Cannot find color on 'Clothes Colour'. Please ignore.", false, true);
-                    }
-                    PriorityCodeSetModelBuilder(false, true, true);
+                    UpdateModelToNewValuesBuilder();
                 }
-
                 else
                 {
-                    try
-                    {
-                        DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboArmour.SelectedItem)).Colour;
-                        ClothColour.Value = new SolidColorBrush(DQB2ModelRendering.ClothImage);
-                    }
-                    catch
-                    {
-                        ConsoleCommand("NOTE: Cannot find color on 'Clothes Colour'. Please ignore.", false, true);
-                    }
-                    PriorityCodeSetModel(false, true, true);
+                    UpdateModelToNewValues();
                 }
 
             }
@@ -245,12 +226,11 @@ namespace DQB2NPCViewer
                 SelectionList.GenericMenu.TextBoxFilter.Width = 350;
             });
             ZoomSliderBuilder.Value = 1;
-
             if (((TabItem)Tabs.SelectedItem).Name.ToString() == "TabBuilder")
             {
                 SwapToBuilder();
-                PriorityCodeSetModelBuilder(true, true, true);
             }
+            
             swapGender(EditingBuilder.Value.sex, ListText.ArmourBuilderList);
             swapGender(EditingBuilder.Value.sex, ListText.ArmourBuilderListMirror);
             EditingBuilder.NotifyValue();
@@ -269,17 +249,17 @@ namespace DQB2NPCViewer
             String prefix = Encoding.UTF8.GetString(CMNDAT, 0, 4);
             if (prefix != "aerC") return;
 
-            DQB2DataEditor.LoadFile(CMNDAT);
-            SelectionList.StoryChar = DQB2DataEditor.LoadCMNDATStory();
-            SelectionList.GenericChar = DQB2DataEditor.LoadCMNDATGeneric();
-            EditingBuilder.Value = DQB2DataEditor.LoadCMNDATBuilder();
+            code.CMNDAT.LoadFile(CMNDAT);
+            SelectionList.StoryChar = code.CMNDAT.LoadCMNDATStory();
+            SelectionList.GenericChar = code.CMNDAT.LoadCMNDATGeneric();
+            EditingBuilder.Value = code.CMNDAT.LoadCMNDATBuilder();
             EditingBuilder.Value.UpdatedCoords += UpdateCoord;
         }
         private async void CMNDAT_Save_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (DQB2DataEditor.CMNDATfileBytes == null)
+                if (CMNDAT.CMNDATfileBytes == null)
                 {
                     return;
                 }
@@ -295,7 +275,7 @@ namespace DQB2NPCViewer
                 }
                 Saving.Visibility = Visibility.Visible;
                 MainGrid.IsEnabled = false;
-                await Task.Run(() => DQB2DataEditor.SaveFile(saveFileDialog.FileName, EditingBuilder.Value));
+                await Task.Run(() => CMNDAT.SaveFile(saveFileDialog.FileName, EditingBuilder.Value));
                 MainGrid.IsEnabled = true;
                 Saving.Visibility = Visibility.Collapsed;
                 ConsoleCommand("Saved CMNDAT!", false, false);
@@ -322,7 +302,7 @@ namespace DQB2NPCViewer
 
             if (System.IO.File.Exists(openFileDialog.FileName) == false) return;
             FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
-            if (DQB2DataEditor.SizeOfChar != (uint)(fileInfo.Length)) {
+            if (CMNDAT.SizeOfChar != (uint)(fileInfo.Length)) {
                 ConsoleCommand("NPC not valid", true, false);
                 return;
             }
@@ -347,7 +327,6 @@ namespace DQB2NPCViewer
             SwapToNPC();
             swapGender(EditingNPC.Value.sex, ListText.ArmourList);
 
-            PriorityCodeSetModel(true, true, true);
             MyHelixViewport.ZoomExtents();
 
             ConsoleCommand("Imported NPC", false, false);
@@ -356,7 +335,7 @@ namespace DQB2NPCViewer
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if(EditingNPC.Value == null) return;
-            if (DQB2DataEditor.CMNDATfileBytes == null) return;
+            if (CMNDAT.CMNDATfileBytes == null) return;
             var saveFileDialog = new SaveFileDialog
             {
                 Filter = "*.BIN|*.bin",
@@ -397,32 +376,7 @@ namespace DQB2NPCViewer
         {
             if (Loaded)
             {
-                builder = false;
-                DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.eyeColour).color);
-                EyeColour.Value = new SolidColorBrush(DQB2ModelRendering.EyeImage);
-
-                DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.hairColour).color);
-                HairColour.Value = new SolidColorBrush(DQB2ModelRendering.HairImage);
-
-                DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.skinColour).color);
-                SkinColour.Value = new SolidColorBrush(DQB2ModelRendering.SkinImage);
-                SkinColourFilter.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingNPC.Value.skinColour).color)));
-                
-                if((ComboBoxArmour)(ComboArmour.SelectedItem) != null)
-                {
-                    DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboArmour.SelectedItem)).Colour;
-                    ConsoleCommand("NPC model loaded.", false, false);
-                }
-                else
-                {
-                    var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingNPC.Value.armour);
-                    ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
-                    if (EditingNPC.Value.sex == 1)
-                        IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
-                    DQB2ModelRendering.ClothImage = ListText.getColorDyeVal(IDColour);
-                    ConsoleCommand("NOTE: Cloth colour not found on ComboArmour. Fallback code ran.", false, true);
-                }
-                ClothColour.Value = new SolidColorBrush(DQB2ModelRendering.ClothImage);
+                UpdateModelToNewValues();
             }
         }
 
@@ -430,52 +384,15 @@ namespace DQB2NPCViewer
         {
             if (LoadedBuilder)
             {
-                builder = true;
-                DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingBuilder.Value.eyeColour).color);
-                EyeColourBuilder.Value = new SolidColorBrush(DQB2ModelRendering.EyeImage);
-
-                DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingBuilder.Value.hairColour).color);
-                HairColourBuilder.Value = new SolidColorBrush(DQB2ModelRendering.HairImage);
-
-                DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingBuilder.Value.skinColour).color);
-                SkinColourBuilder.Value = new SolidColorBrush(DQB2ModelRendering.SkinImage);
-                SkinColourFilterBuilder.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingBuilder.Value.skinColour).color)));    
-                try
-                {
-                    if (EditingBuilder.Value.mirrorClothes == 0)
-                        if (EditingBuilder.Value.armour == 0)
-                            DQB2ModelRendering.ClothImage = ListText.ArmourBuilderList.FirstOrDefault(x => x.Armour.ModelIDMale == 1).Colour;
-                        else
-                            DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderArmour.SelectedItem)).Colour;
-                    else
-                        DQB2ModelRendering.ClothImage = ((ComboBoxArmour)(ComboBuilderMirrorArmour.SelectedItem)).Colour;
-                    ConsoleCommand("Builder model loaded.", false, false);
-                }
-                catch
-                {
-                    ComboBoxArmour ArmourClass;
-                    if (EditingBuilder.Value.mirrorClothes == 0)
-                        if (EditingBuilder.Value.armour == 0)
-                            ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.Armour.ModelIDMale == 1);
-                        else
-                            ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.armour);
-                    else
-                        ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.mirrorClothes);
-                    ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
-                    if (EditingBuilder.Value.sex == 1)
-                        IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
-                    DQB2ModelRendering.ClothImage = ListText.getColorDyeVal(IDColour);
-                    ConsoleCommand("NOTE: Cloth colour not found on ComboBuilderArmour. Fallback code ran.", false, true);
-                }
+                UpdateModelToNewValuesBuilder();
             }
-
         }
         private void LoadSelectedNPC_Click(object sender, RoutedEventArgs e)
         {
             byte Bk = 255;
             if(EditingNPC.Value != null)
                 Bk = EditingNPC.Value.island;
-            EditingNPC.Value = DQB2DataEditor.LoadCMNDATOffset(SelectedNPC.Value.NPC.Value.offset);
+            EditingNPC.Value = CMNDAT.LoadCMNDATOffset(SelectedNPC.Value.NPC.Value.offset);
             EditingNPC.Value.UpdatedCoords += UpdateCoord;
 
             var Point = EditingNPC.Value.coordFocus(ImageMap);
@@ -490,132 +407,107 @@ namespace DQB2NPCViewer
             SwapToNPC();
             swapGender(EditingNPC.Value.sex, ListText.ArmourList);
 
-            PriorityCodeSetModel(true, true, true);
             MyHelixViewport.ZoomExtents();
             ConsoleCommand("NPC loaded!", false, false);
         }
         private void SaveSelectedNPC_Click(object sender, RoutedEventArgs e)
         {
             EditingNPC.Value.offset = SelectedNPC.Value.NPC.Value.offset;
-            DQB2DataEditor.SaveCMNDATOffset(EditingNPC.Value);
+            CMNDAT.SaveCMNDATOffset(EditingNPC.Value);
             SelectedNPC.Value = new CharacterButton(SelectionList.UpdateCharButton(EditingNPC.Value.offset, EditingNPC.Value));
             ConsoleCommand("NPC saved!", false, false);
         }
-        private void PriorityCodeSetModel(bool Face, bool Hair, bool Body)
+        private void UpdateModelToNewValues()
         {
-            if (Loaded == true)
+            if (Loaded)
             {
-                var HairVisual = EditingNPC.Value.hairModel;
-                var FaceVisual = EditingNPC.Value.faceModel;
-                var BodyVisual = EditingNPC.Value.bodyModel;
-                if (EditingNPC.Value.typeLock == true)
-                {
-                    TypeSet TypeLockCurrent = null;
-                    if(ComboBoxCharType.SelectedItem != null)
-                    {
-                        TypeLockCurrent = (ComboBoxCharType.SelectedItem as ComboBoxColour).TypeListing;
-                    }
-                    else
-                    {
-                        var a = ListText.TypeLockList.FirstOrDefault(x => x.ID == EditingNPC.Value.charType);
-                        if (a != null)
-                            TypeLockCurrent = a.TypeListing;
-                    }
-                    if (TypeLockCurrent != null)
-                    {
-                        if (TypeLockCurrent.faceID != 0)
-                            FaceVisual = TypeLockCurrent.faceID;
-                        if (TypeLockCurrent.bodyID != 0)
-                            BodyVisual = TypeLockCurrent.bodyID;
-                        if (TypeLockCurrent.hairID != 0)
-                            HairVisual = TypeLockCurrent.hairID;
-                    }
-                }
-                if (EditingNPC.Value.hasRags == true)
-                {
-                    if (EditingNPC.Value.sex == 1)
-                        BodyVisual = 31;
-                    else
-                        BodyVisual = 32;
-                }
-                else
-                {
-                    if (EditingNPC.Value.armour != 0 && EditingNPC.Value.hasClothes == true)
-                    {
-                        var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingNPC.Value.armour);
-                        if (EditingNPC.Value.sex == 1)
-                            BodyVisual = ArmourClass.Armour.ModelIDMale;
-                        else
-                            BodyVisual = ArmourClass.Armour.ArmourValues.ModelIDFemale;
-                    }
-
-                }
-                ModelGroupVisualName.Content = DQB2ModelRendering.GroupModels(FaceVisual, HairVisual, BodyVisual, Face, Hair, Body);
+                //Get cloth colour before anything else.
+                var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingNPC.Value.armour);
+                ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
+                if (EditingNPC.Value.sex == 1)
+                    IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
+                NPCModel.UpdateAll(EditingNPC.Value, IDColour);
+                ModelGroupVisualName.Content = NPCModel.GetFullModel();
                 ConsoleCommand("Updated NPC model.", false, false);
             }
-
         }
-        private void PriorityCodeSetModelBuilder(bool Face, bool Hair, bool Body)
+        private void UpdateModelToNewValuesBuilder()
         {
-            if (LoadedBuilder == true)
+            if (LoadedBuilder)
             {
+                //Get cloth colour before anything else.
+                ComboBoxArmour ArmourClass;
+                if (EditingBuilder.Value.mirrorClothes == 0)
+                    ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.armour);
+                else
+                    ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.mirrorClothes);
 
-                DQB2ModelRendering.RotateAccesory();
-                var HairVisual = EditingBuilder.Value.hairModelBase;
-                var FaceVisual = EditingBuilder.Value.faceModelBase;
-                var BodyVisual = EditingBuilder.Value.bodyModelBase;
-
-                var Accesory1 = EditingBuilder.Value.mirrorAccesory1;
-                var Accesory2 = EditingBuilder.Value.mirrorAccesory2;
-                var Accesory3 = EditingBuilder.Value.mirrorAccesory3;
-
-                ushort AccesoryExtra = 0;
-                if (EditingBuilder.Value.mirrorClothes != 0 || EditingBuilder.Value.armour != 0)
-                {
-                    ComboBoxArmour ArmourClass;
-                    if (EditingBuilder.Value.mirrorClothes == 0)
-                        ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.armour);
-                    else
-                        ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.mirrorClothes);
-                    if (EditingBuilder.Value.sex == 1)
-                        BodyVisual = ArmourClass.Armour.ModelIDMale;
-                    else
-                        BodyVisual = ArmourClass.Armour.ArmourValues.ModelIDFemale;
-                }
-                if (Hair)
-                {
-                    if (Accesory1 != 0)
-                    {
-                        var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory1);
-                        Accesory1 = AccClass.ModelAccesoryID;
-                    }
-                    if (Accesory2 != 0)
-                    {
-                        var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory2);
-                        Accesory2 = AccClass.ModelAccesoryID;
-                    }
-                    if (Accesory3 != 0)
-                    {
-                        var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory3);
-                        Accesory3 = AccClass.ModelAccesoryID;
-                    }
-                    if (EditingBuilder.Value.mirrorHair != 0)
-                    {
-                        var AccClass = ListText.HairBuilderList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorHair);
-                        HairVisual = AccClass.ModelHairID;
-                        if (HairVisual == 0)
-                        {
-                            AccesoryExtra = AccClass.ModelAccesoryID;
-                            HairVisual = EditingBuilder.Value.isMale ? (ushort)53 : (ushort)52;
-                        }
-                    }
-                }
-                ModelGroupVisualBuilder.Content = DQB2ModelRendering.GroupModelsBuilder(FaceVisual, HairVisual, BodyVisual,
-                    Accesory1, Accesory2, Accesory3, AccesoryExtra,
-                    Face, Hair, Body,
-                    Hair, Hair, Hair, Hair);
-                ConsoleCommand("Updated Builder model.", false, false);
+                ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
+                if (EditingBuilder.Value.sex == 1)
+                    IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
+                BuilderModel.UpdateAll(EditingBuilder.Value, IDColour);
+                ModelGroupVisualBuilder.Content = BuilderModel.GetFullModel();
+                ConsoleCommand("Updated builder model.", false, false);
             }
+            //    if (LoadedBuilder == true)
+            //    {
+
+            //        HelixViewportModel.RotateAccesory();
+            //        var HairVisual = EditingBuilder.Value.hairModelBase;
+            //        var FaceVisual = EditingBuilder.Value.faceModelBase;
+            //        var BodyVisual = EditingBuilder.Value.bodyModelBase;
+
+            //        var Accesory1 = EditingBuilder.Value.mirrorAccesory1;
+            //        var Accesory2 = EditingBuilder.Value.mirrorAccesory2;
+            //        var Accesory3 = EditingBuilder.Value.mirrorAccesory3;
+
+            //        ushort AccesoryExtra = 0;
+            //        if (EditingBuilder.Value.mirrorClothes != 0 || EditingBuilder.Value.armour != 0)
+            //        {
+            //            ComboBoxArmour ArmourClass;
+            //            if (EditingBuilder.Value.mirrorClothes == 0)
+            //                ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.armour);
+            //            else
+            //                ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingBuilder.Value.mirrorClothes);
+            //            if (EditingBuilder.Value.sex == 1)
+            //                BodyVisual = ArmourClass.Armour.ModelIDMale;
+            //            else
+            //                BodyVisual = ArmourClass.Armour.ArmourValues.ModelIDFemale;
+            //        }
+            //        if (Hair)
+            //        {
+            //            if (Accesory1 != 0)
+            //            {
+            //                var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory1);
+            //                Accesory1 = AccClass.ModelAccesoryID;
+            //            }
+            //            if (Accesory2 != 0)
+            //            {
+            //                var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory2);
+            //                Accesory2 = AccClass.ModelAccesoryID;
+            //            }
+            //            if (Accesory3 != 0)
+            //            {
+            //                var AccClass = ListText.AccesoryList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorAccesory3);
+            //                Accesory3 = AccClass.ModelAccesoryID;
+            //            }
+            //            if (EditingBuilder.Value.mirrorHair != 0)
+            //            {
+            //                var AccClass = ListText.HairBuilderList.FirstOrDefault(x => x.ItemID == EditingBuilder.Value.mirrorHair);
+            //                HairVisual = AccClass.ModelHairID;
+            //                if (HairVisual == 0)
+            //                {
+            //                    AccesoryExtra = AccClass.ModelAccesoryID;
+            //                    HairVisual = EditingBuilder.Value.isMale ? (ushort)53 : (ushort)52;
+            //                }
+            //            }
+            //        }
+            //        ModelGroupVisualBuilder.Content = HelixViewportModel.GroupModelsBuilder(FaceVisual, HairVisual, BodyVisual,
+            //            Accesory1, Accesory2, Accesory3, AccesoryExtra,
+            //            Face, Hair, Body,
+            //            Hair, Hair, Hair, Hair);
+            //        ConsoleCommand("Updated Builder model.", false, false);
+            //  }
 
         }
         private void InfoPanel_Click(object sender, RoutedEventArgs e)
@@ -639,28 +531,6 @@ namespace DQB2NPCViewer
 
         }
 
-        private void EditingTabChange(object sender, SelectionChangedEventArgs e)
-        {
-            var tabControl = sender as TabControl;
-            var selectedTab = tabControl.SelectedItem as TabItem;
-            if (selectedTab != null && builder && (selectedTab.Header.ToString() == "Visual" || selectedTab.Name.ToString() == "TabEditing"))
-            {
-                SwapToNPC();
-                PriorityCodeSetModel(true, true, true);
-                MyHelixViewport.ZoomExtents();
-            }
-            else if (selectedTab != null && !builder && selectedTab.Name.ToString() == "TabBuilder")
-            {
-                SwapToBuilder();
-                PriorityCodeSetModelBuilder(true, true, true);
-                MyHelixViewport.ZoomExtents();
-            }
-            else if(e.OriginalSource is TabControl && TabNPC.SelectedItem != null && ((TabItem)TabNPC.SelectedItem).Header.ToString() == "Visual")
-            {
-                PriorityCodeSetModel(true, true, true);
-            }
-        }
-
         private void ChangeChar_OnClick(object sender, EventArgs e)
         {
             if(Loaded)
@@ -680,17 +550,7 @@ namespace DQB2NPCViewer
                 ComboBoxArmour BoxCheck = List[i];
                 if (BoxCheck.Armour.ImageID != BoxCheck.Armour.ArmourValues.ImageIDFem)
                 {
-                    if (gender == 1)
-                    {
-                        BoxCheck.Image = BoxCheck.Armour.Image;
-                        BoxCheck.Colour = ListText.getColorDyeVal(BoxCheck.Armour.ArmourValues.ColourIDMale);
-                    }
-                    else
-                    {
-                        BoxCheck.Image = BoxCheck.Armour.ArmourValues.ImageFem;
-                        BoxCheck.Colour = ListText.getColorDyeVal(BoxCheck.Armour.ArmourValues.ColourIDFemale);
-                    }
-                    BoxCheck.SetImage();
+                    BoxCheck.ChangeGender(gender == 2);
                 }
             }
             ConsoleCommand("(PLACEHOLDER) ComboBox gender changed. Delete this text.", false, true);
@@ -701,7 +561,7 @@ namespace DQB2NPCViewer
             {
                 EditingNPC.NotifyValue();
                 swapGender(EditingNPC.Value.sex, ListText.ArmourList);
-                PriorityCodeSetModel(false, false, true);
+                UpdateModelToNewValues();
             }
 
         }
@@ -712,15 +572,7 @@ namespace DQB2NPCViewer
                 EditingBuilder.NotifyValue();
                 swapGender(EditingBuilder.Value.sex, ListText.ArmourBuilderList);
                 swapGender(EditingBuilder.Value.sex, ListText.ArmourBuilderListMirror);
-                if (EditingBuilder.Value.mirrorClothes == 0 && EditingBuilder.Value.armour == 0)
-                {
-                    ComboBoxArmour ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.Armour.ModelIDMale == 1);
-                    ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
-                    if (EditingBuilder.Value.sex == 1)
-                        IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
-                    DQB2ModelRendering.ClothImage = ListText.getColorDyeVal(IDColour);
-                }
-                PriorityCodeSetModelBuilder(true, true, true);
+                UpdateModelToNewValuesBuilder();
             }
         }
 
@@ -762,24 +614,15 @@ namespace DQB2NPCViewer
             {
                 case "0": //eye
                     EditingNPC.Value.eyeColour = ColorWindow.ColourPicked;
-                    DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.eyeColour).color); ;
-                    EyeColour.Value = new SolidColorBrush(DQB2ModelRendering.EyeImage);
-                    PriorityCodeSetModel(true, false, false);
                     break;
                 case "1": //hair
                     EditingNPC.Value.hairColour = ColorWindow.ColourPicked;
-                    DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.hairColour).color);
-                    HairColour.Value = new SolidColorBrush(DQB2ModelRendering.HairImage);
-                    PriorityCodeSetModel(true, true, false);
                     break;
                 case "2": //skin
                     EditingNPC.Value.skinColour = ColorWindow.ColourPicked;
-                    DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingNPC.Value.skinColour).color);
-                    SkinColour.Value = new SolidColorBrush(DQB2ModelRendering.SkinImage);
-                    SkinColourFilter.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingNPC.Value.skinColour).color)));
-                    PriorityCodeSetModel(true, false, true);
                     break;
             }
+            UpdateModelToNewValues();
             EditingNPC.NotifyValue();
             ConsoleCommand("Colour changed on NPC.", false, false);
             //TextBoxConsole.Text = "Eye colour changed to " + ColorList + "!";
@@ -824,24 +667,15 @@ namespace DQB2NPCViewer
             {
                 case "0": //eye
                     EditingBuilder.Value.eyeColour = ColorWindow.ColourPicked;
-                    DQB2ModelRendering.EyeImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingBuilder.Value.eyeColour).color); ;
-                    EyeColourBuilder.Value = new SolidColorBrush(DQB2ModelRendering.EyeImage);
-                    PriorityCodeSetModelBuilder(true, false, false);
                     break;
                 case "1": //hair
                     EditingBuilder.Value.hairColour = ColorWindow.ColourPicked;
-                    DQB2ModelRendering.HairImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingBuilder.Value.hairColour).color);
-                    HairColourBuilder.Value = new SolidColorBrush(DQB2ModelRendering.HairImage);
-                    PriorityCodeSetModelBuilder(true, true, false);
                     break;
                 case "2": //skin
                     EditingBuilder.Value.skinColour = ColorWindow.ColourPicked;
-                    DQB2ModelRendering.SkinImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(EditingBuilder.Value.skinColour).color);
-                    SkinColourBuilder.Value = new SolidColorBrush(DQB2ModelRendering.SkinImage);
-                    SkinColourFilterBuilder.Value = new SolidColorBrush((Color)ColorConverter.ConvertFromString(DQB2ModelRendering.Multiply(ListText.getColorVal(EditingBuilder.Value.skinColour).color)));
-                    PriorityCodeSetModelBuilder(true, false, true);
                     break;
             }
+            UpdateModelToNewValuesBuilder();
             EditingBuilder.NotifyValue();
             ConsoleCommand("Colour changed on Builder.", false, false);
         }
@@ -859,7 +693,7 @@ namespace DQB2NPCViewer
                 return;
             }
 
-            EditingNPC.Value = new NPCData(new byte[DQB2DataEditor.SizeOfChar]);
+            EditingNPC.Value = new NPCData(new byte[CMNDAT.SizeOfChar]);
             EditingNPC.Value.bodyModel = 1;
             EditingNPC.Value.faceModel = 1;
             EditingNPC.Value.hairModel = 1;
@@ -872,7 +706,6 @@ namespace DQB2NPCViewer
             SwapToNPC();
             swapGender(EditingNPC.Value.sex, ListText.ArmourList);
 
-            PriorityCodeSetModel(true, true, true);
             MyHelixViewport.ZoomExtents();
             ConsoleCommand("Empty NPC created!", false, false);
         }
@@ -939,6 +772,11 @@ namespace DQB2NPCViewer
             var job = ((sender as ComboBox).SelectedItem as Job);
             NameDescText.Value = job.Name;
             DescText.Value = job.Description;
+        }
+
+        private void LoadBuilder(object sender, RoutedEventArgs e)
+        {
+            SwapToBuilder();
         }
     }
 }

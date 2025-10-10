@@ -6,6 +6,7 @@
 1802	44	0	44	Block Head
 1805	0	4	104	Dracky Cap
 2017	40	0	40	Pumpkin Mask
+3222	92	0	84	Hipster Ponytail
 3224	81	0	81	Straw Hat ♂
 3225	82	0	81	Straw Hat ♀
 3366	90	0	85	Pretty Ponytail

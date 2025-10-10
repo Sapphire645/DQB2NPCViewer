@@ -18,6 +18,7 @@ namespace DQB2NPCViewer.control
                 disable.Visibility = System.Windows.Visibility.Collapsed;
                 disable.Source = null;
             }
+            
             DataContext = this;
         }
     }

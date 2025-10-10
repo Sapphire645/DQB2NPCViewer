@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DQB2NPCViewer", "DQB2NPCViewer.csproj", "{E37C6050-9806-4F9E-BD6F-61D395F5EC28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DQB2NPCViewer", "DQB2NPCViewer.csproj", "{E37C6050-9806-4F9E-BD6F-61D395F5EC28}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F65389B-D58C-4D1E-9367-915247F1889F}"
 EndProject

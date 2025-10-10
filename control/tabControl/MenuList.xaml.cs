@@ -43,9 +43,8 @@ namespace DQB2NPCViewer.control
         {
             for (int i = 0; i < BlockList.Count; i++)
             {
-                var CharacterButton = new CharacterButton(BlockList[i]);
+                var CharacterButton = new CharacterButton(BlockList[i], Button_Click);
                 ButtonList.Add(CharacterButton);
-                CharacterButton.ClickSend += Button_Click;
                 CurrentListFull.Add(CharacterButton);
             }
         }
