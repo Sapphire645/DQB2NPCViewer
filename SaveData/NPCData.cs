@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -220,7 +221,7 @@ namespace DQB2NPCViewer.code
         public ushort tempCoordOffsetZ => island < ListText.CoordinateMap.Count ? ListText.CoordinateMap[island].Item2 : (ushort)0; //On N of tiles
         public string imageFancy => $"/images/resource/fancy{roomFancy:0}.png";
         public string imageSize => $"/images/resource/size{roomSize:0}.png";
-        public string imageCoordinates => $"/images/maps/STGDAT{island:00}.png";
+        public string imageCoordinates => ListText.IslandList.Any(x => x.Id == island) ? $"/images/maps/STGDAT{island:00}.png" : $"/images/resource/icon/10.png";
     }
     public class NPCDataMinimum
     {

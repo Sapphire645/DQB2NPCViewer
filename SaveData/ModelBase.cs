@@ -128,8 +128,11 @@ public abstract class HelixViewportModel
             else
             {
                 FullModel.Children.Add(BodyModel);
-                FullModel.Children.Add(FaceModel);
-                FullModel.Children.Add(HairModel);
+                if (BodyID < 200)
+                {
+                    FullModel.Children.Add(FaceModel);
+                    FullModel.Children.Add(HairModel);
+                }
             }
         }
         catch
