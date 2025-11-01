@@ -413,9 +413,13 @@ namespace DQB2NPCViewer
             {
                 //Get cloth colour before anything else.
                 var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == EditingNPC.Value.armour);
-                ushort IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
-                if (EditingNPC.Value.sex == 1)
-                    IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
+                ushort IDColour = 0;
+                if (ArmourClass != null)
+                {
+                    IDColour = ArmourClass.Armour.ArmourValues.ColourIDFemale;
+                    if (EditingNPC.Value.sex == 1)
+                        IDColour = ArmourClass.Armour.ArmourValues.ColourIDMale;
+                }
                 NPCModel.UpdateAll(EditingNPC.Value, IDColour);
                 ModelGroupVisualName.Content = NPCModel.GetFullModel();
                 ConsoleCommand("Updated NPC model.", false, false);

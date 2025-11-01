@@ -22,6 +22,7 @@
 539	3	4	213	213	plain clothes [pink]	40
 540	3	4	214	214	plain clothes [red]	53
 589	3	4	215	215	plain clothes [green]	60
+687	158	159	66	66	cottontail costume 	23
 898	3	4	216	216	plain clothes [yellow]	71
 899	3	4	217	217	plain clothes [blue]	80
 900	5	6	5	5	training togs [white]	10
