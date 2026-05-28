@@ -309,7 +309,7 @@ namespace DQB2NPCViewer.code
             if (!System.IO.File.Exists(filename)) return;
             String[] lines = System.IO.File.ReadAllLines(filename);
             String[] linesText = System.IO.File.ReadAllLines(filenameText);
-            for(int Index = 0; Index < lines.Length; Index++)
+            for(int Index = 0; Index < lines.Length-1; Index++)
             {
                 String line = lines[Index];
                 String lineText = linesText[Index];
