@@ -16,6 +16,22 @@ namespace DQB2NPCViewer.code
         {
             this.byteData = byteData;
         }
+        public void SetFloat(float value, ushort offset)
+        {
+            var floatBytes = System.BitConverter.GetBytes(value);
+            Array.Copy(floatBytes, 0, byteData, offset, 4);
+        }
+        public void SetUshort(ushort value, ushort offset)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            Array.Copy(bytes, 0, byteData, offset, 2);
+        }
+
+        public void SetBool(bool value, ushort offset, byte place)
+        {
+            byteData[offset] = (byte)((byteData[offset] & (0xFF-place)) + (((value == true) ? 1 : 0) * place));
+        }
+
         public String name { 
             get{
                 var NameBytes = new byte[30];
@@ -29,179 +45,46 @@ namespace DQB2NPCViewer.code
                 Array.Copy(NameBytes, 0, byteData, 0, 30);
             }
         }
+        public float coordX{ get => System.BitConverter.ToSingle(byteData, 0x5C); 
+            set{ SetFloat(value, 0x5C); UpdatedCoords?.Invoke(null, EventArgs.Empty);} }
+        public float coordY { get => System.BitConverter.ToSingle(byteData, 0x60);
+            set { SetFloat(value, 0x60); UpdatedCoords?.Invoke(null, EventArgs.Empty); } }
+        public float coordZ { get => System.BitConverter.ToSingle(byteData, 0x64); 
+            set { SetFloat(value, 0x64); UpdatedCoords?.Invoke(null, EventArgs.Empty); } }
+        public float coordAngle { get => System.BitConverter.ToSingle(byteData, 0x8C); 
+            set { SetFloat(value, 0x8C); UpdatedCoords?.Invoke(null, EventArgs.Empty); } }
+        public ushort charType { get => BitConverter.ToUInt16(byteData, 0x90); set => SetUshort(value, 0x90); }
+        public ushort HP { get => BitConverter.ToUInt16(byteData, 0x92); set => SetUshort(value, 0x92); }
+        public bool hasClothes { get => (byteData[0x9C] & 0x40) == 0x40; set => SetBool(value, 0x9C, 0x40); }
+        public bool hasRags { get => (byteData[0x9C] & 0x02) == 0x02; set => SetBool(value, 0x9C, 0x02); }
+        public ushort weapon { get => BitConverter.ToUInt16(byteData, 0xC7); set => SetUshort(value, 0xC7); }
+        public ushort armour { get => BitConverter.ToUInt16(byteData, 0xCF); set => SetUshort(value, 0xCF); }
+        public byte island { get =>  byteData[0xDF]; set{ byteData[0xDF] = value;UpdatedCoords?.Invoke(null, EventArgs.Empty);}}
+        public ushort faceModel { get => BitConverter.ToUInt16(byteData, 0xE5); set => SetUshort(value, 0xE5); }
+        public ushort hairModel { get => BitConverter.ToUInt16(byteData, 0xE7); set => SetUshort(value, 0xE7); }
+        public ushort bodyModel { get => BitConverter.ToUInt16(byteData, 0xE9); set => SetUshort(value, 0xE9); }
+        public ushort eyeColour { get => BitConverter.ToUInt16(byteData, 0xEB); set => SetUshort(value, 0xEB); }
+        public ushort hairColour { get => BitConverter.ToUInt16(byteData, 0xED); set => SetUshort(value, 0xED); }
+        public ushort skinColour { get => BitConverter.ToUInt16(byteData, 0xEF); set => SetUshort(value, 0xEF); }
+        public byte sex { get => byteData[0x102]; set => byteData[0x102] = value; }
+        public bool isMale{ get => sex == 1; set { if (value) sex = 1; else sex = 2; } } //Problematic
+        public bool isFemale{ get => sex == 2;  set { if (value) sex = 2; else sex = 1; }}
+        public bool canBattle { get => (byteData[0x103] & 0x02) == 0x02; set => SetBool(value, 0x103, 0x02); }
+        public byte roomSize{get => byteData[0x107]; set => byteData[0x107] = value; }
+        public byte roomFancy{ get => byteData[0x108]; set => byteData[0x108] = value; }
+        public byte roomAmbiance { get => byteData[0x109]; set => byteData[0x109] = value; }
+        public byte messages { get => byteData[0x10A]; set => byteData[0x10A] = value; }
+        public byte voice { get => byteData[0x10B]; set => byteData[0x10B] = value; }
+        public byte style { get => byteData[0x10D]; set => byteData[0x10D] = value; }
+        public byte job { get => byteData[0x10F]; set => byteData[0x10F] = value; }
 
-        public float coordX
-        {
-            get { return System.BitConverter.ToSingle(byteData, 0x5C); }
-            set
-            {  
-                var floatBytes = System.BitConverter.GetBytes(value);
-                Array.Copy(floatBytes, 0, byteData, 0x5C, 4);
-                UpdatedCoords?.Invoke(null, EventArgs.Empty);
-            }
-        }
-        public float coordY
-        {
-            get { return System.BitConverter.ToSingle(byteData, 0x60); }
-            set
-            {
-                var floatBytes = System.BitConverter.GetBytes(value);
-                Array.Copy(floatBytes, 0, byteData, 0x60, 4);
-                UpdatedCoords?.Invoke(null, EventArgs.Empty);
-            }
-        }
-        public float coordZ
-        {
-            get { return System.BitConverter.ToSingle(byteData, 0x64); }
-            set
-            {
-                var floatBytes = System.BitConverter.GetBytes(value);
-                Array.Copy(floatBytes, 0, byteData, 0x64, 4);
-                UpdatedCoords?.Invoke(null, EventArgs.Empty);
-            }
-        }
-        public float coordAngle
-        {
-            get { return System.BitConverter.ToSingle(byteData, 0x8C); }
-            set
-            {
-                var floatBytes = System.BitConverter.GetBytes(value);
-                Array.Copy(floatBytes, 0, byteData, 0x8C, 4);
-                UpdatedCoords?.Invoke(null, EventArgs.Empty);
-            }
-        }
-        public ushort charType
-        {
-            get
-            { return BitConverter.ToUInt16(byteData, 0x90);}
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0x90, 2);}
-        }
-        public ushort HP
-        {
-            get
-            { return BitConverter.ToUInt16(byteData, 0x92); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0x92, 2); }
-        }
-        public bool hasClothes
-        {
-            get { return (byteData[0x9C] & 0x40) == 0x40; }
-            set { byteData[0x9C] = (byte)((byteData[0x9C] & 0xBF) + (((value == true) ? 1 : 0) * 0x40)); }
-        }
-        public bool hasRags
-        {
-            get { return (byteData[0x9C] & 0x02) == 0x02; }
-            set { byteData[0x9C] = (byte)((byteData[0x9C] & 0xFD) + (((value == true) ? 1 : 0) * 0x02)); }
-        }
-        public ushort weapon
-        {
-            get
-            { return BitConverter.ToUInt16(byteData, 0xC7); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xC7, 2); }
-        }
-        public ushort armour
-        {
-            get {
-                return BitConverter.ToUInt16(byteData, 0xCF);
-            }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xCF, 2); }
-        }
-        public byte island
-        {
-            get { return byteData[0xDF]; }
-            set { byteData[0xDF] = value;
-                UpdatedCoords?.Invoke(null, EventArgs.Empty);
-            }
-        }
-        public ushort faceModel
-        {
-            get { return BitConverter.ToUInt16(byteData, 0xE5); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xE5, 2); }
-        }
-        public ushort hairModel
-        {
-            get { return BitConverter.ToUInt16(byteData, 0xE7); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xE7, 2); }
-        }
-        public ushort bodyModel
-        {
-            get { return BitConverter.ToUInt16(byteData, 0xE9); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xE9, 2); }
-        }
-        public ushort eyeColour
-        {
-            get { return BitConverter.ToUInt16(byteData, 0xEB); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xEB, 2); }
-        }
-        public ushort hairColour
-        {
-            get { return BitConverter.ToUInt16(byteData, 0xED); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xED, 2); }
-        }
-        public ushort skinColour
-        {
-            get { return BitConverter.ToUInt16(byteData, 0xEF); }
-            set { var bytes = BitConverter.GetBytes(value); Array.Copy(bytes, 0, byteData, 0xEF, 2); }
-        }
-        public byte sex
-        {
-            get { return byteData[0x102]; }
-            set { byteData[0x102] = value; }
-        }
-        public bool isMale
-        {
-            get { return sex == 1; }
-            set { if (value) sex = 1; else sex = 2; }
-        }
-        public bool isFemale
-        {
-            get { return sex == 2; }
-            set { if (value) sex = 2; else sex = 1; }
-        }
-        public byte roomSize
-        {
-            get { return byteData[0x107]; }
-            set { byteData[0x107] = value; }
-        }
-        public byte roomFancy
-        {
-            get { return byteData[0x108]; }
-            set { byteData[0x108] = value; }
-        }
-        public byte roomAmbiance
-        {
-            get { return byteData[0x109]; }
-            set { byteData[0x109] = value; }
-        }
-        public byte messages
-        {
-            get { return byteData[0x10A]; }
-            set { byteData[0x10A] = value; }
-        }
-        public byte voice
-        {
-            get { return byteData[0x10B]; }
-            set { byteData[0x10B] = value; }
-        }
-        public byte job
-        {
-            get { return byteData[0x10F]; }
-            set { byteData[0x10F] = value; }
-        }
-        public byte nativeHome
-        {
-            get { return byteData[0x113]; }
-            set { byteData[0x113] = value; }
-        }
-        public bool typeLock
-        {
-            get { return (byteData[0x12E] & 0x10) != 0x10; }
-            set { byteData[0x12E] = (byte)((byteData[0x12E] & 0xEF) + (((value == true) ? 0 : 1) * 0x10)); }
-        }
-        public byte place
-        {
-            get { return byteData[0x144]; }
-            set { byteData[0x144] = value; }
-        }
+        public byte commonName { get => byteData[0x112]; set => byteData[0x112] = value; }
+        public byte nativeHome { get => byteData[0x113]; set => byteData[0x113] = value; }
+        public bool useCommonName { get => (byteData[0x12D] & 0x80) == 0x80; set => SetBool(value, 0x12D, 0x80); }
+        public bool typeLock { get => (byteData[0x12E] & 0x10) == 0x10; set => SetBool(value, 0x12E, 0x10); }
+
+        public bool isHidden { get => (byteData[0x133] & 0x08) == 0x08; set => SetBool(value, 0x133, 0x08); }
+        public byte place { get => byteData[0x144]; set => byteData[0x144] = value; }
         public Thickness coordMargin => new Thickness(((coordX+1024)*2) - (tempCoordOffsetX*16)-13, ((coordZ+1024)*2) - (tempCoordOffsetZ*16)-13, 0,0);
         public Point coordFocus(Image image)
         {
