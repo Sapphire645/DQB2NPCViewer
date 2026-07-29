@@ -133,3 +133,4 @@
 183	183	Flashy Formalwear ♂
 184	183	Malroth's Flashy Formalwear
 185	181	Malroth's Flashy Formalwear [D]
+400	0	Wrigley

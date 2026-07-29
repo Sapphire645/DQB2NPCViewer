@@ -27,45 +27,17 @@ namespace DQB2NPCViewer.SaveData
 
             NPCData NPCdata = (NPCData)NPC;
 
-            //Get the ID of the parts
-            var HairID = NPCdata.hairModel;
-            var FaceID = NPCdata.faceModel;
-            var BodyID = NPCdata.bodyModel;
-            if (NPCdata.typeLock == true)
-            {
-                TypeSet TypeLockCurrent = null;
-                var a = ListText.TypeLockList.FirstOrDefault(x => x.ID == NPCdata.charType);
-                if (a != null)
-                    TypeLockCurrent = a.TypeListing;
-                if (TypeLockCurrent != null)
-                {
-                    if (TypeLockCurrent.faceID != 0)
-                        FaceID = TypeLockCurrent.faceID;
-                    if (TypeLockCurrent.bodyID != 0)
-                        BodyID = TypeLockCurrent.bodyID;
-                    if (TypeLockCurrent.hairID != 0)
-                        HairID = TypeLockCurrent.hairID;
-                }
-            }
-            if (NPCdata.hasRags == true)
-            {
-                if (NPCdata.sex == 1)
-                    BodyID = 31;
-                else
-                    BodyID = 32;
-            }
-            else
-            {
-                if (NPCdata.armour != 0 && NPCdata.hasClothes == true)
-                {
-                    var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == NPCdata.armour);
-                    if (NPCdata.sex == 1)
-                        BodyID = ArmourClass.Armour.ModelIDMale;
-                    else
-                        BodyID = ArmourClass.Armour.ArmourValues.ModelIDFemale;
-                }
+            var face = ListText.FaceList.FirstOrDefault(x => x.ID == NPCdata.faceModelDisplay);
+            faceModelDName.Value = NPCdata.faceModelDisplay + " - " + (face != null ? face.ModelClassV.ModelName : "?");
+            var hair = ListText.HairList.FirstOrDefault(x => x.ID == NPCdata.hairModelDisplay);
+            hairModelDName.Value = NPCdata.hairModelDisplay + " - " + (hair != null ? hair.ModelClassV.ModelName : "?");
+            var body = ListText.BodyList.FirstOrDefault(x => x.ID == NPCdata.bodyModelDisplay);
+            bodyModelDName.Value = NPCdata.bodyModelDisplay + " - " + (body != null ? body.ModelClassV.ModelName : "?");
 
-            }
+            //Get the ID of the parts
+            var HairID = NPCdata.hairModelDisplay;
+            var FaceID = NPCdata.faceModelDisplay;
+            var BodyID = NPCdata.bodyModelDisplay;
             //Get the colours 
             ClothImage = ListText.getColorDyeVal(ClothColourID);
             EyeImage = (Color)ColorConverter.ConvertFromString(ListText.getColorVal(NPCdata.eyeColour).color);

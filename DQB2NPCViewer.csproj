@@ -23,6 +23,11 @@
     <ApplicationIcon>images/resource/icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="data\npc_info.json" />
+    <None Remove="data\npc_infoText.txt" />
+    <None Remove="data\weapon.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="models\body\001.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -854,10 +859,19 @@
     <None Update="models\hair\110.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="data\npc_info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="images\resource\icon\0V.png" />
     <Resource Include="images\resource\Loading.png" />
     <Resource Include="images\resource\Saving.png" />
     <Content Include="data\builderHair.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\npc_infoText.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\weapon.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Update="data\accesories.txt">
@@ -1053,9 +1067,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\resource\create.png" />
-    <Content Include="data\typelockText.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="images\island\p5.png" />
     <Content Include="images\maps\STGDAT01.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2770,11 +2781,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Update="data\weapon.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\island\0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -3689,6 +3695,10 @@
     <None Update="data\info.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="textures\monster\3512.dds" />
@@ -3989,5 +3999,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Content Include="textures\face\m051.dds" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

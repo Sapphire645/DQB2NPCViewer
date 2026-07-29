@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DQB2NPCViewer.SaveData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace DQB2NPCViewer.control
         private List<Button> BlockListFilter2;
         private List<Button> BlockListFilter3;
         private List<Button> BlockListFull;
-        public MenuListType(List<TypeSet> ListFilter1, string Filter1,
-List<TypeSet> ListFilter2, string Filter2,
-List<TypeSet> ListFilter3, string Filter3)
+        public MenuListType(List<CHARlock> ListFilter1, string Filter1,
+List<CHARlock> ListFilter2, string Filter2,
+List<CHARlock> ListFilter3, string Filter3)
         {
             BlockListFilter1 = new List<Button>();
             BlockListFilter2 = new List<Button>();
@@ -38,12 +39,12 @@ List<TypeSet> ListFilter3, string Filter3)
             AddBlocks(BlockListFilter2);
             AddBlocks(BlockListFilter3);
         }
-        private void CreateButtons(List<Button> ButtonList, List<TypeSet> BlockList)
+        private void CreateButtons(List<Button> ButtonList, List<CHARlock> BlockList)
         {
             Brush Colour = new SolidColorBrush(Colors.White);
             for (int i = 0; i < BlockList.Count; i++)
             {
-                if(BlockList[i].faceID == BlockList[i].bodyID && BlockList[i].bodyID == BlockList[i].hairID && BlockList[i].hairID == 0)
+                if(BlockList[i].Models.Count == 0)
                 {
                     Colour = new SolidColorBrush(Colors.Orange);
                 }
@@ -53,7 +54,7 @@ List<TypeSet> ListFilter3, string Filter3)
                 }
                 var ComboBoxColour = new Button()
                 {
-                    Content = new ComboBoxColour(BlockList[i], BlockList[i].typeID),
+                    Content = new ComboBoxColour(BlockList[i], BlockList[i].ID),
                     Background = Colour
                 };
                 ComboBoxColour.Click += Button_Click;
@@ -111,7 +112,7 @@ List<TypeSet> ListFilter3, string Filter3)
             Grid.Children.Clear();
             foreach (var child in BlockListFull)
             {
-                var a = ((ComboBoxColour)child.Content).TypeListing.name.ToLower();
+                var a = ((ComboBoxColour)child.Content).TypeListing.Name.ToLower();
                 if (a.Contains(Filter))
                     Grid.Children.Add(child);
                 else

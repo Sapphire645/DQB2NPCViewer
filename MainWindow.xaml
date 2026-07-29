@@ -176,7 +176,7 @@
                                         </StackPanel>
                                         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="5,5,5,5">
                                             <Button Content="Character type" Click="InfoPanel_Click" Tag="4" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-                                            <ComboBox Name="ComboBoxCharType" Height="38" ItemsSource="{x:Static s:ListText.TypeLockList}" SelectedValuePath="ID" SelectedValue="{Binding EditingNPC.Value.charType}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="FullModelUpdate"/>
+                                            <ComboBox Name="ComboBoxCharType" Height="38" ItemsSource="{x:Static s:ListText.TypeLockList}" SelectedValuePath="ID" SelectedValue="{Binding EditingNPC.Value.charType}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="CharTypeUpdate"/>
                                             <Button Content="Job" Click="InfoPanel_Click" Tag="19" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                             <ComboBox Name="ComboJob" ItemsSource="{x:Static s:ListText.JobList}" Height="25" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.job}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="FullModelUpdate">
                                                 <ComboBox.ItemTemplate>
@@ -192,11 +192,32 @@
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
-                                            <Button Content="Face Model" Click="InfoPanel_Click" Tag="10" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Grid HorizontalAlignment="Stretch">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width ="auto"/>
+                                                    <ColumnDefinition Width ="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Grid.Column="0" Content="Face Model" Click="InfoPanel_Click" Tag="10" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding FaceDisplay.Value}" Padding="5,2,5,2" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
+                                            </Grid>
                                             <ComboBox Height="35" ItemsSource="{x:Static s:ListText.FaceList}" SelectedValuePath="ModelClassV.ID" SelectedValue="{Binding EditingNPC.Value.faceModel}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="FaceModelUpdate"/>
-                                            <Button Content="Hair Model" Click="InfoPanel_Click" Tag="11" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Grid HorizontalAlignment="Stretch">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width ="auto"/>
+                                                    <ColumnDefinition Width ="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Content="Hair Model" Click="InfoPanel_Click" Tag="11" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding HairDisplay.Value}" Padding="5,2,5,2" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
+                                            </Grid>
                                             <ComboBox Height="35" ItemsSource="{x:Static s:ListText.HairList}" SelectedValuePath="ModelClassV.ID" SelectedValue="{Binding EditingNPC.Value.hairModel}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="HairModelUpdate"/>
-                                            <Button Content="Body Model" Click="InfoPanel_Click" Tag="12" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <Grid HorizontalAlignment="Stretch">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width ="auto"/>
+                                                    <ColumnDefinition Width ="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Content="Body Model" Click="InfoPanel_Click" Tag="12" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding BodyDisplay.Value}" Padding="5,2,5,2" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
+                                            </Grid>
                                             <ComboBox Height="35" ItemsSource="{x:Static s:ListText.BodyList}" SelectedValuePath="ModelClassV.ID" SelectedValue="{Binding EditingNPC.Value.bodyModel}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
                                             <Button Content="Armour/Clothes" Click="InfoPanel_Click" Tag="17" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                             <ComboBox Name="ComboArmour" Height="35" ItemsSource="{x:Static s:ListText.ArmourList}" SelectedValuePath="Armour.ID" SelectedValue="{Binding EditingNPC.Value.armour}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="BodyModelUpdate"/>
@@ -251,6 +272,21 @@
                                             </UniformGrid>
                                             <Button Content="Clothes Colour" Click="InfoPanel_Click" Tag="17" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
                                             <Rectangle Height="35" Stroke="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Fill="{Binding ClothColour.Value}"/>
+                                            <Button Content="Style" Click="InfoPanel_Click" Tag="17" ToolTipService.InitialShowDelay="50" ToolTip="Click for info!" Padding="5,2,5,2" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+                                            <ComboBox Name="Style" ItemsSource="{Binding StyleList}" Height="35" SelectedValuePath="Id" SelectedValue="{Binding EditingNPC.Value.style}" PreviewMouseDown="VisualChangeCheck" SelectionChanged="StyleChange" VerticalContentAlignment="Center">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock>
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                                    <Binding Path="Id"/>
+                                                                    <Binding Path="Name"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
                                         </StackPanel>
                                     </Grid>
 

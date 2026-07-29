@@ -3,11 +3,54 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 
 namespace DQB2NPCViewer.code
 {
     public class NPCData
     {
+
+        public ushort faceModelDisplay { 
+            get
+            {
+                if (!typeLock & faceModel != 0)
+                    return faceModel;
+                if (ListText.getTypeCharVal(charType).Models.ContainsKey(style))
+                    return ListText.getTypeCharVal(charType).Models[style].FaceModel;
+                return 0;
+            }
+        }
+        public ushort hairModelDisplay {
+            get
+            {
+                if (!typeLock & hairModel != 0)
+                    return hairModel;
+                if (ListText.getTypeCharVal(charType).Models.ContainsKey(style))
+                    return ListText.getTypeCharVal(charType).Models[style].HairModel;
+                return 0;
+            }
+        }
+        public ushort bodyModelDisplay
+        {
+            get
+            {
+                if (hasRags) return (ushort)(sex == 1 ? 31 : 32);
+                if (hasClothes)
+                {
+                    var ArmourClass = ListText.ArmourList.FirstOrDefault(x => x.ID == armour);
+                    if(ArmourClass.Armour.ID != 0)
+                    {
+                        return (ushort)(sex == 1 ? ArmourClass.Armour.ModelIDMale : ArmourClass.Armour.ArmourValues.ModelIDFemale);
+                    }
+                }
+                if (!typeLock & bodyModel != 0)
+                    return bodyModel;
+                if (ListText.getTypeCharVal(charType).Models.ContainsKey(style))
+                    return ListText.getTypeCharVal(charType).Models[style].BodyModel;
+                return 0;
+            }
+        }
+
         public byte[] byteData { get; }
         public ushort offset {  get; set; }
         public event EventHandler UpdatedCoords;
@@ -80,9 +123,9 @@ namespace DQB2NPCViewer.code
 
         public byte commonName { get => byteData[0x112]; set => byteData[0x112] = value; }
         public byte nativeHome { get => byteData[0x113]; set => byteData[0x113] = value; }
+        //public bool question { get => (byteData[0x133] & 0x01) == 0x01; set => SetBool(value, 0x133, 0x01); }
         public bool useCommonName { get => (byteData[0x12D] & 0x80) == 0x80; set => SetBool(value, 0x12D, 0x80); }
-        public bool typeLock { get => (byteData[0x12E] & 0x10) == 0x10; set => SetBool(value, 0x12E, 0x10); }
-
+        public bool typeLock { get => (byteData[0x12E] & 0x10) != 0x10; set => SetBool(!value, 0x12E, 0x10); }
         public bool isHidden { get => (byteData[0x133] & 0x08) == 0x08; set => SetBool(value, 0x133, 0x08); }
         public byte place { get => byteData[0x144]; set => byteData[0x144] = value; }
         public Thickness coordMargin => new Thickness(((coordX+1024)*2) - (tempCoordOffsetX*16)-13, ((coordZ+1024)*2) - (tempCoordOffsetZ*16)-13, 0,0);
@@ -130,7 +173,7 @@ namespace DQB2NPCViewer.code
         public string CharNameGet
         {
             get { 
-                return ListText.getTypeCharVal(charType).name;
+                return ListText.getTypeCharVal(charType).Name;
             }
         }
         public CroppedBitmap Image

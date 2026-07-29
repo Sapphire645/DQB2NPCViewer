@@ -3,6 +3,7 @@ using HelixToolkit.Wpf;
 using SharpGLTF.Schema2;
 using System;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Policy;
 using System.Windows;
@@ -27,6 +28,10 @@ public abstract class HelixViewportModel
     public ObservableProperty<Brush> SkinColourFilter { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
     public ObservableProperty<Brush> HairColour { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
     public ObservableProperty<Brush> ClothColour { get; set; } = new ObservableProperty<Brush>() { Value = Brushes.White };
+
+    public ObservableProperty<String> faceModelDName { get; set; } = new ObservableProperty<String>() { Value = String.Empty};
+    public ObservableProperty<String> hairModelDName { get; set; } = new ObservableProperty<String>() { Value = String.Empty };
+    public ObservableProperty<String> bodyModelDName { get; set; } = new ObservableProperty<String>() { Value = String.Empty };
 
     protected Model3DGroup FaceModel;
     protected ushort CurrentFaceID = 0;

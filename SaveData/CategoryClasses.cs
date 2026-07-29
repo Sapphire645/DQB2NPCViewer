@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using Cyotek.Drawing.BitmapFont;
+using System;
+using System.Windows.Media;
 
 public class Island
 {
@@ -20,23 +22,25 @@ public class Place
 {
     public string Name { get; set; }
     public byte Id { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Place other)
+            return false;
+
+        return Id == other.Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id);
+    }
 }
 
 public class Colour
 {
     public ushort ID { get; set; }
     public string color { get; set; }
-}
-public class TypeSet
-{
-    public ushort typeID { get; set; }
-    public ushort hairID { get; set; }
-    public ushort faceID { get; set; }
-    public ushort bodyID { get; set; }
-    public bool Monster { get; set; }
-    public ushort Tier { get; set; }
-    public string name { get; set; }
-    public string description { get; set; }
 }
 public class Accesory
 {

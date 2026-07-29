@@ -48,6 +48,29 @@ namespace DQB2NPCViewer
         public ObservableProperty<Brush> SkinColourFilterBuilder => BuilderModel.SkinColourFilter;
         public ObservableProperty<Brush> HairColourBuilder => BuilderModel.HairColour;
         public ObservableProperty<Brush> ClothColour => NPCModel.ClothColour;
+
+        public ObservableProperty<String> FaceDisplay => NPCModel.faceModelDName;
+        public ObservableProperty<String> HairDisplay => NPCModel.hairModelDName;
+        public ObservableProperty<String> BodyDisplay => NPCModel.bodyModelDName;
+
+        public ObservableCollection<Place> StyleList { get; set; } = new ObservableCollection<Place>();
+        private void UpdateStyleList()
+        {
+            StyleList.Clear();
+            if (EditingNPC.Value == null || ListText.getTypeCharVal(EditingNPC.Value.charType).Models.Count == 0)
+            {
+                StyleList.Add(ListText.DefaultState[0]);
+            }
+            else
+            {
+                foreach (var a in ListText.getTypeCharVal(EditingNPC.Value.charType).Models)
+                {
+                    StyleList.Add(new Place() { Id = a.Key, Name = a.Value.Name });
+                }
+            }
+            if (EditingNPC.Value == null) return;
+            Style.SelectedIndex = EditingNPC.Value.style;
+        }
         private new bool Loaded => EditingNPC.Value != null;
         private bool LoadedBuilder => EditingBuilder.Value != null;
 
@@ -68,12 +91,15 @@ namespace DQB2NPCViewer
             NPCModel = new ModelDisplayNPC();
             BuilderModel = new ModelDisplayBuilder();
             DataContext = this;
-            ListText.setList("body", "color", "face", "hair", "islands", "jobs", "ambiance", "typelock", "weapon", "armour", "place", "builderHair", "accesories", "tools", "shield", "coordinatemap");
+            ListText.setList("body", "color", "face", "hair", "islands", "jobs", "ambiance", "npc_info", "weapon", "armour", "place", "builderHair", "accesories", "tools", "shield", "coordinatemap");
+            
 
             InitializeComponent();
             CharacterTabList();
             this.SizeChanged += OnWindowSizeChanged;
             SelectionList.ReturnSelectedTile += SelectedNPC_OnClick;
+            UpdateStyleList();
+            Style.SelectedIndex = 0;
 
             ConsoleText.Value = "Hello World!";
             DescText.Value = "Open a CMNDAT.BIN file to continue.";
@@ -101,8 +127,8 @@ namespace DQB2NPCViewer
                 if (sender == ComboBoxCharType)
                 {
                     var type = ((sender as ComboBox).SelectedItem as ComboBoxColour).TypeListing;
-                    NameDescText.Value = type.name;
-                    DescText.Value = type.description;
+                    NameDescText.Value = type.Name;
+                    DescText.Value = type.Description;
                 }
                 else if (sender == ComboJob) UpdateJobConsole(sender, e);
                 _isUserInitiated = false;
@@ -172,18 +198,22 @@ namespace DQB2NPCViewer
         }
         private void CharacterTabList()
         {
-            var Mon = new List<TypeSet>();
-            var An = new List<TypeSet>();
-            var Hum = new List<TypeSet>();
+            var Mon = new List<CHARlock>();
+            var An = new List<CHARlock>();
+            var Hum = new List<CHARlock>();
             foreach (var a in ListText.TypeLockList)
             {
-                if (a.TypeListing.Monster == true)
+                switch (a.TypeListing.SpeciesCategory)
                 {
-                    Mon.Add(a.TypeListing);
-                }
-                else
-                {
-                    Hum.Add(a.TypeListing);
+                    case 0:
+                        Hum.Add(a.TypeListing);
+                        break;
+                    case 1:
+                        Mon.Add(a.TypeListing);
+                        break;
+                    case 2:
+                        An.Add(a.TypeListing);
+                        break;
                 }
             }
             MenuListType menu = new MenuListType(Hum, "Human", An, "Animal", Mon, "Monster");
@@ -316,6 +346,7 @@ namespace DQB2NPCViewer
             }
             SwapToNPC();
             swapGender(EditingNPC.Value.sex, ListText.ArmourList);
+            UpdateStyleList();
 
             MyHelixViewport.ZoomExtents();
 
@@ -360,7 +391,6 @@ namespace DQB2NPCViewer
         {
             SelectedNPC.Value = new CharacterButton(NewSelectedNPC);
             ConsoleCommand("Selected NPC slot " + NewSelectedNPC.offset, false, false);
-
         }
         private void SwapToNPC()
         {
@@ -397,8 +427,10 @@ namespace DQB2NPCViewer
             SwapToNPC();
             swapGender(EditingNPC.Value.sex, ListText.ArmourList);
 
+            UpdateStyleList();
             MyHelixViewport.ZoomExtents();
             ConsoleCommand("NPC loaded!", false, false);
+            //ConsoleCommand(EditingNPC.Value.question.ToString(), false, false);
         }
         private void SaveSelectedNPC_Click(object sender, RoutedEventArgs e)
         {
@@ -464,7 +496,10 @@ namespace DQB2NPCViewer
             }
 
         }
-
+        private void CharTypeUpdate(object sender, RoutedEventArgs e)
+        {
+            FullModelUpdate(sender, e);
+        }
         private void ChangeChar_OnClick(object sender, EventArgs e)
         {
             if (Loaded)
@@ -472,8 +507,10 @@ namespace DQB2NPCViewer
             EditingNPC.NotifyValue();
 
             var type = (sender as ComboBoxColour).TypeListing;
-            NameDescText.Value = type.name;
-            DescText.Value = type.description;
+            NameDescText.Value = type.Name;
+            DescText.Value = type.Description;
+
+            UpdateModelToNewValues();
 
             ConsoleCommand("Character type changed", false, false);
         }
@@ -706,6 +743,14 @@ namespace DQB2NPCViewer
         private void LoadBuilder(object sender, RoutedEventArgs e)
         {
             SwapToBuilder();
+        }
+
+        private void StyleChange(object sender, SelectionChangedEventArgs e)
+        {
+            if (EditingNPC.Value == null) return;
+            if (!_isUserInitiated) return;
+            EditingNPC.Value.style = (byte)Style.SelectedIndex;
+            FullModelUpdate(sender, e);
         }
     }
 }

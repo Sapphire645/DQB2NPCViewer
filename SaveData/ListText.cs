@@ -1,8 +1,11 @@
 ﻿using DQB2NPCViewer.control;
+using DQB2NPCViewer.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -32,6 +35,7 @@ namespace DQB2NPCViewer.code
         public static ObservableCollection<Hearts> RoomSizeList = new ObservableCollection<Hearts>();
         public static ObservableCollection<ComboBoxColour> TypeLockList { get; } = new ObservableCollection<ComboBoxColour>();
         public static List<String> InfoText = new List<String>();
+        private static Dictionary<ushort, CHARlock> CharLockList;
 
         public static ObservableCollection<ComboBoxArmour> ArmourList = new ObservableCollection<ComboBoxArmour>();
         public static ObservableCollection<ComboBoxArmour> ArmourBuilderList = new ObservableCollection<ComboBoxArmour>();
@@ -42,11 +46,12 @@ namespace DQB2NPCViewer.code
 
         public static List<(ushort,ushort)> CoordinateMap = new List<(ushort, ushort)>();
 
+        public static List<Place> DefaultState;
         public static Colour getColorVal(ushort ID) { return ColorList[ID]; }
 
         public static Color getColorDyeVal(ushort ID) { return (Color)ColorConverter.ConvertFromString(DyesList.FirstOrDefault(x => x.ID == ID).color); }
 
-        public static TypeSet getTypeCharVal(ushort ID) { var A =  TypeLockList.FirstOrDefault(x => x.TypeListing.typeID == ID); return (A != null) ? A.TypeListing : TypeLockList[0].TypeListing; }
+        public static CHARlock getTypeCharVal(ushort ID) { if(CharLockList.ContainsKey(ID)) return CharLockList[ID]; return CharLockList[0]; }
 
         //Welcome to "Screw JSONs I want to do the think the save editor does.
         //Code from "Info.cs" in Turtle-Insect's save editor.
@@ -54,6 +59,8 @@ namespace DQB2NPCViewer.code
             string filename4, string filename5, string filename6, string filename7, string filename8, string filename9, string filename10,
             string filename11, string filename12, string filename13, string filename14, string filename15)
         {
+            DefaultState = new List<Place>();
+            DefaultState.Add(new Place() { Id = 0, Name = "Null" });
 
             ConstructColorNames("data/" + filename1 + ".txt", ColorList);
             ConstructColorNames("data/dyecolourResource.txt", DyesList);
@@ -66,7 +73,7 @@ namespace DQB2NPCViewer.code
             ConstructIJNames("data/" + filename5 + ".txt", JobList);
             
             ConstructAmbiance("data/" + filename6 + ".txt");
-            ConstructTypeLock("data/" + filename7 + ".txt", "data/" + filename7+"Text.txt");
+            ConstructTypeLock("data/" + filename7 + ".json", "data/" + filename7+"Text.txt");
             ConstructEquipmentNames("data/" + filename8 + ".txt", WeaponList);
             ConstructArmourNames("data/" + filename9 + ".txt", ArmourList, ArmourBuilderList, ArmourBuilderListMirror);
 
@@ -307,40 +314,35 @@ namespace DQB2NPCViewer.code
         private static void ConstructTypeLock(string filename, string filenameText)
         {
             if (!System.IO.File.Exists(filename)) return;
-            String[] lines = System.IO.File.ReadAllLines(filename);
+
+            string json = File.ReadAllText(filename);
+
+            CharLockList = JsonSerializer.Deserialize<Dictionary<ushort, CHARlock>>(json)!;
+
             String[] linesText = System.IO.File.ReadAllLines(filenameText);
-            for(int Index = 0; Index < lines.Length-1; Index++)
+            for(int Index = 0; Index < linesText.Length-1; Index++)
             {
-                String line = lines[Index];
                 String lineText = linesText[Index];
-                if (line.Length < 1) continue;
-                if (line[0] == '#') continue;
-                String[] values = line.Split('\t');
+                if (lineText.Length < 1) continue;
+                if (lineText[0] == '#') continue;
                 String[] valuesText = lineText.Split('\t');
                 try
                 {
-                    var types = new TypeSet()
-                    {
-                        typeID = (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0,
-                        name = (1 < valuesText.Length) ? valuesText[1] : "???",
-                        description = (2 < valuesText.Length) ? valuesText[2] : "???",
-                        hairID = (1 < values.Length) ? (ushort)Convert.ToInt16(values[1]) : (ushort)0,
-                        faceID = (2 < values.Length) ? (ushort)Convert.ToInt16(values[2]) : (ushort)0,
-                        bodyID = (3 < values.Length) ? (ushort)Convert.ToInt16(values[3]) : (ushort)0,
-                        Tier = (4 < values.Length) ? (ushort)Convert.ToInt16(values[4]) : (ushort)0,
-                        Monster = (5 < values.Length) ? Convert.ToBoolean(values[5].ToLower()) : false
-                    };
-                    var typeLockVal = new ComboBoxColour(types, (0 < values.Length) ? (ushort)Convert.ToInt16(values[0]) : (ushort)0);
-                    if (typeLockVal.TypeListing.faceID == 0 && typeLockVal.TypeListing.hairID == 0 && typeLockVal.TypeListing.bodyID == 0)
-                    {
-                        typeLockVal.Background = new SolidColorBrush(Colors.LightCoral);
-                    }
-                    TypeLockList.Add(typeLockVal);
+                    CharLockList[(ushort)Convert.ToInt16(valuesText[0])].Name = valuesText[1];
                 }
                 catch
                 {
                 }
+            }
+            foreach (var chara in CharLockList){
+                chara.Value.ID = chara.Key;
 
+                var typeLockVal = new ComboBoxColour(chara.Value, chara.Value.ID);
+                if (typeLockVal.TypeListing.Models.Count == 0)
+                {
+                    typeLockVal.Background = new SolidColorBrush(Colors.LightCoral);
+                }
+                TypeLockList.Add(typeLockVal);
             }
         }
     }

@@ -17,8 +17,8 @@
             <TextBlock Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="230">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0} - {1}">
-                        <Binding Path="TypeListing.typeID" />
-                        <Binding Path="TypeListing.name" />
+                        <Binding Path="TypeListing.ID" />
+                        <Binding Path="TypeListing.Name" />
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>

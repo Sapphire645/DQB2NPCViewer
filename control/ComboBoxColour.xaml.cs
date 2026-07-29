@@ -4,6 +4,7 @@ using System.Windows;
 using System;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using DQB2NPCViewer.SaveData;
 
 
 namespace DQB2NPCViewer.control
@@ -14,14 +15,14 @@ namespace DQB2NPCViewer.control
     public partial class ComboBoxColour : UserControl
     {
         public ushort ID { get; private set; } = 0;
-        public TypeSet TypeListing { get; private set; }
+        public CHARlock TypeListing { get; private set; }
         //public ComboBoxColour()
         //{
         //    InitializeComponent();
         //    ImageToChange.Visibility = Visibility.Collapsed;
         //    DataContext = this;
         //}
-        public ComboBoxColour(TypeSet TypeListing, ushort ID)
+        public ComboBoxColour(CHARlock TypeListing, ushort ID)
         {
             this.ID = ID;
             this.TypeListing = TypeListing;
@@ -33,7 +34,7 @@ namespace DQB2NPCViewer.control
         {
             get
             {
-                var TypeVar = TypeListing.typeID;
+                var TypeVar = TypeListing.ID;
                 if (TypeVar < 1 || TypeVar > 900) // Validate number range for a 5x5 grid
                 {
                     Int32Rect iconRect2 = new Int32Rect(0, 0, 124, 124);

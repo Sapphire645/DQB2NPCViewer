@@ -120,7 +120,7 @@ namespace DQB2NPCViewer.control
                     Grid.Children.Add(child);
                 else
                 {
-                    a = ListText.getTypeCharVal(child.NPC.Value.charType).name;
+                    a = ListText.getTypeCharVal(child.NPC.Value.charType).Name;
                     if (a.Contains(Filter))
                         Grid.Children.Add(child);
                 }
