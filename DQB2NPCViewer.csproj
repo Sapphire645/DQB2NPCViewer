@@ -23,6 +23,7 @@
     <ApplicationIcon>images/resource/icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="data\color.txt" />
     <None Remove="data\npc_info.json" />
     <None Remove="data\npc_infoText.txt" />
     <None Remove="data\weapon.txt" />
@@ -859,6 +860,9 @@
     <None Update="models\hair\110.glb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="data\color.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="data\npc_info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2742,11 +2746,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="data\body.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="data\color.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

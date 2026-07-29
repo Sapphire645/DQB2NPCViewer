@@ -95,7 +95,8 @@ namespace DQB2NPCViewer
                     //Tag = ListText.getColorVal(i).ID,
                     Tag = SortedList[i].ID,
                     Width = 20,
-                    Height = 20
+                    Height = 20,
+                    ToolTip = SortedList[i].ID
                 };
 
                 // Attach the Click event handler

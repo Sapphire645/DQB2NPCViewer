@@ -270,7 +270,7 @@ namespace DQB2NPCViewer.code
                 var ColorValue = new Colour()
                 {
                     ID = (ushort)Convert.ToInt16(values[0]),
-                    color = values[1]
+                    color = values[1].Substring(0, 7)
                 };
                 List.Add(ColorValue);
             }
